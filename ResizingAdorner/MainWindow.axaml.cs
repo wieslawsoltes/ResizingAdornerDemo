@@ -18,11 +18,11 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void DragStarted(object? sender, VectorEventArgs e, string name)
+    private void DragStarted(object? sender, VectorEventArgs e)
     {
         if (sender is Thumb { Tag: Control control })
         {
-            Console.WriteLine($"[{name}.Started] {control} {e.Vector}");
+            Console.WriteLine($"[Started] {control} {e.Vector}");
             _left = Canvas.GetLeft(control);
             _top = Canvas.GetTop(control);
             _width = control.Bounds.Width;
@@ -32,27 +32,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void PART_ThumbTopLeft_OnDragStarted(object? sender, VectorEventArgs e)
-    {
-        DragStarted(sender, e, "TopLeft");
-    }
-
-    private void PART_ThumbTopRight_OnDragStarted(object? sender, VectorEventArgs e)
-    {
-        DragStarted(sender, e, "TopRight");
-    }
-
-    private void PART_ThumbBottomLeft_OnDragStarted(object? sender, VectorEventArgs e)
-    {
-        DragStarted(sender, e, "BottomLeft");
-    }
-
-    private void PART_ThumbBottomRight_OnDragStarted(object? sender, VectorEventArgs e)
-    {
-        DragStarted(sender, e, "BottomRight");
-    }
-
-    private void PART_ThumbTopLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    private void DragDeltaTopLeft(object? sender, VectorEventArgs e)
     {
         if (_updating)
         {
@@ -73,12 +53,14 @@ public partial class MainWindow : Window
             if (width >= 0)
             {
                 Canvas.SetLeft(control, left);
+                // TODO: Check for MinWidth
                 control.Width = width;
             }
 
             if (height >= 0)
             {
                 Canvas.SetTop(control, top);
+                // TODO: Check for MinHeight
                 control.Height = height;
             }
         }
@@ -86,7 +68,7 @@ public partial class MainWindow : Window
         _updating = false;
     }
 
-    private void PART_ThumbTopRight_OnDragDelta(object? sender, VectorEventArgs e)
+    private void DragDeltaTopRight(object? sender, VectorEventArgs e)
     {
         if (_updating)
         {
@@ -107,12 +89,14 @@ public partial class MainWindow : Window
 
             if (width >= 0)
             {
+                // TODO: Check for MinWidth
                 control.Width = width;
             }
 
             if (height >= 0)
             {
                 Canvas.SetTop(control, top);
+                // TODO: Check for MinHeight
                 control.Height = height;
             }
         }
@@ -120,7 +104,7 @@ public partial class MainWindow : Window
         _updating = false;
     }
 
-    private void PART_ThumbBottomLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    private void DragDeltaBottomLeft(object? sender, VectorEventArgs e)
     {
         if (_updating)
         {
@@ -142,11 +126,13 @@ public partial class MainWindow : Window
             if (width >= 0)
             {
                 Canvas.SetLeft(control, left);
+                // TODO: Check for MinWidth
                 control.Width = width;
             }
 
             if (height >= 0)
             {
+                // TODO: Check for MinHeight
                 control.Height = height;
             }
         }
@@ -154,7 +140,7 @@ public partial class MainWindow : Window
         _updating = false;
     }
 
-    private void PART_ThumbBottomRight_OnDragDelta(object? sender, VectorEventArgs e)
+    private void DragDeltaBottomRight(object? sender, VectorEventArgs e)
     {
         if (_updating)
         {
@@ -175,15 +161,57 @@ public partial class MainWindow : Window
 
             if (width >= 0)
             {
+                // TODO: Check for MinWidth
                 control.Width = width;
             }
 
             if (height >= 0)
             {
+                // TODO: Check for MinHeight
                 control.Height = height;
             }
         }
 
         _updating = false;
+    }
+
+    private void PART_ThumbTopLeft_OnDragStarted(object? sender, VectorEventArgs e)
+    {
+        DragStarted(sender, e);
+    }
+
+    private void PART_ThumbTopRight_OnDragStarted(object? sender, VectorEventArgs e)
+    {
+        DragStarted(sender, e);
+    }
+
+    private void PART_ThumbBottomLeft_OnDragStarted(object? sender, VectorEventArgs e)
+    {
+        DragStarted(sender, e);
+    }
+
+    private void PART_ThumbBottomRight_OnDragStarted(object? sender, VectorEventArgs e)
+    {
+        DragStarted(sender, e);
+    }
+
+    private void PART_ThumbTopLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    {
+        DragDeltaTopLeft(sender, e);
+    }
+
+    private void PART_ThumbTopRight_OnDragDelta(object? sender, VectorEventArgs e)
+    {
+        DragDeltaTopRight(sender, e);
+    }
+
+    private void PART_ThumbBottomLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    {
+        DragDeltaBottomLeft(sender, e);
+    }
+
+    private void PART_ThumbBottomRight_OnDragDelta(object? sender, VectorEventArgs e)
+    {
+        DragDeltaBottomRight(sender, e);
     }
 }
