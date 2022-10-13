@@ -2,189 +2,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:ResizingAdorner"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
         WindowStartupLocation="CenterScreen"
         Width="600" Height="600">
 
-  <Canvas Name="PART_Canvas" Width="500" Height="500" Background="WhiteSmoke">
+  <Window.Styles>
 
-    <Canvas.Resources>
-      <Color x:Key="AdornerFillColor">#FFFFFFFF</Color>
-      <Color x:Key="AdornerStrokeColor">#FF0080FF</Color>
-    </Canvas.Resources>
+    <Style Selector="Canvas.resizing > :is(Control)">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <controls:ResizingAdornerPresenter 
+            AdornedControl="{Binding $parent[Control]}"
+            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+            AdornedHeight="{Binding $parent[Control].Bounds.Height}"  />
+        </Template>
+      </Setter>
+    </Style>
+    
+  </Window.Styles>
 
-    <Canvas.Styles>
-
-      <Style Selector="Thumb.all">
-        <Setter Property="Cursor" Value="SizeAll" />
-      </Style>
-
-      <Style Selector="Thumb.left">
-        <Setter Property="Cursor" Value="LeftSide" />
-      </Style>
-
-      <Style Selector="Thumb.right">
-        <Setter Property="Cursor" Value="RightSide" />
-      </Style>
-
-      <Style Selector="Thumb.top">
-        <Setter Property="Cursor" Value="TopSide" />
-      </Style>
-
-      <Style Selector="Thumb.bottom">
-        <Setter Property="Cursor" Value="BottomSide" />
-      </Style>
-
-      <Style Selector="Thumb.topLeft">
-        <Setter Property="Cursor" Value="TopLeftCorner" />
-      </Style>
-
-      <Style Selector="Thumb.topRight">
-        <Setter Property="Cursor" Value="TopRightCorner" />
-      </Style>
-
-      <Style Selector="Thumb.bottomLeft">
-        <Setter Property="Cursor" Value="BottomLeftCorner" />
-      </Style>
-
-      <Style Selector="Thumb.bottomRight">
-        <Setter Property="Cursor" Value="BottomRightCorner" />
-      </Style>
-
-      <Style Selector="Thumb.corner">
-        <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Template">
-          <ControlTemplate>
-            <Panel Background="Transparent" Width="12" Height="12">
-              <Rectangle Fill="{DynamicResource AdornerFillColor}" 
-                         Stroke="{DynamicResource AdornerStrokeColor}" 
-                         StrokeThickness="1"
-                         Width="6" 
-                         Height="6" />
-            </Panel>
-          </ControlTemplate>
-        </Setter>
-      </Style>
-
-      <Style Selector="Thumb.center">
-        <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Template">
-          <ControlTemplate>
-            <Rectangle Fill="Transparent" 
-                       Stroke="{DynamicResource AdornerStrokeColor}" 
-                       StrokeThickness="1" />
-          </ControlTemplate>
-        </Setter>
-      </Style>
-
-      <Style Selector="Thumb.side">
-        <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Template">
-          <ControlTemplate>
-            <Rectangle Fill="Transparent" 
-                       Stroke="Transparent" 
-                       StrokeThickness="1" />
-          </ControlTemplate>
-        </Setter>
-      </Style>
-
-      <Style Selector="Canvas > :is(Control)">
-        <Setter Property="(AdornerLayer.Adorner)">
-          <Template>
-            <Panel Name="PART_Panel"
-                   Width="{Binding $parent[Control].Bounds.Width}"
-                   Height="{Binding $parent[Control].Bounds.Height}"
-                   Tag="{Binding $parent[Control]}">
-              <Thumb Name="PART_ThumbCenter"
-                     Width="{Binding $parent[Control].Bounds.Width}"
-                     Height="{Binding $parent[Control].Bounds.Height}"
-                     VerticalAlignment="Center" 
-                     HorizontalAlignment="Center" 
-                     Classes="center all"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbCenter_OnDragStarted"
-                     DragDelta="PART_ThumbCenter_OnDragDelta" />
-              <Thumb Name="PART_ThumbLeft"
-                     Width="6"
-                     Height="{Binding $parent[Control].Bounds.Height}"
-                     Margin="-2,0,0,0"
-                     VerticalAlignment="Center" 
-                     HorizontalAlignment="Left" 
-                     Classes="side left"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbLeft_OnDragStarted"
-                     DragDelta="PART_ThumbLeft_OnDragDelta" />
-              <Thumb Name="PART_ThumbRight"
-                     Width="6"
-                     Height="{Binding $parent[Control].Bounds.Height}"
-                     Margin="0,0,-2,0"
-                     VerticalAlignment="Center" 
-                     HorizontalAlignment="Right" 
-                     Classes="side right"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbRight_OnDragStarted"
-                     DragDelta="PART_ThumbRight_OnDragDelta" />
-              <Thumb Name="PART_ThumbTop"
-                     Width="{Binding $parent[Control].Bounds.Width}"
-                     Height="6"
-                     Margin="0,-2,0,0"
-                     VerticalAlignment="Top" 
-                     HorizontalAlignment="Center" 
-                     Classes="side top"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbTop_OnDragStarted"
-                     DragDelta="PART_ThumbTop_OnDragDelta" />
-              <Thumb Name="PART_ThumbBottom"
-                     Width="{Binding $parent[Control].Bounds.Width}"
-                     Height="6"
-                     Margin="0,0,0,-2"
-                     VerticalAlignment="Bottom" 
-                     HorizontalAlignment="Center" 
-                     Classes="side bottom"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbBottom_OnDragStarted"
-                     DragDelta="PART_ThumbBottom_OnDragDelta" />
-              <Thumb Name="PART_ThumbTopLeft"
-                     VerticalAlignment="Top" 
-                     HorizontalAlignment="Left" 
-                     Margin="-8,-8,0,0"
-                     Classes="corner topLeft"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbTopLeft_OnDragStarted"
-                     DragDelta="PART_ThumbTopLeft_OnDragDelta" />
-              <Thumb Name="PART_ThumbTopRight"
-                     VerticalAlignment="Top" 
-                     HorizontalAlignment="Right" 
-                     Margin="0,-8,-8,0"
-                     Classes="corner topRight"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbTopRight_OnDragStarted"
-                     DragDelta="PART_ThumbTopRight_OnDragDelta" />
-              <Thumb Name="PART_ThumbBottomLeft"
-                     VerticalAlignment="Bottom" 
-                     HorizontalAlignment="Left" 
-                     Margin="-8,0,0,-8"
-                     Classes="corner bottomLeft"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbBottomLeft_OnDragStarted"
-                     DragDelta="PART_ThumbBottomLeft_OnDragDelta" />
-              <Thumb Name="PART_ThumbBottomRight"
-                     VerticalAlignment="Bottom" 
-                     HorizontalAlignment="Right" 
-                     Margin="0,0,-8,-8"
-                     Classes="corner bottomRight"
-                     Tag="{Binding #PART_Panel.Tag}"
-                     DragStarted="PART_ThumbBottomRight_OnDragStarted"
-                     DragDelta="PART_ThumbBottomRight_OnDragDelta" />
-            </Panel>
-          </Template>
-        </Setter>
-      </Style>
-
-    </Canvas.Styles>
-
+  <Canvas Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
 
     <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
     <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
@@ -205,7 +45,6 @@
         </TransformGroup>
       </Rectangle.RenderTransform>
     </Rectangle>
-
 
   </Canvas>
 

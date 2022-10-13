@@ -1,0 +1,161 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ResizingAdorner">
+
+  <Design.PreviewWith>
+    <controls:ResizingAdornerPresenter />
+  </Design.PreviewWith>
+
+  <Styles.Resources>
+    <Color x:Key="AdornerFillColor">#FFFFFFFF</Color>
+    <Color x:Key="AdornerStrokeColor">#FF0080FF</Color>
+  </Styles.Resources>
+
+  <Style Selector="Thumb.all">
+    <Setter Property="Cursor" Value="SizeAll" />
+  </Style>
+
+  <Style Selector="Thumb.left">
+    <Setter Property="Cursor" Value="LeftSide" />
+  </Style>
+
+  <Style Selector="Thumb.right">
+    <Setter Property="Cursor" Value="RightSide" />
+  </Style>
+
+  <Style Selector="Thumb.top">
+    <Setter Property="Cursor" Value="TopSide" />
+  </Style>
+
+  <Style Selector="Thumb.bottom">
+    <Setter Property="Cursor" Value="BottomSide" />
+  </Style>
+
+  <Style Selector="Thumb.topLeft">
+    <Setter Property="Cursor" Value="TopLeftCorner" />
+  </Style>
+
+  <Style Selector="Thumb.topRight">
+    <Setter Property="Cursor" Value="TopRightCorner" />
+  </Style>
+
+  <Style Selector="Thumb.bottomLeft">
+    <Setter Property="Cursor" Value="BottomLeftCorner" />
+  </Style>
+
+  <Style Selector="Thumb.bottomRight">
+    <Setter Property="Cursor" Value="BottomRightCorner" />
+  </Style>
+
+  <Style Selector="Thumb.corner">
+    <Setter Property="ClipToBounds" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="Transparent" Width="12" Height="12">
+          <Rectangle Fill="{DynamicResource AdornerFillColor}" 
+                     Stroke="{DynamicResource AdornerStrokeColor}" 
+                     StrokeThickness="1"
+                     Width="6" 
+                     Height="6" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="Thumb.center">
+    <Setter Property="ClipToBounds" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Rectangle Fill="Transparent" 
+                   Stroke="{DynamicResource AdornerStrokeColor}" 
+                   StrokeThickness="1" />
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="Thumb.side">
+    <Setter Property="ClipToBounds" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Rectangle Fill="Transparent" 
+                   Stroke="Transparent" 
+                   StrokeThickness="1" />
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="controls|ResizingAdornerPresenter">
+
+    <Setter Property="ClipToBounds" Value="False" />
+
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Name="PART_Panel"
+               Width="{TemplateBinding AdornedWidth}"
+               Height="{TemplateBinding AdornedHeight}"
+               Tag="{TemplateBinding AdornedControl}">
+          <Thumb Name="PART_ThumbCenter"
+                 Width="{TemplateBinding AdornedWidth}"
+                 Height="{TemplateBinding AdornedHeight}"
+                 VerticalAlignment="Center" 
+                 HorizontalAlignment="Center" 
+                 Classes="center all"
+                 Tag="{Binding #PART_Panel.Tag}" />
+          <Thumb Name="PART_ThumbLeft"
+                 Width="6"
+                 Height="{TemplateBinding AdornedHeight}"
+                 Margin="-2,0,0,0"
+                 VerticalAlignment="Center" 
+                 HorizontalAlignment="Left" 
+                 Classes="side left"
+                 Tag="{Binding #PART_Panel.Tag}" />
+          <Thumb Name="PART_ThumbRight"
+                 Width="6"
+                 Height="{TemplateBinding AdornedHeight}"
+                 Margin="0,0,-2,0"
+                 VerticalAlignment="Center" 
+                 HorizontalAlignment="Right" 
+                 Classes="side right"
+                 Tag="{Binding #PART_Panel.Tag}" />
+          <Thumb Name="PART_ThumbTop"
+                 Width="{TemplateBinding AdornedWidth}"
+                 Height="6"
+                 Margin="0,-2,0,0"
+                 VerticalAlignment="Top" 
+                 HorizontalAlignment="Center" 
+                 Classes="side top"
+                 Tag="{Binding #PART_Panel.Tag}" />
+          <Thumb Name="PART_ThumbBottom"
+                 Width="{TemplateBinding AdornedWidth}"
+                 Height="6"
+                 Margin="0,0,0,-2"
+                 VerticalAlignment="Bottom" 
+                 HorizontalAlignment="Center" 
+                 Classes="side bottom" />
+          <Thumb Name="PART_ThumbTopLeft"
+                 VerticalAlignment="Top" 
+                 HorizontalAlignment="Left" 
+                 Margin="-8,-8,0,0"
+                 Classes="corner topLeft" />
+          <Thumb Name="PART_ThumbTopRight"
+                 VerticalAlignment="Top" 
+                 HorizontalAlignment="Right" 
+                 Margin="0,-8,-8,0"
+                 Classes="corner topRight"/>
+          <Thumb Name="PART_ThumbBottomLeft"
+                 VerticalAlignment="Bottom" 
+                 HorizontalAlignment="Left" 
+                 Margin="-8,0,0,-8"
+                 Classes="corner bottomLeft" />
+          <Thumb Name="PART_ThumbBottomRight"
+                 VerticalAlignment="Bottom" 
+                 HorizontalAlignment="Right" 
+                 Margin="0,0,-8,-8"
+                 Classes="corner bottomRight"/>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+
+  </Style>
+  
+</Styles>
