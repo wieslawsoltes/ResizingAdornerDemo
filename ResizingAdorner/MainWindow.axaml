@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Width="600" Height="600">
 
-  <Canvas Width="500" Height="500" Background="WhiteSmoke">
+  <Canvas Name="PART_Canvas" Width="500" Height="500" Background="WhiteSmoke">
 
     <Canvas.Resources>
       <Color x:Key="AdornerFillColor">#FFFFFFFF</Color>
@@ -16,6 +16,42 @@
     </Canvas.Resources>
 
     <Canvas.Styles>
+
+      <Style Selector="Thumb.all">
+        <Setter Property="Cursor" Value="SizeAll" />
+      </Style>
+
+      <Style Selector="Thumb.left">
+        <Setter Property="Cursor" Value="LeftSide" />
+      </Style>
+
+      <Style Selector="Thumb.right">
+        <Setter Property="Cursor" Value="RightSide" />
+      </Style>
+
+      <Style Selector="Thumb.top">
+        <Setter Property="Cursor" Value="TopSide" />
+      </Style>
+
+      <Style Selector="Thumb.bottom">
+        <Setter Property="Cursor" Value="BottomSide" />
+      </Style>
+
+      <Style Selector="Thumb.topLeft">
+        <Setter Property="Cursor" Value="TopLeftCorner" />
+      </Style>
+
+      <Style Selector="Thumb.topRight">
+        <Setter Property="Cursor" Value="TopRightCorner" />
+      </Style>
+
+      <Style Selector="Thumb.bottomLeft">
+        <Setter Property="Cursor" Value="BottomLeftCorner" />
+      </Style>
+
+      <Style Selector="Thumb.bottomRight">
+        <Setter Property="Cursor" Value="BottomRightCorner" />
+      </Style>
 
       <Style Selector="Thumb.corner">
         <Setter Property="ClipToBounds" Value="False" />
@@ -31,17 +67,16 @@
           </ControlTemplate>
         </Setter>
       </Style>
-      <Style Selector="Thumb.topLeft">
-        <Setter Property="Cursor" Value="TopLeftCorner" />
-      </Style>
-      <Style Selector="Thumb.topRight">
-        <Setter Property="Cursor" Value="TopRightCorner" />
-      </Style>
-      <Style Selector="Thumb.bottomLeft">
-        <Setter Property="Cursor" Value="BottomLeftCorner" />
-      </Style>
-      <Style Selector="Thumb.bottomRight">
-        <Setter Property="Cursor" Value="BottomRightCorner" />
+
+      <Style Selector="Thumb.center">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+          <ControlTemplate>
+            <Rectangle Fill="Transparent" 
+                       Stroke="{DynamicResource AdornerStrokeColor}" 
+                       StrokeThickness="1" />
+          </ControlTemplate>
+        </Setter>
       </Style>
 
       <Style Selector="Canvas > :is(Control)">
@@ -51,16 +86,16 @@
                    Width="{Binding $parent[Control].Bounds.Width}"
                    Height="{Binding $parent[Control].Bounds.Height}"
                    Tag="{Binding $parent[Control]}">
-
-              <Border Name="PART_BorderBounds"
-                      Width="{Binding $parent[Control].Bounds.Width}"
-                      Height="{Binding $parent[Control].Bounds.Height}"
-                      Background="{x:Null}"
-                      BorderBrush="{DynamicResource AdornerStrokeColor}" BorderThickness="1" />
-
-              <!-- TODO: Convert Border to Thumb to drag entire control -->
+              <Thumb Name="PART_ThumbCenter"
+                     Width="{Binding $parent[Control].Bounds.Width}"
+                     Height="{Binding $parent[Control].Bounds.Height}"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Center" 
+                     Classes="center all"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbCenter_OnDragStarted"
+                     DragDelta="PART_ThumbCenter_OnDragDelta" />
               <!-- TODO: Add left, right, top and bottom Thumb for vertical/horizontal resize -->
-
               <Thumb Name="PART_ThumbTopLeft"
                      VerticalAlignment="Top" 
                      HorizontalAlignment="Left" 
