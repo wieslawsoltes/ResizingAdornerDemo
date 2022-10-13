@@ -79,6 +79,17 @@
         </Setter>
       </Style>
 
+      <Style Selector="Thumb.side">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+          <ControlTemplate>
+            <Rectangle Fill="Transparent" 
+                       Stroke="Transparent" 
+                       StrokeThickness="1" />
+          </ControlTemplate>
+        </Setter>
+      </Style>
+
       <Style Selector="Canvas > :is(Control)">
         <Setter Property="(AdornerLayer.Adorner)">
           <Template>
@@ -95,7 +106,46 @@
                      Tag="{Binding #PART_Panel.Tag}"
                      DragStarted="PART_ThumbCenter_OnDragStarted"
                      DragDelta="PART_ThumbCenter_OnDragDelta" />
-              <!-- TODO: Add left, right, top and bottom Thumb for vertical/horizontal resize -->
+              <Thumb Name="PART_ThumbLeft"
+                     Width="6"
+                     Height="{Binding $parent[Control].Bounds.Height}"
+                     Margin="-2,0,0,0"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Left" 
+                     Classes="side left"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbLeft_OnDragStarted"
+                     DragDelta="PART_ThumbLeft_OnDragDelta" />
+              <Thumb Name="PART_ThumbRight"
+                     Width="6"
+                     Height="{Binding $parent[Control].Bounds.Height}"
+                     Margin="0,0,-2,0"
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Right" 
+                     Classes="side right"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbRight_OnDragStarted"
+                     DragDelta="PART_ThumbRight_OnDragDelta" />
+              <Thumb Name="PART_ThumbTop"
+                     Width="{Binding $parent[Control].Bounds.Width}"
+                     Height="6"
+                     Margin="0,-2,0,0"
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Center" 
+                     Classes="side top"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbTop_OnDragStarted"
+                     DragDelta="PART_ThumbTop_OnDragDelta" />
+              <Thumb Name="PART_ThumbBottom"
+                     Width="{Binding $parent[Control].Bounds.Width}"
+                     Height="6"
+                     Margin="0,0,0,-2"
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Center" 
+                     Classes="side bottom"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbBottom_OnDragStarted"
+                     DragDelta="PART_ThumbBottom_OnDragDelta" />
               <Thumb Name="PART_ThumbTopLeft"
                      VerticalAlignment="Top" 
                      HorizontalAlignment="Left" 
