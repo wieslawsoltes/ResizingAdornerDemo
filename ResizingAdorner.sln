@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResizingAdorner", "ResizingAdorner\ResizingAdorner.csproj", "{822FB9E9-AE6D-43E9-891C-14373788C01F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{822FB9E9-AE6D-43E9-891C-14373788C01F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822FB9E9-AE6D-43E9-891C-14373788C01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822FB9E9-AE6D-43E9-891C-14373788C01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822FB9E9-AE6D-43E9-891C-14373788C01F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

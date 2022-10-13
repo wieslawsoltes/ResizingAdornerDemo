@@ -1,0 +1,120 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
+        x:Class="ResizingAdorner.MainWindow"
+        Title="ResizingAdorner"
+        WindowStartupLocation="CenterScreen"
+        Width="600" Height="600">
+
+  <Canvas Width="500" Height="500" Background="WhiteSmoke">
+
+    <Canvas.Resources>
+      <Color x:Key="AdornerFillColor">#FFFFFFFF</Color>
+      <Color x:Key="AdornerStrokeColor">#FF0080FF</Color>
+    </Canvas.Resources>
+
+    <Canvas.Styles>
+      <Style Selector="Canvas > :is(Control)">
+        <Setter Property="(AdornerLayer.Adorner)">
+          <Template>
+            <Panel Name="PART_Panel"
+                   Width="{Binding $parent[Control].Bounds.Width}"
+                   Height="{Binding $parent[Control].Bounds.Height}"
+                   Tag="{Binding $parent[Control]}">
+              <Panel.Styles>
+                <Style Selector="Thumb.corner">
+                  <Setter Property="ClipToBounds" Value="False" />
+                  <Setter Property="Template">
+                    <ControlTemplate>
+                      <Panel Background="Transparent" Width="12" Height="12">
+                        <Rectangle Fill="{DynamicResource AdornerFillColor}" 
+                                   Stroke="{DynamicResource AdornerStrokeColor}" 
+                                   StrokeThickness="1"
+                                   Width="6" 
+                                   Height="6" />
+                      </Panel>
+                    </ControlTemplate>
+                  </Setter>
+                </Style>
+                <Style Selector="Thumb.topLeft">
+                  <Setter Property="Cursor" Value="TopLeftCorner" />
+                </Style>
+                <Style Selector="Thumb.topRight">
+                  <Setter Property="Cursor" Value="TopRightCorner" />
+                </Style>
+                <Style Selector="Thumb.bottomLeft">
+                  <Setter Property="Cursor" Value="BottomLeftCorner" />
+                </Style>
+                <Style Selector="Thumb.bottomRight">
+                  <Setter Property="Cursor" Value="BottomRightCorner" />
+                </Style>
+              </Panel.Styles>
+              <Border Name="PART_BorderBounds"
+                      Width="{Binding $parent[Control].Bounds.Width}"
+                      Height="{Binding $parent[Control].Bounds.Height}"
+                      Background="{x:Null}"
+                      BorderBrush="{DynamicResource AdornerStrokeColor}" BorderThickness="1" />
+              <Thumb Name="PART_ThumbTopLeft"
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Left" 
+                     Margin="-8,-8,0,0"
+                     Classes="corner topLeft"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbTopLeft_OnDragStarted"
+                     DragDelta="PART_ThumbTopLeft_OnDragDelta" />
+              <Thumb Name="PART_ThumbTopRight"
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Right" 
+                     Margin="0,-8,-8,0"
+                     Classes="corner topRight"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbTopRight_OnDragStarted"
+                     DragDelta="PART_ThumbTopRight_OnDragDelta" />
+              <Thumb Name="PART_ThumbBottomLeft"
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Left" 
+                     Margin="-8,0,0,-8"
+                     Classes="corner bottomLeft"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbBottomLeft_OnDragStarted"
+                     DragDelta="PART_ThumbBottomLeft_OnDragDelta" />
+              <Thumb Name="PART_ThumbBottomRight"
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Right" 
+                     Margin="0,0,-8,-8"
+                     Classes="corner bottomRight"
+                     Tag="{Binding #PART_Panel.Tag}"
+                     DragStarted="PART_ThumbBottomRight_OnDragStarted"
+                     DragDelta="PART_ThumbBottomRight_OnDragDelta" />
+            </Panel>
+          </Template>
+        </Setter>
+      </Style>
+    </Canvas.Styles>
+
+    <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
+    <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
+    <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
+    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
+    <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
+    <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
+    <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
+      <TextBlock Text="Test TextBlock" Margin="6" />
+      <TextBox Text="Test TextBox" Margin="6" />
+    </StackPanel>
+
+    <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
+    <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
+      <Rectangle.RenderTransform>
+        <TransformGroup>
+          <RotateTransform Angle="45" />
+          <ScaleTransform ScaleX="1" ScaleY="1" />
+        </TransformGroup>
+      </Rectangle.RenderTransform>
+    </Rectangle>
+
+  </Canvas>
+
+</Window>
