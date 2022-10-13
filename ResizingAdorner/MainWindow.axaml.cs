@@ -32,6 +32,29 @@ public partial class MainWindow : Window
         }
     }
 
+    private void DragDeltaCenter(object? sender, VectorEventArgs e)
+    {
+        if (_updating)
+        {
+            return;
+        }
+
+        _updating = true;
+
+        if (sender is Thumb { Tag: Control control })
+        {
+            Console.WriteLine($"[Center.Delta] {control} {e.Vector}");
+
+            var left = _left + e.Vector.X;
+            var top = _top + e.Vector.Y;
+
+            Canvas.SetLeft(control, left);
+            Canvas.SetTop(control, top);
+        }
+
+        _updating = false;
+    }
+
     private void DragDeltaTopLeft(object? sender, VectorEventArgs e)
     {
         if (_updating)
@@ -175,6 +198,11 @@ public partial class MainWindow : Window
         _updating = false;
     }
 
+    private void PART_ThumbCenter_OnDragStarted(object? sender, VectorEventArgs e)
+    {
+        DragStarted(sender, e);
+    }
+
     private void PART_ThumbTopLeft_OnDragStarted(object? sender, VectorEventArgs e)
     {
         DragStarted(sender, e);
@@ -193,6 +221,11 @@ public partial class MainWindow : Window
     private void PART_ThumbBottomRight_OnDragStarted(object? sender, VectorEventArgs e)
     {
         DragStarted(sender, e);
+    }
+
+    private void PART_ThumbCenter_OnDragDelta(object? sender, VectorEventArgs e)
+    {
+        DragDeltaCenter(sender, e);
     }
 
     private void PART_ThumbTopLeft_OnDragDelta(object? sender, VectorEventArgs e)
