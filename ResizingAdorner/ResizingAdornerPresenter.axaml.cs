@@ -1,4 +1,3 @@
-using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -27,10 +26,7 @@ public class ResizingAdornerPresenter : TemplatedControl
     public static readonly StyledProperty<double> AdornedHeightProperty = 
         AvaloniaProperty.Register<ResizingAdornerPresenter, double>(nameof(AdornedHeight));
 
-    private double _left;
-    private double _top;
-    private double _width;
-    private double _height;
+    private readonly IControlResizer _controlResizer = new CanvasControlResizer();
     private bool _updating;
     private Thumb? _thumbCenter;
     private Thumb? _thumbLeft;
@@ -129,300 +125,108 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    // DragStarted Implementation
-
     private void DragStarted(object? sender, VectorEventArgs e)
     {
         if (AdornedControl is { } control)
         {
-            // Console.WriteLine($"[Started] {control} {e.Vector}");
-            _left = Canvas.GetLeft(control);
-            _top = Canvas.GetTop(control);
-            _width = control.Bounds.Width;
-            _height = control.Bounds.Height;
-            // control.Width = _width;
-            // control.Height = _height;
+            _controlResizer.Start(control);
         }
     }
 
-    // DragDelta Implementation
-
     private void DragDeltaCenter(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Move(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[Center.Delta] {control} {e.Vector}");
-
-            var left = _left + e.Vector.X;
-            var top = _top + e.Vector.Y;
-
-            Canvas.SetLeft(control, left);
-            Canvas.SetTop(control, top);
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaLeft(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Left(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[Left.Delta] {control} {e.Vector}");
-
-            var left = _left + e.Vector.X;
-            var width = _width - e.Vector.X;
-
-            if (width >= 0)
-            {
-                Canvas.SetLeft(control, left);
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaRight(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Right(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[Right.Delta] {control} {e.Vector}");
-
-            _width = control.Bounds.Width;
-
-            var width = _width + e.Vector.X;
-
-            if (width >= 0)
-            {
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaTop(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Top(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[Top.Delta] {control} {e.Vector}");
-
-            var top = _top + e.Vector.Y;
-            var height = _height - e.Vector.Y;
-
-            if (height >= 0)
-            {
-                Canvas.SetTop(control, top);
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaBottom(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Bottom(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[Bottom.Delta] {control} {e.Vector}");
-
-            _height = control.Bounds.Height;
-
-            var height = _height + e.Vector.Y;
-
-            if (height >= 0)
-            {
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaTopLeft(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Left(control, e.Vector);
+            _controlResizer.Top(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[TopLeft.Delta] {control} {e.Vector}");
-
-            var left = _left + e.Vector.X;
-            var top = _top + e.Vector.Y;
-            var width = _width - e.Vector.X;
-            var height = _height - e.Vector.Y;
-
-            if (width >= 0)
-            {
-                Canvas.SetLeft(control, left);
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-
-            if (height >= 0)
-            {
-                Canvas.SetTop(control, top);
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaTopRight(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Right(control, e.Vector);
+            _controlResizer.Top(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[TopRight.Delta] {control} {e.Vector}");
-
-            _width = control.Bounds.Width;
-
-            var top = _top + e.Vector.Y;
-            var width = _width + e.Vector.X;
-            var height = _height - e.Vector.Y;
-
-            if (width >= 0)
-            {
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-
-            if (height >= 0)
-            {
-                Canvas.SetTop(control, top);
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaBottomLeft(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Left(control, e.Vector);
+            _controlResizer.Bottom(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[BottomLeft.Delta] {control} {e.Vector}");
-
-            _height = control.Bounds.Height;
-
-            var left = _left + e.Vector.X;
-            var width = _width - e.Vector.X;
-            var height = _height + e.Vector.Y;
-
-            if (width >= 0)
-            {
-                Canvas.SetLeft(control, left);
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-
-            if (height >= 0)
-            {
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
     private void DragDeltaBottomRight(object? sender, VectorEventArgs e)
     {
-        if (_updating)
+        if (!_updating && AdornedControl is { } control)
         {
-            return;
+            _updating = true;
+            _controlResizer.Right(control, e.Vector);
+            _controlResizer.Bottom(control, e.Vector);
+            _updating = false;
         }
-
-        _updating = true;
-
-        if (AdornedControl is { } control)
-        {
-            // Console.WriteLine($"[BottomRight.Delta] {control} {e.Vector}");
-
-            _width = control.Bounds.Width;
-            _height = control.Bounds.Height;
-
-            var width = _width + e.Vector.X;
-            var height = _height + e.Vector.Y;
-
-            if (width >= 0)
-            {
-                // TODO: Check for MinWidth
-                control.Width = width;
-            }
-
-            if (height >= 0)
-            {
-                // TODO: Check for MinHeight
-                control.Height = height;
-            }
-        }
-
-        _updating = false;
     }
 
-    // DragStarted Event Handlers
-    
     private void PART_ThumbCenter_OnDragStarted(object? sender, VectorEventArgs e)
     {
         DragStarted(sender, e);
@@ -467,8 +271,6 @@ public class ResizingAdornerPresenter : TemplatedControl
     {
         DragStarted(sender, e);
     }
-
-    // DragDelta Event Handlers
 
     private void PART_ThumbCenter_OnDragDelta(object? sender, VectorEventArgs e)
     {
