@@ -125,7 +125,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragStarted(object? sender, VectorEventArgs e)
+    private void DragStarted()
     {
         if (AdornedControl is { } control)
         {
@@ -133,7 +133,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaCenter(object? sender, VectorEventArgs e)
+    private void DragDeltaCenter(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -143,7 +143,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaLeft(object? sender, VectorEventArgs e)
+    private void DragDeltaLeft(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -153,7 +153,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaRight(object? sender, VectorEventArgs e)
+    private void DragDeltaRight(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -163,7 +163,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaTop(object? sender, VectorEventArgs e)
+    private void DragDeltaTop(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -173,7 +173,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaBottom(object? sender, VectorEventArgs e)
+    private void DragDeltaBottom(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -183,7 +183,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaTopLeft(object? sender, VectorEventArgs e)
+    private void DragDeltaTopLeft(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -194,7 +194,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaTopRight(object? sender, VectorEventArgs e)
+    private void DragDeltaTopRight(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -205,7 +205,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaBottomLeft(object? sender, VectorEventArgs e)
+    private void DragDeltaBottomLeft(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -216,7 +216,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaBottomRight(object? sender, VectorEventArgs e)
+    private void DragDeltaBottomRight(VectorEventArgs e)
     {
         if (!_updating && AdornedControl is { } control)
         {
@@ -229,92 +229,92 @@ public class ResizingAdornerPresenter : TemplatedControl
 
     private void PART_ThumbCenter_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbLeft_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbRight_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbTop_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbBottom_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbTopLeft_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbTopRight_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbBottomLeft_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbBottomRight_OnDragStarted(object? sender, VectorEventArgs e)
     {
-        DragStarted(sender, e);
+        DragStarted();
     }
 
     private void PART_ThumbCenter_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaCenter(sender, e);
+        DragDeltaCenter(e);
     }
 
     private void PART_ThumbLeft_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaLeft(sender, e);
+        DragDeltaLeft(e);
     }
 
     private void PART_ThumbRight_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaRight(sender, e);
+        DragDeltaRight(e);
     }
 
     private void PART_ThumbTop_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaTop(sender, e);
+        DragDeltaTop(e);
     }
 
     private void PART_ThumbBottom_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaBottom(sender, e);
+        DragDeltaBottom(e);
     }
 
     private void PART_ThumbTopLeft_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaTopLeft(sender, e);
+        DragDeltaTopLeft(e);
     }
 
     private void PART_ThumbTopRight_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaTopRight(sender, e);
+        DragDeltaTopRight(e);
     }
 
     private void PART_ThumbBottomLeft_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaBottomLeft(sender, e);
+        DragDeltaBottomLeft(e);
     }
 
     private void PART_ThumbBottomRight_OnDragDelta(object? sender, VectorEventArgs e)
     {
-        DragDeltaBottomRight(sender, e);
+        DragDeltaBottomRight(e);
     }
 }
 
