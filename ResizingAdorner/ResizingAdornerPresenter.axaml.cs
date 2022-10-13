@@ -135,7 +135,7 @@ public class ResizingAdornerPresenter : TemplatedControl
     {
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Started] {control} {e.Vector}");
+            // Console.WriteLine($"[Started] {control} {e.Vector}");
             _left = Canvas.GetLeft(control);
             _top = Canvas.GetTop(control);
             _width = control.Bounds.Width;
@@ -158,7 +158,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Center.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[Center.Delta] {control} {e.Vector}");
 
             var left = _left + e.Vector.X;
             var top = _top + e.Vector.Y;
@@ -181,7 +181,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Left.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[Left.Delta] {control} {e.Vector}");
 
             var left = _left + e.Vector.X;
             var width = _width - e.Vector.X;
@@ -208,7 +208,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Right.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[Right.Delta] {control} {e.Vector}");
 
             _width = control.Bounds.Width;
 
@@ -235,7 +235,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Top.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[Top.Delta] {control} {e.Vector}");
 
             var top = _top + e.Vector.Y;
             var height = _height - e.Vector.Y;
@@ -262,7 +262,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[Bottom.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[Bottom.Delta] {control} {e.Vector}");
 
             _height = control.Bounds.Height;
 
@@ -289,7 +289,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[TopLeft.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[TopLeft.Delta] {control} {e.Vector}");
 
             var left = _left + e.Vector.X;
             var top = _top + e.Vector.Y;
@@ -325,7 +325,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[TopRight.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[TopRight.Delta] {control} {e.Vector}");
 
             _width = control.Bounds.Width;
 
@@ -361,7 +361,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[BottomLeft.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[BottomLeft.Delta] {control} {e.Vector}");
 
             _height = control.Bounds.Height;
 
@@ -397,7 +397,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { } control)
         {
-            Console.WriteLine($"[BottomRight.Delta] {control} {e.Vector}");
+            // Console.WriteLine($"[BottomRight.Delta] {control} {e.Vector}");
 
             _width = control.Bounds.Width;
             _height = control.Bounds.Height;
