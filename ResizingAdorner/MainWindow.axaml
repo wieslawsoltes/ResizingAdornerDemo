@@ -16,6 +16,34 @@
     </Canvas.Resources>
 
     <Canvas.Styles>
+
+      <Style Selector="Thumb.corner">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+          <ControlTemplate>
+            <Panel Background="Transparent" Width="12" Height="12">
+              <Rectangle Fill="{DynamicResource AdornerFillColor}" 
+                         Stroke="{DynamicResource AdornerStrokeColor}" 
+                         StrokeThickness="1"
+                         Width="6" 
+                         Height="6" />
+            </Panel>
+          </ControlTemplate>
+        </Setter>
+      </Style>
+      <Style Selector="Thumb.topLeft">
+        <Setter Property="Cursor" Value="TopLeftCorner" />
+      </Style>
+      <Style Selector="Thumb.topRight">
+        <Setter Property="Cursor" Value="TopRightCorner" />
+      </Style>
+      <Style Selector="Thumb.bottomLeft">
+        <Setter Property="Cursor" Value="BottomLeftCorner" />
+      </Style>
+      <Style Selector="Thumb.bottomRight">
+        <Setter Property="Cursor" Value="BottomRightCorner" />
+      </Style>
+
       <Style Selector="Canvas > :is(Control)">
         <Setter Property="(AdornerLayer.Adorner)">
           <Template>
@@ -23,39 +51,16 @@
                    Width="{Binding $parent[Control].Bounds.Width}"
                    Height="{Binding $parent[Control].Bounds.Height}"
                    Tag="{Binding $parent[Control]}">
-              <Panel.Styles>
-                <Style Selector="Thumb.corner">
-                  <Setter Property="ClipToBounds" Value="False" />
-                  <Setter Property="Template">
-                    <ControlTemplate>
-                      <Panel Background="Transparent" Width="12" Height="12">
-                        <Rectangle Fill="{DynamicResource AdornerFillColor}" 
-                                   Stroke="{DynamicResource AdornerStrokeColor}" 
-                                   StrokeThickness="1"
-                                   Width="6" 
-                                   Height="6" />
-                      </Panel>
-                    </ControlTemplate>
-                  </Setter>
-                </Style>
-                <Style Selector="Thumb.topLeft">
-                  <Setter Property="Cursor" Value="TopLeftCorner" />
-                </Style>
-                <Style Selector="Thumb.topRight">
-                  <Setter Property="Cursor" Value="TopRightCorner" />
-                </Style>
-                <Style Selector="Thumb.bottomLeft">
-                  <Setter Property="Cursor" Value="BottomLeftCorner" />
-                </Style>
-                <Style Selector="Thumb.bottomRight">
-                  <Setter Property="Cursor" Value="BottomRightCorner" />
-                </Style>
-              </Panel.Styles>
+
               <Border Name="PART_BorderBounds"
                       Width="{Binding $parent[Control].Bounds.Width}"
                       Height="{Binding $parent[Control].Bounds.Height}"
                       Background="{x:Null}"
                       BorderBrush="{DynamicResource AdornerStrokeColor}" BorderThickness="1" />
+
+              <!-- TODO: Convert Border to Thumb to drag entire control -->
+              <!-- TODO: Add left, right, top and bottom Thumb for vertical/horizontal resize -->
+
               <Thumb Name="PART_ThumbTopLeft"
                      VerticalAlignment="Top" 
                      HorizontalAlignment="Left" 
@@ -92,7 +97,9 @@
           </Template>
         </Setter>
       </Style>
+
     </Canvas.Styles>
+
 
     <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
     <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
@@ -104,7 +111,6 @@
       <TextBlock Text="Test TextBlock" Margin="6" />
       <TextBox Text="Test TextBox" Margin="6" />
     </StackPanel>
-
     <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
     <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
       <Rectangle.RenderTransform>
@@ -114,6 +120,7 @@
         </TransformGroup>
       </Rectangle.RenderTransform>
     </Rectangle>
+
 
   </Canvas>
 
