@@ -6,7 +6,7 @@ namespace ResizingAdorner;
 
 public class ControlSelection
 {
-    private ResizingAdornerPresenter? _hover = null;
+    private ResizingAdornerPresenter? _hover;
     private readonly Control _control;
 
     public ControlSelection(Control control)
@@ -54,7 +54,36 @@ public class ControlSelection
 
         return hover;
     }
-    
+
+    private void Select(ResizingAdornerPresenter hover)
+    {
+        foreach (var adorner in Editor.s_adorners)
+        {
+            if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
+            {
+                if (!Equals(resizingAdornerPresenter, hover))
+                {
+                    resizingAdornerPresenter.ShowThumbs = false;
+                }
+                else
+                {
+                    resizingAdornerPresenter.ShowThumbs = true;
+                }
+            }
+        }
+    }
+
+    private void Deselect()
+    {
+        foreach (var adorner in Editor.s_adorners)
+        {
+            if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
+            {
+                resizingAdornerPresenter.ShowThumbs = false;
+            }
+        }
+    }
+
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         var hover = FindHover(e);
@@ -92,35 +121,6 @@ public class ControlSelection
             else
             {
                 Deselect();
-            }
-        }
-    }
-
-    private void Deselect()
-    {
-        foreach (var adorner in Editor.s_adorners)
-        {
-            if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
-            {
-                resizingAdornerPresenter.ShowThumbs = false;
-            }
-        }
-    }
-
-    private void Select(ResizingAdornerPresenter hover)
-    {
-        foreach (var adorner in Editor.s_adorners)
-        {
-            if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
-            {
-                if (!Equals(resizingAdornerPresenter, hover))
-                {
-                    resizingAdornerPresenter.ShowThumbs = false;
-                }
-                else
-                {
-                    resizingAdornerPresenter.ShowThumbs = true;
-                }
             }
         }
     }
