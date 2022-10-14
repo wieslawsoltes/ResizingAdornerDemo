@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls;
 
 public interface IControlSelection
 {

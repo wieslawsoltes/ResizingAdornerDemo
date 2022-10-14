@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:c="clr-namespace:ResizingAdorner"
+        xmlns:c="clr-namespace:ResizingAdorner.Controls"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
@@ -18,11 +18,10 @@
     <Style Selector="Canvas.resizing > :is(Control)">
       <Setter Property="(AdornerLayer.Adorner)">
         <Template>
-          <c:ResizingAdornerPresenter 
-            AdornedControl="{Binding $parent[Control]}"
-            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-            AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-            ShowThumbs="False">
+          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
+                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
+                                      ShowThumbs="False">
             <c:ResizingAdornerPresenter.ControlResizer>
               <c:CanvasControlResizer />
             </c:ResizingAdornerPresenter.ControlResizer>

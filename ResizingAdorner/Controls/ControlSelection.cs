@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls;
 
 public class ControlSelection : IControlSelection
 {

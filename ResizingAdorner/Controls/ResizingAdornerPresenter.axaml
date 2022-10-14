@@ -1,9 +1,9 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:ResizingAdorner">
+        xmlns:c="clr-namespace:ResizingAdorner.Controls">
 
   <Design.PreviewWith>
-    <controls:ResizingAdornerPresenter />
+    <c:ResizingAdornerPresenter />
   </Design.PreviewWith>
 
   <Styles.Resources>
@@ -84,7 +84,7 @@
     </Setter>
   </Style>
 
-  <Style Selector="controls|ResizingAdornerPresenter">
+  <Style Selector="c|ResizingAdornerPresenter">
 
     <Setter Property="ClipToBounds" Value="False" />
 

@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls;
 
 public class CanvasControlResizer : IControlResizer
 {

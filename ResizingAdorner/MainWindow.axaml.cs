@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using ResizingAdorner.Controls;
 
 namespace ResizingAdorner;
 

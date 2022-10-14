@@ -4,7 +4,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls;
 
 [TemplatePart("PART_ThumbCenter", typeof(Thumb))]
 [TemplatePart("PART_ThumbLeft", typeof(Thumb))]
