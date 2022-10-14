@@ -65,7 +65,7 @@
     <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
     <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
     <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
-    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" c:Editor.IsSelected="False" />
+    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
     <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
     <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
     <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
