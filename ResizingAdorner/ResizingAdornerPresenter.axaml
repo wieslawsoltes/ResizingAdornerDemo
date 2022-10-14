@@ -90,14 +90,16 @@
 
     <Setter Property="Template">
       <ControlTemplate>
-        <Panel Width="{TemplateBinding AdornedWidth}"
-               Height="{TemplateBinding AdornedHeight}"
-               Tag="{TemplateBinding AdornedControl}">
+        <Panel Background="Transparent"
+               Width="{TemplateBinding AdornedWidth}"
+               Height="{TemplateBinding AdornedHeight}">
           <Thumb Name="PART_ThumbCenter"
                  Width="{TemplateBinding AdornedWidth}"
                  Height="{TemplateBinding AdornedHeight}"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Center"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="center all" />
           <Thumb Name="PART_ThumbLeft"
                  Width="6"
@@ -105,6 +107,8 @@
                  Margin="-2,0,0,0"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Left"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="side left" />
           <Thumb Name="PART_ThumbRight"
                  Width="6"
@@ -112,6 +116,8 @@
                  Margin="0,0,-2,0"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Right"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="side right" />
           <Thumb Name="PART_ThumbTop"
                  Width="{TemplateBinding AdornedWidth}"
@@ -119,6 +125,7 @@
                  Margin="0,-2,0,0"
                  VerticalAlignment="Top"
                  HorizontalAlignment="Center"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="side top" />
           <Thumb Name="PART_ThumbBottom"
                  Width="{TemplateBinding AdornedWidth}"
@@ -126,26 +133,35 @@
                  Margin="0,0,0,-2"
                  VerticalAlignment="Bottom"
                  HorizontalAlignment="Center"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="side bottom" />
           <Thumb Name="PART_ThumbTopLeft"
                  VerticalAlignment="Top"
                  HorizontalAlignment="Left"
                  Margin="-8,-8,0,0"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="corner topLeft" />
           <Thumb Name="PART_ThumbTopRight"
                  VerticalAlignment="Top"
                  HorizontalAlignment="Right"
                  Margin="0,-8,-8,0"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="corner topRight" />
           <Thumb Name="PART_ThumbBottomLeft"
                  VerticalAlignment="Bottom"
                  HorizontalAlignment="Left"
                  Margin="-8,0,0,-8"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="corner bottomLeft" />
           <Thumb Name="PART_ThumbBottomRight"
                  VerticalAlignment="Bottom"
                  HorizontalAlignment="Right"
                  Margin="0,0,-8,-8"
+                 IsHitTestVisible="{TemplateBinding ShowThumbs}"
+                 IsVisible="{TemplateBinding ShowThumbs}"
                  Classes="corner bottomRight" />
         </Panel>
       </ControlTemplate>

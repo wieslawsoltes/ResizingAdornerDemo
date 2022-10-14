@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:ResizingAdorner"
+        xmlns:c="clr-namespace:ResizingAdorner"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
@@ -12,16 +12,52 @@
   <Window.Styles>
 
     <Style Selector="Canvas.resizing > :is(Control)">
+      <Setter Property="IsHitTestVisible" Value="True" />
+    </Style>
+<!--
+    <Style Selector="Canvas.resizing > :is(Control)">
       <Setter Property="(AdornerLayer.Adorner)">
         <Template>
-          <controls:ResizingAdornerPresenter 
+          <c:BoundsAdorner AdornedControl="{Binding $parent[Control]}"
+                           Background="Transparent" />
+        </Template>
+      </Setter>
+    </Style>
+
+    <Style Selector="Canvas.resizing > :is(Control):hover">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter 
             AdornedControl="{Binding $parent[Control]}"
             AdornedWidth="{Binding $parent[Control].Bounds.Width}"
             AdornedHeight="{Binding $parent[Control].Bounds.Height}"  />
         </Template>
       </Setter>
     </Style>
-    
+
+    <Style Selector="Canvas.resizing > :is(Control):selected">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter 
+            AdornedControl="{Binding $parent[Control]}"
+            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+            AdornedHeight="{Binding $parent[Control].Bounds.Height}"  />
+        </Template>
+      </Setter>
+    </Style>
+-->
+    <Style Selector="Canvas.resizing > :is(Control)">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter 
+            AdornedControl="{Binding $parent[Control]}"
+            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+            AdornedHeight="{Binding $parent[Control].Bounds.Height}"
+            ShowThumbs="False" />
+        </Template>
+      </Setter>
+    </Style>
+
   </Window.Styles>
 
   <Canvas Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
@@ -29,7 +65,7 @@
     <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
     <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
     <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
-    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
+    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" c:Editor.IsSelected="False" />
     <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
     <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
     <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
@@ -42,6 +78,14 @@
         <TransformGroup>
           <RotateTransform Angle="45" />
           <ScaleTransform ScaleX="1" ScaleY="1" />
+        </TransformGroup>
+      </Rectangle.RenderTransform>
+    </Rectangle>
+    <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
+      <Rectangle.RenderTransform>
+        <TransformGroup>
+          <RotateTransform Angle="0" />
+          <ScaleTransform ScaleX="2" ScaleY="2" />
         </TransformGroup>
       </Rectangle.RenderTransform>
     </Rectangle>

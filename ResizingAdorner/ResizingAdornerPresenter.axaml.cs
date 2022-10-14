@@ -26,6 +26,9 @@ public class ResizingAdornerPresenter : TemplatedControl
     public static readonly StyledProperty<double> AdornedHeightProperty = 
         AvaloniaProperty.Register<ResizingAdornerPresenter, double>(nameof(AdornedHeight));
 
+    public static readonly StyledProperty<bool> ShowThumbsProperty = 
+        AvaloniaProperty.Register<ResizingAdornerPresenter, bool>(nameof(ShowThumbs));
+
     private readonly IControlResizer _controlResizer = new CanvasControlResizer();
     private bool _updating;
     private Thumb? _thumbCenter;
@@ -56,6 +59,32 @@ public class ResizingAdornerPresenter : TemplatedControl
         set => SetValue(AdornedHeightProperty, value);
     }
 
+    public bool ShowThumbs
+    {
+        get => GetValue(ShowThumbsProperty);
+        set => SetValue(ShowThumbsProperty, value);
+    }
+
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        if (AdornedControl is { })
+        {
+            Editor.s_adorners.Add(this);
+        }
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnDetachedFromVisualTree(e);
+        
+        if (AdornedControl is { })
+        {
+            Editor.s_adorners.Remove(this);
+        }
+    }
+    
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
