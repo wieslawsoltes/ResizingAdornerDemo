@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
+using ResizingAdorner.Controls.Model;
 
 namespace ResizingAdorner.Controls;
 

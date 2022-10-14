@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:c="clr-namespace:ResizingAdorner.Controls"
+        xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
@@ -23,7 +24,7 @@
                                       AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                       ShowThumbs="False">
             <c:ResizingAdornerPresenter.ControlResizer>
-              <c:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
+              <r:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
             </c:ResizingAdornerPresenter.ControlResizer>
           </c:ResizingAdornerPresenter>
         </Template>

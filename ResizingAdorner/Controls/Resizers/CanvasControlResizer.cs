@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
+using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 
-namespace ResizingAdorner.Controls;
+namespace ResizingAdorner.Controls.Resizers;
 
 public class CanvasControlResizer : IControlResizer
 {
@@ -18,12 +20,12 @@ public class CanvasControlResizer : IControlResizer
 
     private double SnapXValue(double value)
     {
-        return EnableSnap ? Snap.SnapValue(value, SnapX) : value;
+        return EnableSnap ? SnapHelper.SnapValue(value, SnapX) : value;
     }
 
     private double SnapYValue(double value)
     {
-        return EnableSnap ? Snap.SnapValue(value, SnapY) : value;
+        return EnableSnap ? SnapHelper.SnapValue(value, SnapY) : value;
     }
 
     public void Start(Control control)

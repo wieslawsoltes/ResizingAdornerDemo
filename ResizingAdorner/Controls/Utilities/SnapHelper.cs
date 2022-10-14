@@ -1,8 +1,8 @@
 using Avalonia;
 
-namespace ResizingAdorner.Controls;
+namespace ResizingAdorner.Controls.Utilities;
 
-public static class Snap
+public static class SnapHelper
 {
     public static double SnapValue(double value, double snap)
     {

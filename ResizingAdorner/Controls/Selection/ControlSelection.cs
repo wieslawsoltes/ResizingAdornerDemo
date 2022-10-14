@@ -2,8 +2,9 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using ResizingAdorner.Controls.Model;
 
-namespace ResizingAdorner.Controls;
+namespace ResizingAdorner.Controls.Selection;
 
 public class ControlSelection : IControlSelection
 {
@@ -73,14 +74,7 @@ public class ControlSelection : IControlSelection
         {
             if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
             {
-                if (!Equals(resizingAdornerPresenter, hover))
-                {
-                    resizingAdornerPresenter.ShowThumbs = false;
-                }
-                else
-                {
-                    resizingAdornerPresenter.ShowThumbs = true;
-                }
+                resizingAdornerPresenter.ShowThumbs = Equals(resizingAdornerPresenter, hover);
             }
         }
     }
