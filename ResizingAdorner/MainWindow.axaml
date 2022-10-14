@@ -22,7 +22,11 @@
             AdornedControl="{Binding $parent[Control]}"
             AdornedWidth="{Binding $parent[Control].Bounds.Width}"
             AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-            ShowThumbs="False" />
+            ShowThumbs="False">
+            <c:ResizingAdornerPresenter.ControlResizer>
+              <c:CanvasControlResizer />
+            </c:ResizingAdornerPresenter.ControlResizer>
+          </c:ResizingAdornerPresenter>
         </Template>
       </Setter>
     </Style>

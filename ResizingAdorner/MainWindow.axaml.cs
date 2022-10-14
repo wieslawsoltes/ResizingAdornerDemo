@@ -4,12 +4,12 @@ namespace ResizingAdorner;
 
 public partial class MainWindow : Window
 {
-    private readonly ControlSelection _controlSelection;
+    public static IControlSelection? s_controlSelection;
 
     public MainWindow()
     {
         InitializeComponent();
 
-        _controlSelection = new ControlSelection(this);
+        s_controlSelection = new ControlSelection(this);
     }
 }

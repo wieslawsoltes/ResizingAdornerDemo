@@ -29,7 +29,9 @@ public class ResizingAdornerPresenter : TemplatedControl
     public static readonly StyledProperty<bool> ShowThumbsProperty = 
         AvaloniaProperty.Register<ResizingAdornerPresenter, bool>(nameof(ShowThumbs));
 
-    private readonly IControlResizer _controlResizer = new CanvasControlResizer();
+    public static readonly StyledProperty<IControlResizer?> ControlResizerProperty = 
+        AvaloniaProperty.Register<ResizingAdornerPresenter, IControlResizer?>(nameof(ControlResizer));
+
     private bool _updating;
     private Thumb? _thumbCenter;
     private Thumb? _thumbLeft;
@@ -65,13 +67,19 @@ public class ResizingAdornerPresenter : TemplatedControl
         set => SetValue(ShowThumbsProperty, value);
     }
 
+    public IControlResizer? ControlResizer
+    {
+        get => GetValue(ControlResizerProperty);
+        set => SetValue(ControlResizerProperty, value);
+    }
+
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
 
         if (AdornedControl is { })
         {
-            Editor.s_adorners.Add(this);
+            MainWindow.s_controlSelection?.Register(this);
         }
     }
 
@@ -81,7 +89,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         
         if (AdornedControl is { })
         {
-            Editor.s_adorners.Remove(this);
+            MainWindow.s_controlSelection?.Unregister(this);
         }
     }
     
@@ -158,7 +166,7 @@ public class ResizingAdornerPresenter : TemplatedControl
     {
         if (AdornedControl is { } control)
         {
-            _controlResizer.Start(control);
+            ControlResizer?.Start(control);
         }
     }
 
@@ -167,7 +175,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Move(control, e.Vector);
+            ControlResizer?.Move(control, e.Vector);
             _updating = false;
         }
     }
@@ -177,7 +185,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Left(control, e.Vector);
+            ControlResizer?.Left(control, e.Vector);
             _updating = false;
         }
     }
@@ -187,7 +195,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Right(control, e.Vector);
+            ControlResizer?.Right(control, e.Vector);
             _updating = false;
         }
     }
@@ -197,7 +205,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Top(control, e.Vector);
+            ControlResizer?.Top(control, e.Vector);
             _updating = false;
         }
     }
@@ -207,7 +215,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Bottom(control, e.Vector);
+            ControlResizer?.Bottom(control, e.Vector);
             _updating = false;
         }
     }
@@ -217,8 +225,8 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Left(control, e.Vector);
-            _controlResizer.Top(control, e.Vector);
+            ControlResizer?.Left(control, e.Vector);
+            ControlResizer?.Top(control, e.Vector);
             _updating = false;
         }
     }
@@ -228,8 +236,8 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Right(control, e.Vector);
-            _controlResizer.Top(control, e.Vector);
+            ControlResizer?.Right(control, e.Vector);
+            ControlResizer?.Top(control, e.Vector);
             _updating = false;
         }
     }
@@ -239,8 +247,8 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Left(control, e.Vector);
-            _controlResizer.Bottom(control, e.Vector);
+            ControlResizer?.Left(control, e.Vector);
+            ControlResizer?.Bottom(control, e.Vector);
             _updating = false;
         }
     }
@@ -250,8 +258,8 @@ public class ResizingAdornerPresenter : TemplatedControl
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            _controlResizer.Right(control, e.Vector);
-            _controlResizer.Bottom(control, e.Vector);
+            ControlResizer?.Right(control, e.Vector);
+            ControlResizer?.Bottom(control, e.Vector);
             _updating = false;
         }
     }

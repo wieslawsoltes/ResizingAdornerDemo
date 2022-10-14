@@ -1,11 +1,13 @@
-﻿using Avalonia.Controls;
+﻿using System.Collections.Generic;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 
 namespace ResizingAdorner;
 
-public class ControlSelection
+public class ControlSelection : IControlSelection
 {
+    private readonly List<Control> _adorners = new (); 
     private ResizingAdornerPresenter? _hover;
     private readonly Control _control;
 
@@ -15,6 +17,16 @@ public class ControlSelection
         _control.AddHandler(InputElement.PointerPressedEvent, OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         _control.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         _control.AddHandler(InputElement.PointerReleasedEvent, OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+    }
+
+    public void Register(Control control)
+    {
+        _adorners.Add(control);
+    }
+
+    public void Unregister(Control control)
+    {
+        _adorners.Remove(control);
     }
 
     private ResizingAdornerPresenter? FindAdorner(Control control)
@@ -57,7 +69,7 @@ public class ControlSelection
 
     private void Select(ResizingAdornerPresenter hover)
     {
-        foreach (var adorner in Editor.s_adorners)
+        foreach (var adorner in _adorners)
         {
             if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
             {
@@ -75,7 +87,7 @@ public class ControlSelection
 
     private void Deselect()
     {
-        foreach (var adorner in Editor.s_adorners)
+        foreach (var adorner in _adorners)
         {
             if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
             {
