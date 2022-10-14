@@ -14,38 +14,7 @@
     <Style Selector="Canvas.resizing > :is(Control)">
       <Setter Property="IsHitTestVisible" Value="True" />
     </Style>
-<!--
-    <Style Selector="Canvas.resizing > :is(Control)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:BoundsAdorner AdornedControl="{Binding $parent[Control]}"
-                           Background="Transparent" />
-        </Template>
-      </Setter>
-    </Style>
 
-    <Style Selector="Canvas.resizing > :is(Control):hover">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter 
-            AdornedControl="{Binding $parent[Control]}"
-            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-            AdornedHeight="{Binding $parent[Control].Bounds.Height}"  />
-        </Template>
-      </Setter>
-    </Style>
-
-    <Style Selector="Canvas.resizing > :is(Control):selected">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter 
-            AdornedControl="{Binding $parent[Control]}"
-            AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-            AdornedHeight="{Binding $parent[Control].Bounds.Height}"  />
-        </Template>
-      </Setter>
-    </Style>
--->
     <Style Selector="Canvas.resizing > :is(Control)">
       <Setter Property="(AdornerLayer.Adorner)">
         <Template>
