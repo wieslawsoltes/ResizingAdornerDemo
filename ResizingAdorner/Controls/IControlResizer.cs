@@ -5,6 +5,9 @@ namespace ResizingAdorner.Controls;
 
 public interface IControlResizer
 {
+    bool EnableSnap { get; set; }
+    double SnapX { get; set; }
+    double SnapY { get; set; }
     void Start(Control control);
     void Move(Control control, Vector vector);
     void Left(Control control, Vector vector);

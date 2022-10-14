@@ -23,7 +23,7 @@
                                       AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                       ShowThumbs="False">
             <c:ResizingAdornerPresenter.ControlResizer>
-              <c:CanvasControlResizer />
+              <c:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
             </c:ResizingAdornerPresenter.ControlResizer>
           </c:ResizingAdornerPresenter>
         </Template>

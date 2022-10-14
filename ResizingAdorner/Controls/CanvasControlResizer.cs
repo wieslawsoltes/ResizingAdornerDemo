@@ -10,6 +10,22 @@ public class CanvasControlResizer : IControlResizer
     private double _width;
     private double _height;
 
+    public bool EnableSnap { get; set; }
+
+    public double SnapX { get; set; }
+
+    public double SnapY { get; set; }
+
+    private double SnapXValue(double value)
+    {
+        return EnableSnap ? Snap.SnapValue(value, SnapX) : value;
+    }
+
+    private double SnapYValue(double value)
+    {
+        return EnableSnap ? Snap.SnapValue(value, SnapY) : value;
+    }
+
     public void Start(Control control)
     {
         _left = Canvas.GetLeft(control);
@@ -21,10 +37,10 @@ public class CanvasControlResizer : IControlResizer
     public void Move(Control control, Vector vector)
     {
         var left = _left + vector.X;
-        Canvas.SetLeft(control, left);
+        Canvas.SetLeft(control, SnapXValue(left));
 
         var top = _top + vector.Y;
-        Canvas.SetTop(control, top);
+        Canvas.SetTop(control, SnapYValue(top));
     }
 
     public void Left(Control control, Vector vector)
@@ -33,9 +49,9 @@ public class CanvasControlResizer : IControlResizer
         var width = _width - vector.X;
         if (width >= 0)
         {
-            Canvas.SetLeft(control, left);
+            Canvas.SetLeft(control, SnapXValue(left));
             // TODO: Check for MinWidth
-            control.Width = width;
+            control.Width = SnapXValue(width);
         }
     }
 
@@ -46,7 +62,7 @@ public class CanvasControlResizer : IControlResizer
         if (width >= 0)
         {
             // TODO: Check for MinWidth
-            control.Width = width;
+            control.Width = SnapXValue(width);
         }
     }
 
@@ -56,9 +72,9 @@ public class CanvasControlResizer : IControlResizer
         var height = _height - vector.Y;
         if (height >= 0)
         {
-            Canvas.SetTop(control, top);
+            Canvas.SetTop(control, SnapYValue(top));
             // TODO: Check for MinHeight
-            control.Height = height;
+            control.Height = SnapYValue(height);
         }
     }
 
@@ -69,7 +85,7 @@ public class CanvasControlResizer : IControlResizer
         if (height >= 0)
         {
             // TODO: Check for MinHeight
-            control.Height = height;
+            control.Height = SnapYValue(height);
         }
     }
 }
