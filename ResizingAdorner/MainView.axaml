@@ -7,9 +7,10 @@
              xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ResizingAdorner.MainView"
+             x:CompileBindings="True" x:DataType="local:MainView"
              Background="Transparent"
              Name="Editor"
-             x:CompileBindings="True" x:DataType="local:MainView">
+             FontFamily="avares://Avalonia.Themes.Fluent/Assets#Inter">
 
   <UserControl.Styles>
 
