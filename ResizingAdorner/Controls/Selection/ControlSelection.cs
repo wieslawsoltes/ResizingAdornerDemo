@@ -9,7 +9,7 @@ namespace ResizingAdorner.Controls.Selection;
 
 public class ControlSelection : IControlSelection
 {
-    private readonly List<Control> _adorners = new (); 
+    private readonly List<Control> _adorners = new ();
     private ResizingAdornerPresenter? _hover;
     private readonly Control _control;
 
