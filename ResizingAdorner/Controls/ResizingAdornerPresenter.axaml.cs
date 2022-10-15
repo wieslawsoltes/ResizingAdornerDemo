@@ -80,7 +80,7 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (AdornedControl is { })
         {
-            MainWindow.s_controlSelection?.Register(this);
+            MainView.s_controlSelection?.Register(this);
         }
     }
 
@@ -90,7 +90,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         
         if (AdornedControl is { })
         {
-            MainWindow.s_controlSelection?.Unregister(this);
+            MainView.s_controlSelection?.Unregister(this);
         }
     }
     

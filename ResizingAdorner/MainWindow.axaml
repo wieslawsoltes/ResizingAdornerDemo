@@ -2,91 +2,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:c="clr-namespace:ResizingAdorner.Controls"
-        xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
         xmlns:local="clr-namespace:ResizingAdorner"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
         WindowStartupLocation="CenterScreen"
-        Width="600" Height="600"
-        Name="MainView"
-        x:CompileBindings="True" x:DataType="local:MainWindow">
-
-  <Window.Styles>
-
-    <Style Selector="Canvas.resizing > :is(Control)">
-      <Setter Property="IsHitTestVisible" Value="True" />
-    </Style>
-
-    <Style Selector="Canvas.resizing > :is(Control)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
-                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False">
-            <c:ResizingAdornerPresenter.ControlResizer>
-              <r:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
-            </c:ResizingAdornerPresenter.ControlResizer>
-          </c:ResizingAdornerPresenter>
-        </Template>
-      </Setter>
-    </Style>
-
-  </Window.Styles>
-
-  <Window.KeyBindings>
-    <KeyBinding Command="{Binding #MainView.OnDelete}" Gesture="Delete" />
-    <KeyBinding Command="{Binding #MainView.OnDelete}" Gesture="Back" />
-  </Window.KeyBindings>
-  
-  <Canvas Name="Canvas" Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
-
-    <Canvas.ContextFlyout>
-      <MenuFlyout Placement="Auto">
-        <MenuItem Header="TextBlock" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type TextBlock}" />
-        <MenuItem Header="TextBox"  Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type TextBox}"/>
-        <MenuItem Header="Label" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Label}" />
-        <Separator />
-        <MenuItem Header="CheckBox" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type CheckBox}" />
-        <MenuItem Header="RadioButton" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type RadioButton}" />
-        <Separator />
-        <MenuItem Header="Slider" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Slider}" />
-        <Separator />
-        <MenuItem Header="Ellipse" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Ellipse}" />
-        <MenuItem Header="Rectangle" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Rectangle}" />
-      </MenuFlyout>
-    </Canvas.ContextFlyout>
-
-    <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
-    <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
-    <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
-    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
-    <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
-    <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
-    <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
-      <TextBlock Text="Test TextBlock" Margin="6" />
-      <TextBox Text="Test TextBox" Margin="6" />
-    </StackPanel>
-    <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
-    <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
-      <Rectangle.RenderTransform>
-        <TransformGroup>
-          <RotateTransform Angle="45" />
-          <ScaleTransform ScaleX="1" ScaleY="1" />
-        </TransformGroup>
-      </Rectangle.RenderTransform>
-    </Rectangle>
-    <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
-      <Rectangle.RenderTransform>
-        <TransformGroup>
-          <RotateTransform Angle="0" />
-          <ScaleTransform ScaleX="2" ScaleY="2" />
-        </TransformGroup>
-      </Rectangle.RenderTransform>
-    </Rectangle>
-
-  </Canvas>
-
+        Width="600" Height="600">
+  <local:MainView />
 </Window>
