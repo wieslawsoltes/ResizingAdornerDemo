@@ -21,14 +21,14 @@ public class ControlSelection : IControlSelection
         _control.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
     }
 
-    public void Register(Control control)
+    public void Register(Control adorner)
     {
-        _adorners.Add(control);
+        _adorners.Add(adorner);
     }
 
-    public void Unregister(Control control)
+    public void Unregister(Control adorner)
     {
-        _adorners.Remove(control);
+        _adorners.Remove(adorner);
     }
 
     private void Select(ResizingAdornerPresenter? hover, ResizingAdornerPresenter? selected)
@@ -81,9 +81,9 @@ public class ControlSelection : IControlSelection
 
         _hover = hitTest;
 
-        if (hitTest is { } || _selected is { })
+        if (_hover is { } || _selected is { })
         {
-            Select(hitTest, _selected);
+            Select(_hover, _selected);
         }
         else
         {
