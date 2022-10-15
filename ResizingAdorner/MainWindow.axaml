@@ -4,11 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:c="clr-namespace:ResizingAdorner.Controls"
         xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
+        xmlns:local="clr-namespace:ResizingAdorner"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ResizingAdorner.MainWindow"
         Title="ResizingAdorner"
         WindowStartupLocation="CenterScreen"
-        Width="600" Height="600">
+        Width="600" Height="600"
+        Name="MainView"
+        x:CompileBindings="True" x:DataType="local:MainWindow">
 
   <Window.Styles>
 
@@ -33,7 +36,28 @@
 
   </Window.Styles>
 
-  <Canvas Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
+  <Window.KeyBindings>
+    <KeyBinding Command="{Binding #MainView.OnDelete}" Gesture="Delete" />
+    <KeyBinding Command="{Binding #MainView.OnDelete}" Gesture="Back" />
+  </Window.KeyBindings>
+  
+  <Canvas Name="Canvas" Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
+
+    <Canvas.ContextFlyout>
+      <MenuFlyout Placement="Auto">
+        <MenuItem Header="TextBlock" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type TextBlock}" />
+        <MenuItem Header="TextBox"  Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type TextBox}"/>
+        <MenuItem Header="Label" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Label}" />
+        <Separator />
+        <MenuItem Header="CheckBox" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type CheckBox}" />
+        <MenuItem Header="RadioButton" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type RadioButton}" />
+        <Separator />
+        <MenuItem Header="Slider" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Slider}" />
+        <Separator />
+        <MenuItem Header="Ellipse" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Ellipse}" />
+        <MenuItem Header="Rectangle" Command="{Binding #MainView.OnInsert}" CommandParameter="{x:Type Rectangle}" />
+      </MenuFlyout>
+    </Canvas.ContextFlyout>
 
     <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
     <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
