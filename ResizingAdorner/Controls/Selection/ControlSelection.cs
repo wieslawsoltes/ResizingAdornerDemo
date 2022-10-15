@@ -30,15 +30,9 @@ public class ControlSelection : IControlSelection
         _adorners.Remove(control);
     }
 
-    private void Select(ResizingAdornerPresenter hover)
+    private void Select(ResizingAdornerPresenter resizingAdornerPresenter)
     {
-        foreach (var adorner in _adorners)
-        {
-            if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
-            {
-                resizingAdornerPresenter.ShowThumbs = Equals(resizingAdornerPresenter, hover);
-            }
-        }
+        resizingAdornerPresenter.ShowThumbs = true;
     }
 
     private void Deselect()
