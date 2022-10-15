@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 
 namespace ResizingAdorner.Controls.Selection;
 
@@ -30,44 +31,6 @@ public class ControlSelection : IControlSelection
         _adorners.Remove(control);
     }
 
-    private T? FindAdorner<T>(Control control) where T : Control
-    {
-        if (control is T resizingAdornerPresenter)
-        {
-            return resizingAdornerPresenter;
-        }
-
-        if (control.Parent is T resizingAdornerPresenterParent)
-        {
-            return resizingAdornerPresenterParent;
-        }
-
-        if (control.Parent is Control controlParent)
-        {
-            return FindAdorner<T>(controlParent);
-        }
-
-        return null;
-    }
-
-    private T? FindHover<T>(PointerEventArgs e) where T : Control
-    {
-        var point = e.GetPosition(_control);
-        var result = _control.InputHitTest(point);
-        if (result is not Control control)
-        {
-            return default;
-        }
-
-        var resizingAdornerPresenter = FindAdorner<T>(control);
-        if (resizingAdornerPresenter is { })
-        {
-            return resizingAdornerPresenter;
-        }
-
-        return default;
-    }
-
     private void Select(ResizingAdornerPresenter hover)
     {
         foreach (var adorner in _adorners)
@@ -92,7 +55,7 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var hover = FindHover<ResizingAdornerPresenter>(e);
+        var hover = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
         if (hover != null)
         {
             _hover = hover;
@@ -107,27 +70,28 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-
     }
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        var hover = FindHover<ResizingAdornerPresenter>(e);
+        var hover = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
         if (hover is { } && Equals(hover, _hover))
         {
             return;
         }
 
-        if (_hover is null)
+        if (_hover is not null)
         {
-            if (hover is { })
-            {
-                Select(hover);
-            }
-            else
-            {
-                Deselect();
-            }
+            return;
+        }
+
+        if (hover is { })
+        {
+            Select(hover);
+        }
+        else
+        {
+            Deselect();
         }
     }
 }
