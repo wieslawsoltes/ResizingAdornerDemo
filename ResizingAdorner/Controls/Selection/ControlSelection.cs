@@ -10,8 +10,9 @@ namespace ResizingAdorner.Controls.Selection;
 public class ControlSelection : IControlSelection
 {
     private readonly List<Control> _adorners = new ();
-    private ResizingAdornerPresenter? _hover;
     private readonly Control _control;
+    private ResizingAdornerPresenter? _hover;
+    private ResizingAdornerPresenter? _selected;
 
     public ControlSelection(Control control)
     {
@@ -30,13 +31,14 @@ public class ControlSelection : IControlSelection
         _adorners.Remove(control);
     }
 
-    private void Select(ResizingAdornerPresenter hover)
+    private void Select(ResizingAdornerPresenter? hover, ResizingAdornerPresenter? selected)
     {
         foreach (var adorner in _adorners)
         {
             if (adorner is ResizingAdornerPresenter resizingAdornerPresenter)
             {
-                resizingAdornerPresenter.ShowThumbs = Equals(resizingAdornerPresenter, hover);
+                var showThumbs = Equals(resizingAdornerPresenter, hover) || Equals(resizingAdornerPresenter, selected);
+                resizingAdornerPresenter.ShowThumbs = showThumbs;
             }
         }
     }
@@ -54,14 +56,16 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var hover = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
-        if (hover != null)
+        var selected = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
+        if (selected != null)
         {
-            _hover = hover;
-            Select(hover);
+            _selected = selected;
+            _hover = null;
+            Select(_hover, _selected);
         }
         else
         {
+            _selected = null;
             _hover = null;
             Deselect();
         }
@@ -69,20 +73,17 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        var hover = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
-        if (hover is { } && Equals(hover, _hover))
+        var hitTest = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
+        if (hitTest is { } && (Equals(hitTest, _hover) || Equals(hitTest, _selected)))
         {
             return;
         }
 
-        if (_hover is not null)
-        {
-            return;
-        }
+        _hover = hitTest;
 
-        if (hover is { })
+        if (hitTest is { } || _selected is { })
         {
-            Select(hover);
+            Select(hitTest, _selected);
         }
         else
         {
