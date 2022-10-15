@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
     <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
@@ -8,10 +9,13 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <AvaloniaVersion>11.0.0-preview2</AvaloniaVersion>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\ResizingAdorner\ResizingAdorner.csproj" />
   </ItemGroup>
+
 </Project>
