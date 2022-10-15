@@ -18,7 +18,6 @@ public class ControlSelection : IControlSelection
         _control = control;
         _control.AddHandler(InputElement.PointerPressedEvent, OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         _control.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
-        _control.AddHandler(InputElement.PointerReleasedEvent, OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
     }
 
     public void Register(Control control)
@@ -66,10 +65,6 @@ public class ControlSelection : IControlSelection
             _hover = null;
             Deselect();
         }
-    }
-
-    private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
-    {
     }
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
