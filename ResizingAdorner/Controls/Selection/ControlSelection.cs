@@ -31,6 +31,26 @@ public class ControlSelection : IControlSelection
         _adorners.Remove(adorner);
     }
 
+    public void Delete()
+    {
+        if (_selected is not { } resizingAdornerPresenter)
+        {
+            return;
+        }
+
+        if (resizingAdornerPresenter.AdornedControl is { } control)
+        {
+            _selected = null;
+            _hover = null;
+            Deselect();
+
+            if (control.Parent is Panel panel)
+            {
+                panel.Children.Remove(control);
+            }
+        }
+    }
+    
     private void Select(ResizingAdornerPresenter? hover, ResizingAdornerPresenter? selected)
     {
         foreach (var adorner in _adorners)
