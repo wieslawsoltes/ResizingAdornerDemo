@@ -30,42 +30,42 @@ public class ControlSelection : IControlSelection
         _adorners.Remove(control);
     }
 
-    private ResizingAdornerPresenter? FindAdorner(Control control)
+    private T? FindAdorner<T>(Control control) where T : Control
     {
-        if (control is ResizingAdornerPresenter resizingAdornerPresenter)
+        if (control is T resizingAdornerPresenter)
         {
             return resizingAdornerPresenter;
         }
 
-        if (control.Parent is ResizingAdornerPresenter resizingAdornerPresenterParent)
+        if (control.Parent is T resizingAdornerPresenterParent)
         {
             return resizingAdornerPresenterParent;
         }
 
         if (control.Parent is Control controlParent)
         {
-            return FindAdorner(controlParent);
+            return FindAdorner<T>(controlParent);
         }
 
         return null;
     }
 
-    private ResizingAdornerPresenter? FindHover(PointerEventArgs e)
+    private T? FindHover<T>(PointerEventArgs e) where T : Control
     {
-        ResizingAdornerPresenter? hover = null;
-
         var point = e.GetPosition(_control);
         var result = _control.InputHitTest(point);
-        if (result is Control control)
+        if (result is not Control control)
         {
-            var resizingAdornerPresenter = FindAdorner(control);
-            if (resizingAdornerPresenter is { })
-            {
-                hover = resizingAdornerPresenter;
-            }
+            return default;
         }
 
-        return hover;
+        var resizingAdornerPresenter = FindAdorner<T>(control);
+        if (resizingAdornerPresenter is { })
+        {
+            return resizingAdornerPresenter;
+        }
+
+        return default;
     }
 
     private void Select(ResizingAdornerPresenter hover)
@@ -92,7 +92,7 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var hover = FindHover(e);
+        var hover = FindHover<ResizingAdornerPresenter>(e);
         if (hover != null)
         {
             _hover = hover;
@@ -112,7 +112,7 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        var hover = FindHover(e);
+        var hover = FindHover<ResizingAdornerPresenter>(e);
         if (hover is { } && Equals(hover, _hover))
         {
             return;
