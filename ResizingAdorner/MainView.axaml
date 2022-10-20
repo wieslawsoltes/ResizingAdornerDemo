@@ -34,60 +34,117 @@
       </Setter>
     </Style>
 
+    <Style Selector="Grid.resizing > :is(Control)">
+      <Setter Property="IsHitTestVisible" Value="True" />
+    </Style>
+
+    <Style Selector="Grid.resizing > :is(Control)">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
+                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
+                                      ShowThumbs="False"
+                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
+            <c:ResizingAdornerPresenter.ControlResizer>
+              <r:GridControlResizer />
+            </c:ResizingAdornerPresenter.ControlResizer>
+          </c:ResizingAdornerPresenter>
+        </Template>
+      </Setter>
+    </Style>
+    
   </UserControl.Styles>
 
   <UserControl.KeyBindings>
     <KeyBinding Command="{Binding #Editor.OnDelete}" Gesture="Delete" />
     <KeyBinding Command="{Binding #Editor.OnDelete}" Gesture="Back" />
   </UserControl.KeyBindings>
-  
-  <Canvas Name="Canvas" Classes="resizing" Width="500" Height="500" Background="WhiteSmoke">
 
-    <Canvas.ContextFlyout>
-      <MenuFlyout Placement="Auto">
-        <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type TextBlock}" />
-        <MenuItem Header="TextBox"  Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type TextBox}"/>
-        <MenuItem Header="Label" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Label}" />
-        <Separator />
-        <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type CheckBox}" />
-        <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type RadioButton}" />
-        <Separator />
-        <MenuItem Header="Slider" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Slider}" />
-        <Separator />
-        <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Ellipse}" />
-        <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Rectangle}" />
-      </MenuFlyout>
-    </Canvas.ContextFlyout>
+  <TabControl>
 
-    <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
-    <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
-    <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
-    <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
-    <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
-    <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
-    <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
-      <TextBlock Text="Test TextBlock" Margin="6" />
-      <TextBox Text="Test TextBox" Margin="6" />
-    </StackPanel>
-    <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
-    <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
-      <Rectangle.RenderTransform>
-        <TransformGroup>
-          <RotateTransform Angle="45" />
-          <ScaleTransform ScaleX="1" ScaleY="1" />
-        </TransformGroup>
-      </Rectangle.RenderTransform>
-    </Rectangle>
-    <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
-      <Rectangle.RenderTransform>
-        <TransformGroup>
-          <RotateTransform Angle="0" />
-          <ScaleTransform ScaleX="2" ScaleY="2" />
-        </TransformGroup>
-      </Rectangle.RenderTransform>
-    </Rectangle>
+    <!-- Grid -->
+    
+    <TabItem Header="Canvas">
 
-  </Canvas>
+      <Grid Name="Grid" 
+            Classes="resizing"
+            ColumnDefinitions="100,*,100" 
+            RowDefinitions="100,*,100"
+            Background="WhiteSmoke"
+            ShowGridLines="False">
+        
+        <AdornerLayer.Adorner>
+          <local:GridCellsAdorner Grid="{Binding $parent[Control]}" />
+        </AdornerLayer.Adorner>
+
+        <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
+        <Rectangle Fill="Green" Grid.Column="1" Grid.Row="1" />
+        <Rectangle Fill="Blue" Grid.Column="2" Grid.Row="2" />
+
+      </Grid>
+
+    </TabItem>
+
+    <!-- Canvas -->
+    
+    <TabItem Header="Canvas">
+
+      <Canvas Name="Canvas" 
+              Classes="resizing"
+              Width="500" 
+              Height="500" 
+              Background="WhiteSmoke">
+
+        <Canvas.ContextFlyout>
+          <MenuFlyout Placement="Auto">
+            <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type TextBlock}" />
+            <MenuItem Header="TextBox"  Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type TextBox}"/>
+            <MenuItem Header="Label" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Label}" />
+            <Separator />
+            <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type CheckBox}" />
+            <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type RadioButton}" />
+            <Separator />
+            <MenuItem Header="Slider" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Slider}" />
+            <Separator />
+            <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Ellipse}" />
+            <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsert}" CommandParameter="{x:Type Rectangle}" />
+          </MenuFlyout>
+        </Canvas.ContextFlyout>
+
+        <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
+        <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
+        <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
+        <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
+        <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
+        <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
+        <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
+          <TextBlock Text="Test TextBlock" Margin="6" />
+          <TextBox Text="Test TextBox" Margin="6" />
+        </StackPanel>
+        <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
+        <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
+          <Rectangle.RenderTransform>
+            <TransformGroup>
+              <RotateTransform Angle="45" />
+              <ScaleTransform ScaleX="1" ScaleY="1" />
+            </TransformGroup>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
+          <Rectangle.RenderTransform>
+            <TransformGroup>
+              <RotateTransform Angle="0" />
+              <ScaleTransform ScaleX="2" ScaleY="2" />
+            </TransformGroup>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+      </Canvas>
+
+    </TabItem>
+
+  </TabControl>
 
 </UserControl>
 
