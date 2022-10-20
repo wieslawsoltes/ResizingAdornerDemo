@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.VisualTree;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Selection;
+using ResizingAdorner.Editors;
 
 namespace ResizingAdorner;
 

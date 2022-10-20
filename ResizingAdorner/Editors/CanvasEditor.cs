@@ -6,7 +6,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Editors;
 
 public class CanvasEditor
 {
