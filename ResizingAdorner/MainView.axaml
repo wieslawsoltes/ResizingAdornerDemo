@@ -24,7 +24,8 @@
           <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
                                       AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                       AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False">
+                                      ShowThumbs="False"
+                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
             <c:ResizingAdornerPresenter.ControlResizer>
               <r:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
             </c:ResizingAdornerPresenter.ControlResizer>

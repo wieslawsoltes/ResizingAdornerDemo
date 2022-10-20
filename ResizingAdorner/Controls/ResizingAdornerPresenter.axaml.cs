@@ -33,6 +33,9 @@ public class ResizingAdornerPresenter : TemplatedControl
     public static readonly StyledProperty<IControlResizer?> ControlResizerProperty = 
         AvaloniaProperty.Register<ResizingAdornerPresenter, IControlResizer?>(nameof(ControlResizer));
 
+    public static readonly StyledProperty<IControlSelection?> ControlSelectionProperty = 
+        AvaloniaProperty.Register<ResizingAdornerPresenter, IControlSelection?>(nameof(ControlSelection));
+
     private bool _updating;
     private Thumb? _thumbCenter;
     private Thumb? _thumbLeft;
@@ -74,13 +77,19 @@ public class ResizingAdornerPresenter : TemplatedControl
         set => SetValue(ControlResizerProperty, value);
     }
 
+    public IControlSelection? ControlSelection
+    {
+        get => GetValue(ControlSelectionProperty);
+        set => SetValue(ControlSelectionProperty, value);
+    }
+
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
 
         if (AdornedControl is { })
         {
-            MainView.s_controlSelection?.Register(this);
+            ControlSelection?.Register(this);
         }
     }
 
@@ -90,7 +99,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         
         if (AdornedControl is { })
         {
-            MainView.s_controlSelection?.Unregister(this);
+            ControlSelection?.Unregister(this);
         }
     }
     

@@ -13,7 +13,7 @@ namespace ResizingAdorner;
 
 public partial class MainView : UserControl
 {
-    public static IControlSelection? s_controlSelection;
+    public static readonly IControlSelection? ControlSelection = new ControlSelection();
 
     private Point _insertPoint;
 
@@ -26,7 +26,7 @@ public partial class MainView : UserControl
             var topLevel = this.GetVisualRoot();
             if (topLevel is Control control)
             {
-                s_controlSelection = new ControlSelection(control);
+                ControlSelection?.Initialize(control);
             }
 
             Canvas.AddHandler(InputElement.PointerPressedEvent, Canvas_PointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
@@ -43,7 +43,7 @@ public partial class MainView : UserControl
 
     public void OnDelete()
     {
-        s_controlSelection?.Delete();
+        ControlSelection?.Delete();
     }
 
     private void SetControlDefaults(Control control)
