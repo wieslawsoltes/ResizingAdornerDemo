@@ -65,7 +65,7 @@
 
     <!-- Grid -->
     
-    <TabItem Header="Canvas">
+    <TabItem Header="Grid">
 
       <Grid Name="Grid" 
             Classes="resizing"
