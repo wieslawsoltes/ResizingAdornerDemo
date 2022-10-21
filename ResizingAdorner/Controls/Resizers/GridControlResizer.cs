@@ -28,33 +28,33 @@ public class GridControlResizer : IControlResizer
         _rowSpan = Grid.GetRowSpan(control);
     }
 
-    public void Move(Control control, Vector vector)
+    public void Move(Control control, Point origin, Vector vector)
     {
         // TODO:
-        Console.WriteLine($"[Move] bounds='{control.Bounds}', vector='{vector}'");
+        Console.WriteLine($"[Move] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
     }
 
-    public void Left(Control control, Vector vector)
+    public void Left(Control control, Point origin, Vector vector)
     {
         // TODO:
-        Console.WriteLine($"[Left] bounds='{control.Bounds}', vector='{vector}'");
+        Console.WriteLine($"[Left] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
     }
 
-    public void Right(Control control, Vector vector)
+    public void Right(Control control, Point origin, Vector vector)
     {
         // TODO:
-        Console.WriteLine($"[Right] bounds='{control.Bounds}', vector='{vector}'");
+        Console.WriteLine($"[Right] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
     }
 
-    public void Top(Control control, Vector vector)
+    public void Top(Control control, Point origin, Vector vector)
     {
         // TODO:
-        Console.WriteLine($"[Top] bounds='{control.Bounds}', vector='{vector}'");
+        Console.WriteLine($"[Top] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
     }
 
-    public void Bottom(Control control, Vector vector)
+    public void Bottom(Control control, Point origin, Vector vector)
     {
         // TODO:
-        Console.WriteLine($"[Bottom] bounds='{control.Bounds}', vector='{vector}'");
+        Console.WriteLine($"[Bottom] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
     }
 }

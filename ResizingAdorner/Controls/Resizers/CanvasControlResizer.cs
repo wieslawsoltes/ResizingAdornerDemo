@@ -36,7 +36,7 @@ public class CanvasControlResizer : IControlResizer
         _height = control.Bounds.Height;
     }
 
-    public void Move(Control control, Vector vector)
+    public void Move(Control control, Point origin, Vector vector)
     {
         var left = _left + vector.X;
         Canvas.SetLeft(control, SnapXValue(left));
@@ -45,7 +45,7 @@ public class CanvasControlResizer : IControlResizer
         Canvas.SetTop(control, SnapYValue(top));
     }
 
-    public void Left(Control control, Vector vector)
+    public void Left(Control control, Point origin, Vector vector)
     {
         var left = _left + vector.X;
         var width = _width - vector.X;
@@ -57,7 +57,7 @@ public class CanvasControlResizer : IControlResizer
         }
     }
 
-    public void Right(Control control, Vector vector)
+    public void Right(Control control, Point origin, Vector vector)
     {
         _width = control.Bounds.Width;
         var width = _width + vector.X;
@@ -68,7 +68,7 @@ public class CanvasControlResizer : IControlResizer
         }
     }
 
-    public void Top(Control control, Vector vector)
+    public void Top(Control control, Point origin, Vector vector)
     {
         var top = _top + vector.Y;
         var height = _height - vector.Y;
@@ -80,7 +80,7 @@ public class CanvasControlResizer : IControlResizer
         }
     }
 
-    public void Bottom(Control control, Vector vector)
+    public void Bottom(Control control, Point origin, Vector vector)
     {
         _height = control.Bounds.Height;
         var height = _height + vector.Y;

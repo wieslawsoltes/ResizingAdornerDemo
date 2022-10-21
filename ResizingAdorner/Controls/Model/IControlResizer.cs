@@ -9,9 +9,9 @@ public interface IControlResizer
     double SnapX { get; set; }
     double SnapY { get; set; }
     void Start(Control control);
-    void Move(Control control, Vector vector);
-    void Left(Control control, Vector vector);
-    void Right(Control control, Vector vector);
-    void Top(Control control, Vector vector);
-    void Bottom(Control control, Vector vector);
+    void Move(Control control, Point origin, Vector vector);
+    void Left(Control control, Point origin, Vector vector);
+    void Right(Control control, Point origin, Vector vector);
+    void Top(Control control, Point origin, Vector vector);
+    void Bottom(Control control, Point origin, Vector vector);
 }
