@@ -53,7 +53,47 @@
         </Template>
       </Setter>
     </Style>
-    
+
+    <Style Selector="DockPanel.resizing > :is(Control)">
+      <Setter Property="IsHitTestVisible" Value="True" />
+    </Style>
+
+    <Style Selector="DockPanel.resizing > :is(Control)">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
+                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
+                                      ShowThumbs="False"
+                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
+            <c:ResizingAdornerPresenter.ControlResizer>
+              <r:DockPanelControlResizer />
+            </c:ResizingAdornerPresenter.ControlResizer>
+          </c:ResizingAdornerPresenter>
+        </Template>
+      </Setter>
+    </Style>
+
+    <Style Selector="StackPanel.resizing > :is(Control)">
+      <Setter Property="IsHitTestVisible" Value="True" />
+    </Style>
+
+    <Style Selector="StackPanel.resizing > :is(Control)">
+      <Setter Property="(AdornerLayer.Adorner)">
+        <Template>
+          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
+                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
+                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
+                                      ShowThumbs="False"
+                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
+            <c:ResizingAdornerPresenter.ControlResizer>
+              <r:StackPanelControlResizer />
+            </c:ResizingAdornerPresenter.ControlResizer>
+          </c:ResizingAdornerPresenter>
+        </Template>
+      </Setter>
+    </Style>
+
   </UserControl.Styles>
 
   <UserControl.KeyBindings>
@@ -94,6 +134,44 @@
   </UserControl.Resources>
   
   <TabControl Padding="12,0,12,12">
+
+    <!-- DockPanel -->
+    
+    <TabItem Header="DockPanel">
+
+      <DockPanel Name="DockPanel" 
+            Classes="resizing"
+            Background="WhiteSmoke"
+            LastChildFill="True">
+
+        <Button Content="Test Button" DockPanel.Dock="Left" />
+        <TextBox Text="Test TextBox" DockPanel.Dock="Right" />
+        <CheckBox Content="Test CheckBox" DockPanel.Dock="Top" />
+        <Label Content="Test Label" DockPanel.Dock="Bottom" />
+        <TextBlock Text="Test TextBlock" Background="LightGray" />
+        
+      </DockPanel>
+
+    </TabItem>
+
+    <!-- StackPanel -->
+    
+    <TabItem Header="StackPanel">
+
+      <StackPanel Name="StackPanel" 
+                  Classes="resizing"
+                  Orientation="Vertical"
+                  Background="WhiteSmoke">
+
+        <Button Content="Test Button" />
+        <TextBox Text="Test TextBox" />
+        <CheckBox Content="Test CheckBox" />
+        <Label Content="Test Label" />
+        <TextBlock Text="Test TextBlock" Background="LightGray" />
+
+      </StackPanel>
+
+    </TabItem>
 
     <!-- Grid -->
     
