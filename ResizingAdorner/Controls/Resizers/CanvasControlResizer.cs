@@ -59,7 +59,6 @@ public class CanvasControlResizer : IControlResizer
 
     public void Right(Control control, Point origin, Vector vector)
     {
-        _width = control.Bounds.Width;
         var width = _width + vector.X;
         if (width >= 0)
         {
@@ -82,7 +81,6 @@ public class CanvasControlResizer : IControlResizer
 
     public void Bottom(Control control, Point origin, Vector vector)
     {
-        _height = control.Bounds.Height;
         var height = _height + vector.Y;
         if (height >= 0)
         {
