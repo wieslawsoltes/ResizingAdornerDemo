@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:ResizingAdorner"
              xmlns:c="clr-namespace:ResizingAdorner.Controls"
-             xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ResizingAdorner.MainView"
              x:CompileBindings="True" x:DataType="local:MainView"
@@ -13,87 +12,7 @@
              FontFamily="avares://Avalonia.Themes.Fluent/Assets#Inter">
 
   <UserControl.Styles>
-
-    <Style Selector="Canvas.resizing > :is(Control)">
-      <Setter Property="IsHitTestVisible" Value="True" />
-    </Style>
-
-    <Style Selector="Canvas.resizing > :is(Control)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
-                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False"
-                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
-            <c:ResizingAdornerPresenter.ControlResizer>
-              <r:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
-            </c:ResizingAdornerPresenter.ControlResizer>
-          </c:ResizingAdornerPresenter>
-        </Template>
-      </Setter>
-    </Style>
-
-    <Style Selector="Grid.resizing > :is(Control)">
-      <Setter Property="IsHitTestVisible" Value="True" />
-    </Style>
-
-    <Style Selector="Grid.resizing > :is(Control):not(c|GridAdorner)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
-                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False"
-                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
-            <c:ResizingAdornerPresenter.ControlResizer>
-              <r:GridControlResizer />
-            </c:ResizingAdornerPresenter.ControlResizer>
-          </c:ResizingAdornerPresenter>
-        </Template>
-      </Setter>
-    </Style>
-
-    <Style Selector="DockPanel.resizing > :is(Control)">
-      <Setter Property="IsHitTestVisible" Value="True" />
-    </Style>
-
-    <Style Selector="DockPanel.resizing > :is(Control)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
-                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False"
-                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
-            <c:ResizingAdornerPresenter.ControlResizer>
-              <r:DockPanelControlResizer />
-            </c:ResizingAdornerPresenter.ControlResizer>
-          </c:ResizingAdornerPresenter>
-        </Template>
-      </Setter>
-    </Style>
-
-    <Style Selector="StackPanel.resizing > :is(Control)">
-      <Setter Property="IsHitTestVisible" Value="True" />
-    </Style>
-
-    <Style Selector="StackPanel.resizing > :is(Control)">
-      <Setter Property="(AdornerLayer.Adorner)">
-        <Template>
-          <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
-                                      AdornedWidth="{Binding $parent[Control].Bounds.Width}"
-                                      AdornedHeight="{Binding $parent[Control].Bounds.Height}"
-                                      ShowThumbs="False"
-                                      ControlSelection="{x:Static local:MainView.ControlSelection}">
-            <c:ResizingAdornerPresenter.ControlResizer>
-              <r:StackPanelControlResizer />
-            </c:ResizingAdornerPresenter.ControlResizer>
-          </c:ResizingAdornerPresenter>
-        </Template>
-      </Setter>
-    </Style>
-
+    <StyleInclude Source="/Resizing.axaml"></StyleInclude>
   </UserControl.Styles>
 
   <UserControl.KeyBindings>
@@ -170,6 +89,24 @@
         <TextBlock Text="Test TextBlock" Background="LightGray" />
 
       </StackPanel>
+
+    </TabItem>
+
+    <!-- WrapPanel -->
+    
+    <TabItem Header="WrapPanel">
+
+      <WrapPanel Name="WrapPanel" 
+                 Classes="resizing"
+                 Background="WhiteSmoke">
+
+        <Button Content="Test Button" />
+        <TextBox Text="Test TextBox" />
+        <CheckBox Content="Test CheckBox" />
+        <Label Content="Test Label" />
+        <TextBlock Text="Test TextBlock" Background="LightGray" />
+
+      </WrapPanel>
 
     </TabItem>
 
