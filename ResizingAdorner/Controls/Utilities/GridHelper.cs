@@ -29,6 +29,8 @@ public static class GridHelper
                     Row = row,
                     ActualWidth = columnDefinition.ActualWidth,
                     ActualHeight = rowDefinition.ActualHeight,
+                    ColumnOffset = columnOffset,
+                    RowOffset = rowOffset,
                     Bounds = new Rect(
                         columnOffset,
                         rowOffset,
