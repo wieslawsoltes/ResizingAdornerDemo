@@ -36,11 +36,11 @@ public partial class MainView : UserControl
         ControlSelection?.Delete();
     }
 
-
     public void OnInsertGrid(Type type)
     {
         _gridEditor.Insert(type, _gridEditor.InsertPoint);
     }
+
     public void OnInsertCanvas(Type type)
     {
         _canvasEditor.Insert(type, _canvasEditor.InsertPoint);
