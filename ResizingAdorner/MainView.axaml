@@ -61,7 +61,39 @@
     <KeyBinding Command="{Binding #Editor.OnDelete}" Gesture="Back" />
   </UserControl.KeyBindings>
 
-  <TabControl>
+  <UserControl.Resources>
+
+    <MenuFlyout x:Key="GridInsertMenuFlyout" Placement="Auto">
+      <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type TextBlock}" />
+      <MenuItem Header="TextBox" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type TextBox}"/>
+      <MenuItem Header="Label" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Label}" />
+      <Separator />
+      <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type CheckBox}" />
+      <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type RadioButton}" />
+      <Separator />
+      <MenuItem Header="Slider" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Slider}" />
+      <Separator />
+      <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Ellipse}" />
+      <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Rectangle}" />
+    </MenuFlyout>
+
+    <MenuFlyout x:Key="CanvasInsertMenuFlyout" Placement="Auto">
+      <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type TextBlock}" />
+      <MenuItem Header="TextBox" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type TextBox}"/>
+      <MenuItem Header="Label" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Label}" />
+      <Separator />
+      <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type CheckBox}" />
+      <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type RadioButton}" />
+      <Separator />
+      <MenuItem Header="Slider" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Slider}" />
+      <Separator />
+      <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Ellipse}" />
+      <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Rectangle}" />
+    </MenuFlyout>
+
+  </UserControl.Resources>
+  
+  <TabControl Padding="12,0,12,12">
 
     <!-- Grid -->
     
@@ -72,27 +104,12 @@
             ColumnDefinitions="100,*,100" 
             RowDefinitions="100,*,100"
             Background="WhiteSmoke"
-            ShowGridLines="False">
+            ShowGridLines="False"
+            ContextFlyout="{StaticResource GridInsertMenuFlyout}">
 
         <AdornerLayer.Adorner>
           <local:GridCellsAdorner Grid="{Binding $parent[Control]}" />
         </AdornerLayer.Adorner>
-
-        <Grid.ContextFlyout>
-          <MenuFlyout Placement="Auto">
-            <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type TextBlock}" />
-            <MenuItem Header="TextBox"  Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type TextBox}"/>
-            <MenuItem Header="Label" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Label}" />
-            <Separator />
-            <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type CheckBox}" />
-            <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type RadioButton}" />
-            <Separator />
-            <MenuItem Header="Slider" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Slider}" />
-            <Separator />
-            <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Ellipse}" />
-            <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsertGrid}" CommandParameter="{x:Type Rectangle}" />
-          </MenuFlyout>
-        </Grid.ContextFlyout>
 
         <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
         <Rectangle Fill="Green" Grid.Column="1" Grid.Row="1" />
@@ -110,23 +127,8 @@
               Classes="resizing"
               Width="500" 
               Height="500" 
-              Background="WhiteSmoke">
-
-        <Canvas.ContextFlyout>
-          <MenuFlyout Placement="Auto">
-            <MenuItem Header="TextBlock" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type TextBlock}" />
-            <MenuItem Header="TextBox"  Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type TextBox}"/>
-            <MenuItem Header="Label" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Label}" />
-            <Separator />
-            <MenuItem Header="CheckBox" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type CheckBox}" />
-            <MenuItem Header="RadioButton" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type RadioButton}" />
-            <Separator />
-            <MenuItem Header="Slider" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Slider}" />
-            <Separator />
-            <MenuItem Header="Ellipse" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Ellipse}" />
-            <MenuItem Header="Rectangle" Command="{Binding #Editor.OnInsertCanvas}" CommandParameter="{x:Type Rectangle}" />
-          </MenuFlyout>
-        </Canvas.ContextFlyout>
+              Background="WhiteSmoke"
+              ContextFlyout="{StaticResource CanvasInsertMenuFlyout}">
 
         <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
         <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
