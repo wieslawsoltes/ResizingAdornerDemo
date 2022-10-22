@@ -12,6 +12,7 @@ public partial class MainView : UserControl
     public static readonly IControlSelection? ControlSelection = new ControlSelection();
 
     private readonly CanvasEditor _canvasEditor = new ();
+    private readonly GridEditor _gridEditor = new ();
 
     public MainView()
     {
@@ -26,6 +27,7 @@ public partial class MainView : UserControl
             }
 
             _canvasEditor.Initialize(Canvas);
+            _gridEditor.Initialize(Grid);
         };
     }
 
@@ -34,8 +36,13 @@ public partial class MainView : UserControl
         ControlSelection?.Delete();
     }
 
-    public void OnInsert(Type type)
+    public void OnInsertCanvas(Type type)
     {
         _canvasEditor.Insert(type, _canvasEditor.InsertPoint);
+    }
+
+    public void OnInsertGrid(Type type)
+    {
+        _gridEditor.Insert(type, _gridEditor.InsertPoint);
     }
 }
