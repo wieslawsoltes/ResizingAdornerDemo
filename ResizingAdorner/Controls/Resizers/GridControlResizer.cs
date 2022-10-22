@@ -2,16 +2,13 @@
 using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 
 namespace ResizingAdorner.Controls.Resizers;
 
 public class GridControlResizer : IControlResizer
 {
     private Grid? _grid;
-    private int _column;
-    private int _row;
-    private int _columnSpan;
-    private int _rowSpan;
 
     public bool EnableSnap { get; set; }
 
@@ -22,39 +19,158 @@ public class GridControlResizer : IControlResizer
     public void Start(Control control)
     {
         _grid = control.Parent as Grid;
-        _column = Grid.GetColumn(control);
-        _row = Grid.GetRow(control);
-        _columnSpan = Grid.GetColumnSpan(control);
-        _rowSpan = Grid.GetRowSpan(control);
     }
 
     public void Move(Control control, Point origin, Vector vector)
     {
-        // TODO:
-        Console.WriteLine($"[Move] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
+        if (_grid is null)
+        {
+            return;
+        }
+
+        var point = origin + vector;
+        var cells = GridHelper.GetCells(_grid);
+
+        foreach (var cell in cells)
+        {
+            if (!cell.Bounds.Contains(point))
+            {
+                continue;
+            }
+
+            Grid.SetColumn(control, cell.Column);
+            Grid.SetRow(control, cell.Row);
+            break;
+        }
     }
 
     public void Left(Control control, Point origin, Vector vector)
     {
-        // TODO:
-        Console.WriteLine($"[Left] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
+        if (_grid is null)
+        {
+            return;
+        }
+
+        var point = origin + vector;
+        var cells = GridHelper.GetCells(_grid);
+
+        foreach (var cell in cells)
+        {
+            if (!cell.Bounds.Contains(point))
+            {
+                continue;
+            }
+
+            var column = Grid.GetColumn(control);
+            var columnSpan = Grid.GetColumnSpan(control);
+            if (cell.Column > column && columnSpan == 1)
+            {
+                break;
+            }
+
+            Grid.SetColumn(control, cell.Column);
+
+            if (column > cell.Column)
+            {
+                columnSpan = Math.Max(1, 1 + columnSpan);
+                Grid.SetColumnSpan(control, columnSpan);
+            }
+            else if (column < cell.Column)
+            {
+                columnSpan = Math.Max(1, columnSpan - 1);
+                Grid.SetColumnSpan(control, columnSpan);
+            }
+
+            break;
+        }
     }
 
     public void Right(Control control, Point origin, Vector vector)
     {
-        // TODO:
-        Console.WriteLine($"[Right] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
+        if (_grid is null)
+        {
+            return;
+        }
+
+        var point = origin + vector;
+        var cells = GridHelper.GetCells(_grid);
+
+        foreach (var cell in cells)
+        {
+            if (!cell.Bounds.Contains(point))
+            {
+                continue;
+            }
+
+            var column = Grid.GetColumn(control);
+            var columnSpan = Math.Max(1, 1 + cell.Column - column);
+            Grid.SetColumnSpan(control, columnSpan);
+            break;
+        }
     }
 
     public void Top(Control control, Point origin, Vector vector)
     {
-        // TODO:
-        Console.WriteLine($"[Top] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
+        if (_grid is null)
+        {
+            return;
+        }
+
+        var point = origin + vector;
+        var cells = GridHelper.GetCells(_grid);
+
+        foreach (var cell in cells)
+        {
+            if (!cell.Bounds.Contains(point))
+            {
+                continue;
+            }
+
+            var row = Grid.GetRow(control);
+            var rowSpan = Grid.GetRowSpan(control);
+            if (cell.Row > row && rowSpan == 1)
+            {
+                break;
+            }
+
+            Grid.SetRow(control, cell.Row);
+
+            if (row > cell.Row)
+            {
+                rowSpan = Math.Max(1, 1 + rowSpan);
+                Grid.SetRowSpan(control, rowSpan);
+            }
+            else if (row < cell.Row)
+            {
+                rowSpan = Math.Max(1, rowSpan - 1);
+                Grid.SetRowSpan(control, rowSpan);
+            }
+
+            break;
+        }
     }
 
     public void Bottom(Control control, Point origin, Vector vector)
     {
-        // TODO:
-        Console.WriteLine($"[Bottom] bounds='{control.Bounds}', origin='{origin}', vector='{vector}'");
+        if (_grid is null)
+        {
+            return;
+        }
+
+        var point = origin + vector;
+        var cells = GridHelper.GetCells(_grid);
+
+        foreach (var cell in cells)
+        {
+            if (!cell.Bounds.Contains(point))
+            {
+                continue;
+            }
+
+            var row = Grid.GetRow(control);
+            var rowSpan = Math.Max(1, 1 + cell.Row - row);
+            Grid.SetRowSpan(control, rowSpan);
+            break;
+        }
     }
 }
