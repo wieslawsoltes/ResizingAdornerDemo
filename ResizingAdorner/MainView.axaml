@@ -38,7 +38,7 @@
       <Setter Property="IsHitTestVisible" Value="True" />
     </Style>
 
-    <Style Selector="Grid.resizing > :is(Control):not(local|GridCellsAdorner)">
+    <Style Selector="Grid.resizing > :is(Control):not(local|GridAdorner)">
       <Setter Property="(AdornerLayer.Adorner)">
         <Template>
           <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
@@ -108,7 +108,7 @@
             ContextFlyout="{StaticResource GridInsertMenuFlyout}">
 
         <AdornerLayer.Adorner>
-          <local:GridCellsAdorner Grid="{Binding $parent[Control]}" />
+          <local:GridAdorner Grid="{Binding $parent[Control]}" />
         </AdornerLayer.Adorner>
 
         <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
