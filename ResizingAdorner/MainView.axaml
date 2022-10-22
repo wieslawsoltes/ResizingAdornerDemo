@@ -38,7 +38,7 @@
       <Setter Property="IsHitTestVisible" Value="True" />
     </Style>
 
-    <Style Selector="Grid.resizing > :is(Control):not(local|GridAdorner)">
+    <Style Selector="Grid.resizing > :is(Control):not(c|GridAdorner)">
       <Setter Property="(AdornerLayer.Adorner)">
         <Template>
           <c:ResizingAdornerPresenter AdornedControl="{Binding $parent[Control]}"
