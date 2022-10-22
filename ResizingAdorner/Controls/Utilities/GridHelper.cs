@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using ResizingAdorner.Controls.Model;
 
 namespace ResizingAdorner.Controls.Utilities;
 

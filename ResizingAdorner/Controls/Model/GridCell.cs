@@ -1,6 +1,6 @@
 using Avalonia;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls.Model;
 
 public class GridCell
 {

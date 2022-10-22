@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using ResizingAdorner.Controls.Utilities;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Controls;
 
 public class GridAdorner : Control
 {
