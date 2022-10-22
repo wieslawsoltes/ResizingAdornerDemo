@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using ResizingAdorner.Controls.Utilities;
@@ -22,12 +23,35 @@ public class GridCellsAdorner : Control
 
         if (Grid is { })
         {
+            var bounds = Grid.Bounds;
             var cells = GridHelper.GetCells(Grid);
             var pen = new Pen(new SolidColorBrush(Colors.Cyan));
 
+            var column = -1;
+            var row = -1;
             foreach (var cell in cells)
             {
-                context.DrawRectangle(null, pen, cell.Bounds);
+                if (cell.Column > column && cell.Column > 0)
+                {
+                    column = cell.Column;
+                    context.DrawLine(
+                        pen, 
+                        new Point(cell.ColumnOffset, 0.0), 
+                        new Point(cell.ColumnOffset, bounds.Height));
+                    // Console.WriteLine($"column {column}");
+                }
+
+                if (cell.Row > row && cell.Row > 0)
+                {
+                    row = cell.Row;
+                    context.DrawLine(
+                        pen, 
+                        new Point(0.0, cell.RowOffset), 
+                        new Point(bounds.Width, cell.RowOffset));
+                    // Console.WriteLine($"row {row}");
+                }
+
+                // context.DrawRectangle(null, pen, cell.Bounds);
             }
         }
     }
