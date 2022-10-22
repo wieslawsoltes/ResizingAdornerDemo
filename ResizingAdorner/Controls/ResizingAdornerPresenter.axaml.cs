@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -38,6 +39,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         AvaloniaProperty.Register<ResizingAdornerPresenter, IControlSelection?>(nameof(ControlSelection));
 
     private bool _updating;
+    private bool _dragging;
     private Thumb? _thumbCenter;
     private Thumb? _thumbLeft;
     private Thumb? _thumbRight;
@@ -47,7 +49,7 @@ public class ResizingAdornerPresenter : TemplatedControl
     private Thumb? _thumbTopRight;
     private Thumb? _thumbBottomLeft;
     private Thumb? _thumbBottomRight;
-    private Point _startPoint;
+    private Point _startPointParent;
 
     public Control? AdornedControl
     {
@@ -121,65 +123,65 @@ public class ResizingAdornerPresenter : TemplatedControl
 
         if (_thumbCenter is { })
         {
-            _thumbCenter.DragStarted += Thumb_OnDragStarted;
-            _thumbCenter.DragDelta += PART_ThumbCenter_OnDragDelta;
             _thumbCenter.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbCenter.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbCenter.AddHandler(InputElement.PointerMovedEvent, ThumbCenter_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbLeft is { })
         {
-            _thumbLeft.DragStarted += Thumb_OnDragStarted;
-            _thumbLeft.DragDelta += PART_ThumbLeft_OnDragDelta;
             _thumbLeft.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbLeft.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbLeft.AddHandler(InputElement.PointerMovedEvent, ThumbLeft_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbRight is { })
         {
-            _thumbRight.DragStarted += Thumb_OnDragStarted;
-            _thumbRight.DragDelta += PART_ThumbRight_OnDragDelta;
             _thumbRight.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbRight.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbRight.AddHandler(InputElement.PointerMovedEvent, ThumbRight_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbTop is { })
         {
-            _thumbTop.DragStarted += Thumb_OnDragStarted;
-            _thumbTop.DragDelta += PART_ThumbTop_OnDragDelta;
             _thumbTop.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTop.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTop.AddHandler(InputElement.PointerMovedEvent, ThumbTop_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbBottom is { })
         {
-            _thumbBottom.DragStarted += Thumb_OnDragStarted;
-            _thumbBottom.DragDelta += PART_ThumbBottom_OnDragDelta;
             _thumbBottom.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottom.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottom.AddHandler(InputElement.PointerMovedEvent, ThumbBottom_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbTopLeft is { })
         {
-            _thumbTopLeft.DragStarted += Thumb_OnDragStarted;
-            _thumbTopLeft.DragDelta += PART_ThumbTopLeft_OnDragDelta;
             _thumbTopLeft.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTopLeft.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTopLeft.AddHandler(InputElement.PointerMovedEvent, ThumbTopLeft_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbTopRight is { })
         {
-            _thumbTopRight.DragStarted += Thumb_OnDragStarted;
-            _thumbTopRight.DragDelta += PART_ThumbTopRight_OnDragDelta;
             _thumbTopRight.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTopRight.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbTopRight.AddHandler(InputElement.PointerMovedEvent, ThumbTopRight_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbBottomLeft is { })
         {
-            _thumbBottomLeft.DragStarted += Thumb_OnDragStarted;
-            _thumbBottomLeft.DragDelta += PART_ThumbBottomLeft_OnDragDelta;
             _thumbBottomLeft.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottomLeft.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottomLeft.AddHandler(InputElement.PointerMovedEvent, ThumbBottomLeft_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
 
         if (_thumbBottomRight is { })
         {
-            _thumbBottomRight.DragStarted += Thumb_OnDragStarted;
-            _thumbBottomRight.DragDelta += PART_ThumbBottomRight_OnDragDelta;
             _thumbBottomRight.AddHandler(InputElement.PointerPressedEvent, Thumb_OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottomRight.AddHandler(InputElement.PointerReleasedEvent, Thumb_OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            _thumbBottomRight.AddHandler(InputElement.PointerMovedEvent, ThumbBottomRight_OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
     }
 
@@ -191,156 +193,182 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void DragDeltaCenter(VectorEventArgs e)
+    private void DragDeltaCenter(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Move(control, _startPoint, e.Vector);
+            ControlResizer?.Move(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaLeft(VectorEventArgs e)
+    private void DragDeltaLeft(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Left(control, _startPoint, e.Vector);
+            ControlResizer?.Left(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaRight(VectorEventArgs e)
+    private void DragDeltaRight(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Right(control, _startPoint, e.Vector);
+            ControlResizer?.Right(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaTop(VectorEventArgs e)
+    private void DragDeltaTop(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Top(control, _startPoint, e.Vector);
+            ControlResizer?.Top(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaBottom(VectorEventArgs e)
+    private void DragDeltaBottom(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Bottom(control, _startPoint, e.Vector);
+            ControlResizer?.Bottom(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaTopLeft(VectorEventArgs e)
+    private void DragDeltaTopLeft(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Left(control, _startPoint, e.Vector);
-            ControlResizer?.Top(control, _startPoint, e.Vector);
+            ControlResizer?.Left(control, _startPointParent, vector);
+            ControlResizer?.Top(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaTopRight(VectorEventArgs e)
+    private void DragDeltaTopRight(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Right(control, _startPoint, e.Vector);
-            ControlResizer?.Top(control, _startPoint, e.Vector);
+            ControlResizer?.Right(control, _startPointParent, vector);
+            ControlResizer?.Top(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaBottomLeft(VectorEventArgs e)
+    private void DragDeltaBottomLeft(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Left(control, _startPoint, e.Vector);
-            ControlResizer?.Bottom(control, _startPoint, e.Vector);
+            ControlResizer?.Left(control, _startPointParent, vector);
+            ControlResizer?.Bottom(control, _startPointParent, vector);
             _updating = false;
         }
     }
 
-    private void DragDeltaBottomRight(VectorEventArgs e)
+    private void DragDeltaBottomRight(Vector vector)
     {
         if (!_updating && AdornedControl is { } control)
         {
             _updating = true;
-            ControlResizer?.Right(control, _startPoint, e.Vector);
-            ControlResizer?.Bottom(control, _startPoint, e.Vector);
+            ControlResizer?.Right(control, _startPointParent, vector);
+            ControlResizer?.Bottom(control, _startPointParent, vector);
             _updating = false;
         }
+    }
+
+    private void Moved(PointerEventArgs e, Action<Vector> action)
+    {
+        if (!_dragging)
+        {
+            return;
+        }
+
+        if (AdornedControl is {Parent: Control parent})
+        {
+            var point = e.GetPosition(parent);
+            var vector = (Vector) (point - _startPointParent);
+            action(vector);
+        }
+    }
+
+    private void Pressed(PointerPressedEventArgs e)
+    {
+        if (AdornedControl is {Parent: Control parent})
+        {
+            _startPointParent = e.GetPosition(parent);
+            DragStarted();
+            _dragging = true;
+        }
+    }
+
+    private void Released(PointerReleasedEventArgs e)
+    {
+        _dragging = false;
     }
 
     private void Thumb_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (AdornedControl is { } control)
-        {
-            _startPoint = e.GetPosition(control);
-        }
+        Pressed(e);
     }
 
-    private void Thumb_OnDragStarted(object? sender, VectorEventArgs e)
+    private void Thumb_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        DragStarted();
+        Released(e);
     }
 
-    private void PART_ThumbCenter_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbCenter_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaCenter(e);
+        Moved(e, DragDeltaCenter);
     }
 
-    private void PART_ThumbLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbLeft_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaLeft(e);
+        Moved(e, DragDeltaLeft);
     }
 
-    private void PART_ThumbRight_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbRight_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaRight(e);
+        Moved(e, DragDeltaRight);
     }
 
-    private void PART_ThumbTop_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbTop_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaTop(e);
+        Moved(e, DragDeltaTop);
     }
 
-    private void PART_ThumbBottom_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbBottom_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaBottom(e);
+        Moved(e, DragDeltaBottom);
     }
 
-    private void PART_ThumbTopLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbTopLeft_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaTopLeft(e);
+        Moved(e, DragDeltaTopLeft);
     }
 
-    private void PART_ThumbTopRight_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbTopRight_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaTopRight(e);
+        Moved(e, DragDeltaTopRight);
     }
 
-    private void PART_ThumbBottomLeft_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbBottomLeft_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaBottomLeft(e);
+        Moved(e, DragDeltaBottomLeft);
     }
 
-    private void PART_ThumbBottomRight_OnDragDelta(object? sender, VectorEventArgs e)
+    private void ThumbBottomRight_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        DragDeltaBottomRight(e);
+        Moved(e, DragDeltaBottomRight);
     }
 }
-
