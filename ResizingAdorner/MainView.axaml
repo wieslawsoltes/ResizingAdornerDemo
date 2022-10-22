@@ -108,7 +108,7 @@
             ContextFlyout="{StaticResource GridInsertMenuFlyout}">
 
         <AdornerLayer.Adorner>
-          <local:GridAdorner Grid="{Binding $parent[Control]}" />
+          <c:GridAdorner Grid="{Binding $parent[Control]}" />
         </AdornerLayer.Adorner>
 
         <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
