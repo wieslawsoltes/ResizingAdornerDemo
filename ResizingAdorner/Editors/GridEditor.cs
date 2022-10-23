@@ -62,6 +62,9 @@ public class GridEditor
             case RadioButton radioButton:
                 radioButton.Content = "RadioButton";
                 break;
+            case Button button:
+                button.Content = "Button";
+                break;
             case Slider slider:
                 slider.Value = 50;
                 break;
