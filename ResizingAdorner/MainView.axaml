@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:ResizingAdorner"
              xmlns:c="clr-namespace:ResizingAdorner.Controls"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ResizingAdorner.MainView"
              x:CompileBindings="True" x:DataType="local:MainView"
@@ -52,132 +53,146 @@
 
   </UserControl.Resources>
   
-  <TabControl Padding="12,0,12,12">
-
-    <!-- DockPanel -->
+  <Grid ColumnDefinitions="250, 8, *">
     
-    <TabItem Header="DockPanel">
+    <ListBox Name="ControlTypes" Grid.Column="0">
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="system:Type">
+          <TextBlock Text="{Binding Name}" ToolTip.Tip="{Binding FullName}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
 
-      <DockPanel Name="DockPanel" 
-            Classes="resizing"
-            Background="WhiteSmoke"
-            LastChildFill="True">
+    <GridSplitter Grid.Column="1" />
 
-        <Button Content="Test Button" DockPanel.Dock="Left" />
-        <TextBox Text="Test TextBox" DockPanel.Dock="Right" />
-        <CheckBox Content="Test CheckBox" DockPanel.Dock="Top" />
-        <Label Content="Test Label" DockPanel.Dock="Bottom" />
-        <TextBlock Text="Test TextBlock" Background="LightGray" />
-        
-      </DockPanel>
+    <TabControl Grid.Column="2" Padding="12,0,12,12">
 
-    </TabItem>
+      <!-- DockPanel -->
+      
+      <TabItem Header="DockPanel">
 
-    <!-- StackPanel -->
-    
-    <TabItem Header="StackPanel">
-
-      <StackPanel Name="StackPanel" 
-                  Classes="resizing"
-                  Orientation="Vertical"
-                  Background="WhiteSmoke">
-
-        <Button Content="Test Button" />
-        <TextBox Text="Test TextBox" />
-        <CheckBox Content="Test CheckBox" />
-        <Label Content="Test Label" />
-        <TextBlock Text="Test TextBlock" Background="LightGray" />
-
-      </StackPanel>
-
-    </TabItem>
-
-    <!-- WrapPanel -->
-
-    <TabItem Header="WrapPanel">
-
-      <WrapPanel Name="WrapPanel" 
-                 Classes="resizing"
-                 Background="WhiteSmoke">
-
-        <Button Content="Test Button" />
-        <TextBox Text="Test TextBox" />
-        <CheckBox Content="Test CheckBox" />
-        <Label Content="Test Label" />
-        <TextBlock Text="Test TextBlock" Background="LightGray" />
-
-      </WrapPanel>
-
-    </TabItem>
-
-    <!-- Grid -->
-    
-    <TabItem Header="Grid">
-
-      <Grid Name="Grid" 
-            Classes="resizing"
-            ColumnDefinitions="100,*,100" 
-            RowDefinitions="100,*,100"
-            Background="WhiteSmoke"
-            ShowGridLines="False"
-            ContextFlyout="{StaticResource GridInsertMenuFlyout}">
-
-        <AdornerLayer.Adorner>
-          <c:GridAdorner Grid="{Binding $parent[Control]}" />
-        </AdornerLayer.Adorner>
-
-        <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
-        <Rectangle Fill="Green" Grid.Column="1" Grid.Row="1" />
-        <Rectangle Fill="Blue" Grid.Column="2" Grid.Row="2" />
-
-      </Grid>
-
-    </TabItem>
-
-    <!-- Canvas -->
-    
-    <TabItem Header="Canvas">
-
-      <Canvas Name="Canvas" 
+        <DockPanel Name="DockPanel" 
               Classes="resizing"
-              Width="500" 
-              Height="500" 
               Background="WhiteSmoke"
-              ContextFlyout="{StaticResource CanvasInsertMenuFlyout}">
+              LastChildFill="True">
 
-        <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
-        <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
-        <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
-        <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
-        <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
-        <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
-        <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
-          <TextBlock Text="Test TextBlock" Margin="6" />
-          <TextBox Text="Test TextBox" Margin="6" />
+          <Button Content="Test Button" DockPanel.Dock="Left" />
+          <TextBox Text="Test TextBox" DockPanel.Dock="Right" />
+          <CheckBox Content="Test CheckBox" DockPanel.Dock="Top" />
+          <Label Content="Test Label" DockPanel.Dock="Bottom" />
+          <TextBlock Text="Test TextBlock" Background="LightGray" />
+          
+        </DockPanel>
+
+      </TabItem>
+
+      <!-- StackPanel -->
+      
+      <TabItem Header="StackPanel">
+
+        <StackPanel Name="StackPanel" 
+                    Classes="resizing"
+                    Orientation="Vertical"
+                    Background="WhiteSmoke">
+
+          <Button Content="Test Button" />
+          <TextBox Text="Test TextBox" />
+          <CheckBox Content="Test CheckBox" />
+          <Label Content="Test Label" />
+          <TextBlock Text="Test TextBlock" Background="LightGray" />
+
         </StackPanel>
-        <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
-        <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
-          <Rectangle.RenderTransform>
-            <TransformGroup>
-              <RotateTransform Angle="45" />
-              <ScaleTransform ScaleX="1" ScaleY="1" />
-            </TransformGroup>
-          </Rectangle.RenderTransform>
-        </Rectangle>
-        <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
-          <Rectangle.RenderTransform>
-            <TransformGroup>
-              <RotateTransform Angle="0" />
-              <ScaleTransform ScaleX="2" ScaleY="2" />
-            </TransformGroup>
-          </Rectangle.RenderTransform>
-        </Rectangle>
 
-      </Canvas>
+      </TabItem>
 
-    </TabItem>
+      <!-- WrapPanel -->
 
-  </TabControl>
+      <TabItem Header="WrapPanel">
+
+        <WrapPanel Name="WrapPanel" 
+                   Classes="resizing"
+                   Background="WhiteSmoke">
+
+          <Button Content="Test Button" />
+          <TextBox Text="Test TextBox" />
+          <CheckBox Content="Test CheckBox" />
+          <Label Content="Test Label" />
+          <TextBlock Text="Test TextBlock" Background="LightGray" />
+
+        </WrapPanel>
+
+      </TabItem>
+
+      <!-- Grid -->
+      
+      <TabItem Header="Grid">
+
+        <Grid Name="Grid" 
+              Classes="resizing"
+              ColumnDefinitions="100,*,100" 
+              RowDefinitions="100,*,100"
+              Background="WhiteSmoke"
+              ShowGridLines="False"
+              ContextFlyout="{StaticResource GridInsertMenuFlyout}">
+
+          <AdornerLayer.Adorner>
+            <c:GridAdorner Grid="{Binding $parent[Control]}" />
+          </AdornerLayer.Adorner>
+
+          <Ellipse Fill="Red" Grid.Column="0" Grid.Row="0" />
+          <Rectangle Fill="Green" Grid.Column="1" Grid.Row="1" />
+          <Rectangle Fill="Blue" Grid.Column="2" Grid.Row="2" />
+
+        </Grid>
+
+      </TabItem>
+
+      <!-- Canvas -->
+      
+      <TabItem Header="Canvas">
+
+        <Canvas Name="Canvas" 
+                Classes="resizing"
+                Width="500" 
+                Height="500" 
+                Background="WhiteSmoke"
+                ContextFlyout="{StaticResource CanvasInsertMenuFlyout}">
+
+          <TextBlock Text="Test TextBlock" Background="LightGray" Canvas.Left="50" Canvas.Top="50" />
+          <TextBox Text="Test TextBox" Canvas.Left="50" Canvas.Top="100" />
+          <CheckBox Content="Test CheckBox" Canvas.Left="50" Canvas.Top="150" />
+          <Button Content="Test Button" Canvas.Left="50" Canvas.Top="200" />
+          <Label Content="Test Label" Canvas.Left="50" Canvas.Top="250" />
+          <Slider Value="50" Minimum="0" Maximum="100" Canvas.Left="50" Canvas.Top="300" Width="150" />
+          <StackPanel Spacing="8" Background="LightGray" Canvas.Left="50" Canvas.Top="380">
+            <TextBlock Text="Test TextBlock" Margin="6" />
+            <TextBox Text="Test TextBox" Margin="6" />
+          </StackPanel>
+          <Ellipse Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="50" />
+          <Rectangle Fill="Gray" Width="100" Height="100" Canvas.Left="300" Canvas.Top="200">
+            <Rectangle.RenderTransform>
+              <TransformGroup>
+                <RotateTransform Angle="45" />
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+              </TransformGroup>
+            </Rectangle.RenderTransform>
+          </Rectangle>
+          <Rectangle Fill="Gray" Width="50" Height="50" Canvas.Left="300" Canvas.Top="375">
+            <Rectangle.RenderTransform>
+              <TransformGroup>
+                <RotateTransform Angle="0" />
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+              </TransformGroup>
+            </Rectangle.RenderTransform>
+          </Rectangle>
+
+        </Canvas>
+
+      </TabItem>
+
+    </TabControl>
+
+  </Grid>
 
 </UserControl>
 
