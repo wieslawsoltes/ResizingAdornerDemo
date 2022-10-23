@@ -66,13 +66,9 @@ public partial class MainView : UserControl
             }
             else
             {
-                var canvas = this.InputHitTest(e.GetPosition(ControlTypes));
-                Console.WriteLine(canvas);
-                //var canvas = HitTestHelper.HitTest<Canvas>(e, ControlTypes);
-                //if (Equals(canvas, Canvas))
-                //{
-                //    _canvasEditor.Insert(_dragItem.DataContext as Type, e.GetPosition(Canvas));
-                //}
+                var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
+                Console.WriteLine(inputElement);
+                // TODO: Move/add preview
             }
         }
     }
@@ -81,12 +77,17 @@ public partial class MainView : UserControl
     {
         if (_isDragging)
         {
-            var canvas = this.InputHitTest(e.GetPosition(ControlTypes));
-            Console.WriteLine(canvas);
-            //var canvas = HitTestHelper.HitTest<Canvas>(e, ControlTypes);
-            if (Equals(canvas, Canvas))
+            var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
+            Console.WriteLine(inputElement);
+
+            if (Equals(inputElement, Canvas))
             {
                 _canvasEditor.Insert(_dragItem.DataContext as Type, e.GetPosition(Canvas));
+            }
+            
+            if (Equals(inputElement, Grid))
+            {
+                _gridEditor.Insert(_dragItem.DataContext as Type, e.GetPosition(Grid));
             }
         }
 
