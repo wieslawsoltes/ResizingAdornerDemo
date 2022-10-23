@@ -42,7 +42,7 @@ public partial class MainView : UserControl
 
         foreach (var t in controlsAssembly.GetTypes())
         {
-            if (!t.IsAbstract || t.IsPublic || t.IsClass)
+            if (!t.IsAbstract && t.IsPublic && t.IsClass && !t.ContainsGenericParameters)
             {
                 var b = t.BaseType;
                 while (b != null)
