@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
 using ResizingAdorner.Controls.Model;
@@ -29,8 +30,39 @@ public partial class MainView : UserControl
             _canvasEditor.Initialize(Canvas);
             _gridEditor.Initialize(Grid);
         };
+
+        InitToolbox();
     }
 
+    private void InitToolbox()
+    {
+        var controlType = typeof(Control);
+        var controlsAssembly = controlType.Assembly;
+        var controlTypes = new List<Type>();
+
+        foreach (var t in controlsAssembly.GetTypes())
+        {
+            if (!t.IsAbstract || t.IsPublic || t.IsClass)
+            {
+                var b = t.BaseType;
+                while (b != null)
+                {
+                    if (b == controlType)
+                    {
+                        controlTypes.Add(t);
+                        break;
+                    }
+
+                    b = b.BaseType;
+                }
+            }
+        }
+
+        controlTypes.Sort((a, b) => a.Name.CompareTo(b.Name));
+
+        ControlTypes.Items = controlTypes;
+    }
+    
     public void OnDelete()
     {
         ControlSelection?.Delete();
