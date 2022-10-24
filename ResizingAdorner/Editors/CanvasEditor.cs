@@ -46,6 +46,36 @@ public class CanvasEditor
     {
         switch (control)
         {
+            case Canvas canvas:
+                canvas.Background = new SolidColorBrush(Colors.Gray);
+                canvas.Classes.Add("resizing");
+                canvas.Width = 200;
+                canvas.Height = 200;
+                break;
+            case Grid grid:
+                grid.Background = new SolidColorBrush(Colors.Gray);
+                grid.Classes.Add("resizing");
+                grid.Width = 200;
+                grid.Height = 200;
+                break;
+            case StackPanel stackPanel:
+                stackPanel.Background = new SolidColorBrush(Colors.Gray);
+                stackPanel.Classes.Add("resizing");
+                stackPanel.Width = 200;
+                stackPanel.Height = 200;
+                break;
+            case WrapPanel wrapPanel:
+                wrapPanel.Background = new SolidColorBrush(Colors.Gray);
+                wrapPanel.Classes.Add("resizing");
+                wrapPanel.Width = 200;
+                wrapPanel.Height = 200;
+                break;
+            case DockPanel dockPanel:
+                dockPanel.Background = new SolidColorBrush(Colors.Gray);
+                dockPanel.Classes.Add("resizing");
+                dockPanel.Width = 200;
+                dockPanel.Height = 200;
+                break;
             case TextBlock textBlock:
                 textBlock.Text = "TextBlock";
                 break;
