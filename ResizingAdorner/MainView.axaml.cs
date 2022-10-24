@@ -29,24 +29,11 @@ public partial class MainView : UserControl
             {
                 ControlSelection?.Initialize(control);
             }
-
-            _canvasEditor.Initialize(Canvas);
-            _gridEditor.Initialize(Grid);
         };
     }
 
     public void OnDelete()
     {
         ControlSelection?.Delete();
-    }
-
-    public void OnInsertGrid(Type type)
-    {
-        GridEditor.Insert(type, _gridEditor.InsertPoint, Grid);
-    }
-
-    public void OnInsertCanvas(Type type)
-    {
-        CanvasEditor.Insert(type, _canvasEditor.InsertPoint, Canvas);
     }
 }

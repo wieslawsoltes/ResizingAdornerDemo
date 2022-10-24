@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -30,31 +31,65 @@ public partial class ToolboxView : UserControl
         ControlTypes.AddHandler(InputElement.PointerReleasedEvent, ToolBox_PointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         ControlTypes.AddHandler(InputElement.PointerMovedEvent, ToolBox_PointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
 
+        ControlTypes.Items = GetControlTypes();
+    }
+
+    private List<Type> GetControlTypes()
+    {
         var controlType = typeof(Control);
+        var topLevelType = typeof(TopLevel);
         var controlsAssembly = controlType.Assembly;
         var controlTypes = new List<Type>();
 
         foreach (var t in controlsAssembly.GetTypes())
         {
-            if (!t.IsAbstract && t.IsPublic && t.IsClass && !t.ContainsGenericParameters)
+            if (!t.IsAbstract
+                && t.IsPublic
+                && t.IsClass
+                && !t.ContainsGenericParameters
+                && t.GetConstructors().Any(x => x.GetParameters().Length == 0))
             {
-                var b = t.BaseType;
-                while (b != null)
+                if (HasBaseType(t, controlType) && !HasBaseType(t, topLevelType))
                 {
-                    if (b == controlType)
-                    {
-                        controlTypes.Add(t);
-                        break;
-                    }
-
-                    b = b.BaseType;
+                    controlTypes.Add(t);
                 }
             }
         }
 
         controlTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
 
-        ControlTypes.Items = controlTypes;
+        return controlTypes;
+    }
+
+    private bool HasBaseType(Type t, Type baseType)
+    {
+        var b = t.BaseType;
+        while (b != null)
+        {
+            if (b == baseType)
+            {
+                return true;
+            }
+
+            b = b.BaseType;
+        }
+
+        return false;
+    }
+
+    private Control FinDropControl(Control control)
+    {
+        var adorner = HitTestHelper.FindControl<ResizingAdornerPresenter>(control);
+        if (adorner is { AdornedControl: { } })
+        {
+            if (adorner.AdornedControl is ResizingAdornerPresenter)
+            {
+                return FinDropControl(adorner.AdornedControl);
+            }
+            control = adorner.AdornedControl;
+        }
+
+        return control;
     }
 
     private void ToolBox_PointerMoved(object? sender, PointerEventArgs e)
@@ -81,22 +116,6 @@ public partial class ToolboxView : UserControl
         }
     }
 
-    private Control FinDropControl(Control control)
-    {
-        var adorner = HitTestHelper.FindControl<ResizingAdornerPresenter>(control);
-        if (adorner is { AdornedControl: { } })
-        {
-            if (adorner.AdornedControl is ResizingAdornerPresenter)
-            {
-                return FinDropControl(adorner.AdornedControl);
-            }
-            control = adorner.AdornedControl;
-        }
-
-        return control;
-    }
-
-    
     private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
