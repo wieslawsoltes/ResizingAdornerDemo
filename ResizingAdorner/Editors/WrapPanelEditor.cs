@@ -1,24 +1,28 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
-using Avalonia.Media;
+using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
-public class WrapPanelEditor
+public class WrapPanelEditor : IControlEditor
 {
-    public static void Insert(Type type, Point point, WrapPanel wrapPanel)
+    public void Insert(Type type, Point point, object control)
     {
-        var obj = Activator.CreateInstance(type);
-        if (obj is not Control control)
+        if (control is not WrapPanel wrapPanel)
         {
             return;
         }
 
-        DefaultsProvider.FixedPositionAndSize(control);
+        if (TypeFactory.CreateControl(type) is not { } child)
+        {
+            return;
+        }
 
-        wrapPanel.Children.Add(control);
+        DefaultsProvider.FixedPositionAndSize(child);
+
+        wrapPanel.Children.Add(child);
     }
 }

@@ -1,25 +1,31 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
+using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
-public class CanvasEditor
+public class CanvasEditor : IControlEditor
 {
-    public static void Insert(Type type, Point point, Canvas canvas)
+    public void Insert(Type type, Point point, object control)
     {
-        var obj = Activator.CreateInstance(type);
-        if (obj is not Control control)
+        if (control is not Canvas canvas)
+        {
+            return;
+        }
+        
+        if (TypeFactory.CreateControl(type) is not { } child)
         {
             return;
         }
 
-        DefaultsProvider.FixedPositionAndSize(control);
+        DefaultsProvider.FixedPositionAndSize(child);
 
-        Canvas.SetLeft(control, point.X);
-        Canvas.SetTop(control, point.Y);
+        Canvas.SetLeft(child, point.X);
+        Canvas.SetTop(child, point.Y);
 
-        canvas.Children.Add(control);
+        canvas.Children.Add(child);
     }
 }

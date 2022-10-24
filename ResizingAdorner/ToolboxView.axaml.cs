@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using ResizingAdorner.Controls;
+using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
 using ResizingAdorner.Editors;
 
@@ -116,6 +117,19 @@ public partial class ToolboxView : UserControl
         }
     }
 
+    private Dictionary<Type, IControlEditor> _controlEditors = new()
+    {
+        [typeof(Button)] = new ButtonEditor(),
+        [typeof(Canvas)] = new CanvasEditor(),
+        [typeof(ContentControl)] = new ContentControlEditor(),
+        [typeof(DockPanel)] = new DockPanelEditor(),
+        [typeof(Grid)] = new GridEditor(),
+        [typeof(Label)] = new LabelEditor(),
+        [typeof(ScrollViewer)] = new ScrollViewerEditor(),
+        [typeof(StackPanel)] = new StackPanelEditor(),
+        [typeof(WrapPanel)] = new WrapPanelEditor(),
+    };
+
     private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
@@ -127,29 +141,9 @@ public partial class ToolboxView : UserControl
             {
                 control = FinDropControl(control);
 
-                if (control is Canvas canvas)
+                if (_controlEditors.TryGetValue(control.GetType(), out var controlEditor))
                 {
-                    CanvasEditor.Insert(type, e.GetPosition(canvas), canvas);
-                }
-            
-                if (control is Grid grid)
-                {
-                    GridEditor.Insert(type, e.GetPosition(grid), grid);
-                }
-
-                if (control is StackPanel stackPanel)
-                {
-                    StackPanelEditor.Insert(type, e.GetPosition(stackPanel), stackPanel);
-                }
-
-                if (control is WrapPanel wrapPanel)
-                {
-                    WrapPanelEditor.Insert(type, e.GetPosition(wrapPanel), wrapPanel);
-                }
-
-                if (control is DockPanel dockPanel)
-                {
-                    DockPanelEditor.Insert(type, e.GetPosition(dockPanel), dockPanel);
+                    controlEditor.Insert(type, e.GetPosition(control), control);
                 }
             }
         }

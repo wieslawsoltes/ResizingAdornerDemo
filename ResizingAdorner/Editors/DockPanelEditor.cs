@@ -1,22 +1,28 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
+using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Controls.Utilities;
 using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
-public class DockPanelEditor
+public class DockPanelEditor : IControlEditor
 {
-    public static void Insert(Type type, Point point, DockPanel dockPanel)
+    public void Insert(Type type, Point point, object control)
     {
-        var obj = Activator.CreateInstance(type);
-        if (obj is not Control control)
+        if (control is not DockPanel dockPanel)
         {
             return;
         }
 
-        DefaultsProvider.AutoPositionAndStretch(control);
+        if (TypeFactory.CreateControl(type) is not { } child)
+        {
+            return;
+        }
 
-        dockPanel.Children.Add(control);
+        DefaultsProvider.AutoPositionAndStretch(child);
+
+        dockPanel.Children.Add(child);
     }
 }
