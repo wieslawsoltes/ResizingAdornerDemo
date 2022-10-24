@@ -104,14 +104,34 @@ public partial class ToolboxView : UserControl
             var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
             Console.WriteLine(inputElement);
 
-            if (inputElement is Canvas canvas)
+            if (inputElement is Control control)
             {
-                CanvasEditor.Insert(type, e.GetPosition(canvas), canvas);
-            }
+                control = FinDropControl(control);
+
+                if (control is Canvas canvas)
+                {
+                    CanvasEditor.Insert(type, e.GetPosition(canvas), canvas);
+                }
             
-            if (inputElement is Grid grid)
-            {
-                GridEditor.Insert(type, e.GetPosition(grid), grid);
+                if (control is Grid grid)
+                {
+                    GridEditor.Insert(type, e.GetPosition(grid), grid);
+                }
+
+                if (control is StackPanel stackPanel)
+                {
+                    StackPanelEditor.Insert(type, e.GetPosition(stackPanel), stackPanel);
+                }
+
+                if (control is WrapPanel wrapPanel)
+                {
+                    WrapPanelEditor.Insert(type, e.GetPosition(wrapPanel), wrapPanel);
+                }
+
+                if (control is DockPanel dockPanel)
+                {
+                    DockPanelEditor.Insert(type, e.GetPosition(dockPanel), dockPanel);
+                }
             }
         }
 
