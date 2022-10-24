@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:ResizingAdorner"
              xmlns:c="clr-namespace:ResizingAdorner.Controls"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ResizingAdorner.MainView"
              x:CompileBindings="True" x:DataType="local:MainView"
@@ -52,23 +51,17 @@
     </MenuFlyout>
 
   </UserControl.Resources>
-  
+
   <Grid ColumnDefinitions="250, 8, *">
-    
-    <ListBox Name="ControlTypes" Grid.Column="0">
-      <ListBox.ItemTemplate>
-        <DataTemplate DataType="system:Type">
-          <TextBlock Text="{Binding Name}" ToolTip.Tip="{Binding FullName}" />
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+
+    <local:ToolboxView Name="Toolbox" Grid.Column="0" />
 
     <GridSplitter Grid.Column="1" />
 
     <TabControl Grid.Column="2" Padding="12,0,12,12">
 
       <!-- DockPanel -->
-      
+
       <TabItem Header="DockPanel">
 
         <DockPanel Name="DockPanel" 

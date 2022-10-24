@@ -42,7 +42,7 @@ public class CanvasEditor
         }
     }
 
-    private void SetControlDefaults(Control control)
+    private static void SetControlDefaults(Control control)
     {
         switch (control)
         {
@@ -81,13 +81,8 @@ public class CanvasEditor
         }
     }
 
-    public void Insert(Type type, Point point)
+    public static void Insert(Type type, Point point, Canvas canvas)
     {
-        if (_canvas is null)
-        {
-            return;
-        }
-
         var obj = Activator.CreateInstance(type);
         if (obj is not Control control)
         {
@@ -99,6 +94,6 @@ public class CanvasEditor
         Canvas.SetLeft(control, point.X);
         Canvas.SetTop(control, point.Y);
 
-        _canvas.Children.Add(control);
+        canvas.Children.Add(control);
     }
 }

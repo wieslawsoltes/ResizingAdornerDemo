@@ -43,7 +43,7 @@ public class GridEditor
         }
     }
 
-    private void SetControlDefaults(Control control)
+    private static void SetControlDefaults(Control control)
     {
         switch (control)
         {
@@ -77,13 +77,8 @@ public class GridEditor
         }
     }
 
-    public void Insert(Type type, Point point)
+    public static void Insert(Type type, Point point, Grid grid)
     {
-        if (_grid is null)
-        {
-            return;
-        }
-
         var obj = Activator.CreateInstance(type);
         if (obj is not Control control)
         {
@@ -92,7 +87,7 @@ public class GridEditor
 
         SetControlDefaults(control);
 
-        var cells = GridHelper.GetCells(_grid);
+        var cells = GridHelper.GetCells(grid);
 
         foreach (var cell in cells)
         {
@@ -103,6 +98,6 @@ public class GridEditor
             }
         }
 
-        _grid.Children.Add(control);
+        grid.Children.Add(control);
     }
 }
