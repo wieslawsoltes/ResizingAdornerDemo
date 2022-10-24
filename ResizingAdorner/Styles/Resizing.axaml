@@ -1,8 +1,8 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:c="clr-namespace:ResizingAdorner.Controls"
-        xmlns:r="clr-namespace:ResizingAdorner.Controls.Resizers"
-        xmlns:local="clr-namespace:ResizingAdorner">
+        xmlns:views="clr-namespace:ResizingAdorner.Views"
+        xmlns:resizers="clr-namespace:ResizingAdorner.Resizers">
 
   <Design.PreviewWith>
     <Border Padding="20">
@@ -21,9 +21,9 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static local:MainView.ControlSelection}">
+                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
-            <r:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
+            <resizers:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
           </c:ResizingAdornerPresenter.ControlResizer>
         </c:ResizingAdornerPresenter>
       </Template>
@@ -41,9 +41,9 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static local:MainView.ControlSelection}">
+                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
-            <r:GridControlResizer />
+            <resizers:GridControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
         </c:ResizingAdornerPresenter>
       </Template>
@@ -61,9 +61,9 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static local:MainView.ControlSelection}">
+                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
-            <r:DockPanelControlResizer />
+            <resizers:DockPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
         </c:ResizingAdornerPresenter>
       </Template>
@@ -81,9 +81,9 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static local:MainView.ControlSelection}">
+                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
-            <r:StackPanelControlResizer />
+            <resizers:StackPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
         </c:ResizingAdornerPresenter>
       </Template>
@@ -101,9 +101,9 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static local:MainView.ControlSelection}">
+                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
-            <r:WrapPanelControlResizer />
+            <resizers:WrapPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
         </c:ResizingAdornerPresenter>
       </Template>

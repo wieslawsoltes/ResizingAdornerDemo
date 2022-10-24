@@ -8,15 +8,18 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using ResizingAdorner.Controls;
-using ResizingAdorner.Controls.Model;
-using ResizingAdorner.Controls.Utilities;
 using ResizingAdorner.Defaults;
 using ResizingAdorner.Editors;
+using ResizingAdorner.Model;
+using ResizingAdorner.Selection;
+using ResizingAdorner.Utilities;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Views;
 
 public partial class ToolboxView : UserControl
 {
+    public static readonly IControlSelection? ControlSelection = new ControlSelection();
+
     private static readonly Dictionary<Type, IControlEditor> s_controlEditors = new()
     {
         [typeof(Border)] = new BorderEditor(),
@@ -151,13 +154,14 @@ public partial class ToolboxView : UserControl
                 if (deltaX > 3d || deltaY > 3d)
                 {
                     _isDragging = true;
-                    Console.WriteLine(_isDragging);
                 }
             }
             else
             {
                 var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
+
                 Console.WriteLine(inputElement);
+
                 // TODO: Move/add preview
             }
         }
@@ -168,6 +172,7 @@ public partial class ToolboxView : UserControl
         if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
         {
             var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
+
             Console.WriteLine(inputElement);
 
             if (inputElement is Control control)

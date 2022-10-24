@@ -1,7 +1,7 @@
 using System;
 using Avalonia;
 
-namespace ResizingAdorner.Controls.Model;
+namespace ResizingAdorner.Model;
 
 public interface IControlEditor
 {

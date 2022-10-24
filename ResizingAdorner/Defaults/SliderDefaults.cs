@@ -1,5 +1,6 @@
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
+using Avalonia.Layout;
+using ResizingAdorner.Model;
 
 namespace ResizingAdorner.Defaults;
 
@@ -10,6 +11,8 @@ public class SliderDefaults : IControlDefaults
         if (control is Slider slider)
         {
             slider.Value = 50;
+            slider.HorizontalAlignment = HorizontalAlignment.Stretch;
+            slider.VerticalAlignment = VerticalAlignment.Stretch;
         }
     }
 

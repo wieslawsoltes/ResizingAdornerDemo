@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace ResizingAdorner;
+namespace ResizingAdorner.Views;
 
 public partial class MainWindow : Window
 {

@@ -1,13 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
-using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Model;
+using ResizingAdorner.Utilities;
 
-namespace ResizingAdorner.Controls.Resizers;
+namespace ResizingAdorner.Resizers;
 
-public class StackPanelControlResizer : IControlResizer
+public class WrapPanelControlResizer : IControlResizer
 {
-    private StackPanel? _stackPanel;
+    private WrapPanel? _wrapPanel;
     private double _width;
     private double _height;
 
@@ -29,7 +29,7 @@ public class StackPanelControlResizer : IControlResizer
 
     public void Start(Control control)
     {
-        _stackPanel = control.Parent as StackPanel;
+        _wrapPanel = control.Parent as WrapPanel;
         _width = control.Bounds.Width;
         _height = control.Bounds.Height;
     }

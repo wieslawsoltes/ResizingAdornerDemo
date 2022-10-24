@@ -1,8 +1,8 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
-using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Model;
+using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.Editors;
 

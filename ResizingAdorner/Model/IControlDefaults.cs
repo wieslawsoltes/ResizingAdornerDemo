@@ -1,4 +1,4 @@
-namespace ResizingAdorner.Controls.Model;
+namespace ResizingAdorner.Model;
 
 public interface IControlDefaults
 {

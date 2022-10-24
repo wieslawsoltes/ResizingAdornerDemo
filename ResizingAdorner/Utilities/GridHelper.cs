@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Model;
 
-namespace ResizingAdorner.Controls.Utilities;
+namespace ResizingAdorner.Utilities;
 
 public static class GridHelper
 {

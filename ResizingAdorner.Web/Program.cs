@@ -1,9 +1,10 @@
 using System.Runtime.Versioning;
 using Avalonia;
 using Avalonia.Web;
-using ResizingAdorner;
 
 [assembly:SupportedOSPlatform("browser")]
+
+namespace ResizingAdorner.Web;
 
 internal partial class Program
 {
@@ -11,5 +12,5 @@ internal partial class Program
         => BuildAvaloniaApp().SetupBrowserApp("out");
 
     public static AppBuilder BuildAvaloniaApp()
-           => AppBuilder.Configure<App>();
+        => AppBuilder.Configure<App>();
 }

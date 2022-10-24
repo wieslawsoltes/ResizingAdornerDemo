@@ -1,10 +1,10 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
-using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Model;
+using ResizingAdorner.Utilities;
 
-namespace ResizingAdorner.Controls.Resizers;
+namespace ResizingAdorner.Resizers;
 
 public class GridControlResizer : IControlResizer
 {

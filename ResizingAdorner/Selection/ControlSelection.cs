@@ -2,10 +2,11 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using ResizingAdorner.Controls.Model;
-using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Controls;
+using ResizingAdorner.Model;
+using ResizingAdorner.Utilities;
 
-namespace ResizingAdorner.Controls.Selection;
+namespace ResizingAdorner.Selection;
 
 public class ControlSelection : IControlSelection
 {

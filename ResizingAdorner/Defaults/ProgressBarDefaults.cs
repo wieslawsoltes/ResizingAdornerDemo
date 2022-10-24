@@ -1,5 +1,6 @@
 using Avalonia.Controls;
-using ResizingAdorner.Controls.Model;
+using Avalonia.Layout;
+using ResizingAdorner.Model;
 
 namespace ResizingAdorner.Defaults;
 
@@ -10,6 +11,8 @@ public class ProgressBarDefaults : IControlDefaults
         if (control is ProgressBar progressBar)
         {
             progressBar.Value = 50;
+            progressBar.HorizontalAlignment = HorizontalAlignment.Stretch;
+            progressBar.VerticalAlignment = VerticalAlignment.Stretch;
         }
     }
 

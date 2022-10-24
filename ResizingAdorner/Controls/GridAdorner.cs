@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.Controls;
 

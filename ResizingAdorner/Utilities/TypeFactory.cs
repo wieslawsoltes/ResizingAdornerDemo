@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 
-namespace ResizingAdorner.Controls.Utilities;
+namespace ResizingAdorner.Utilities;
 
-public class TypeFactory
+public static class TypeFactory
 {
     public static Control? CreateControl(Type type)
     {

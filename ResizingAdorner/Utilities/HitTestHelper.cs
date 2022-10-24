@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 
-namespace ResizingAdorner.Controls.Utilities;
+namespace ResizingAdorner.Utilities;
 
 public static class HitTestHelper
 {

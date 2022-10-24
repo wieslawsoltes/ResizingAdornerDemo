@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Layout;
-using ResizingAdorner.Controls.Model;
+using ResizingAdorner.Model;
 
 namespace ResizingAdorner.Defaults;
 
