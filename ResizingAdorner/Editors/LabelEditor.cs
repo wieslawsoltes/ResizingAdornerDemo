@@ -3,13 +3,12 @@ using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
-using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
 public class LabelEditor : IControlEditor
 {
-    public void Insert(Type type, Point point, object control)
+    public void Insert(Type type, Point point, object control, IControlDefaults? controlDefaults)
     {
         if (control is not Label label)
         {
@@ -21,7 +20,7 @@ public class LabelEditor : IControlEditor
             return;
         }
 
-        DefaultsProvider.AutoPositionAndStretch(child);
+        controlDefaults?.Auto(child);
 
         label.Content = child;
     }

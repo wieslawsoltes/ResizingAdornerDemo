@@ -3,17 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using ResizingAdorner.Controls;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
+using ResizingAdorner.Defaults;
 using ResizingAdorner.Editors;
 
 namespace ResizingAdorner;
 
 public partial class ToolboxView : UserControl
 {
+    private static readonly Dictionary<Type, IControlEditor> s_controlEditors = new()
+    {
+        [typeof(Border)] = new BorderEditor(),
+        [typeof(Button)] = new ButtonEditor(),
+        [typeof(Canvas)] = new CanvasEditor(),
+        [typeof(ContentControl)] = new ContentControlEditor(),
+        [typeof(Decorator)] = new DecoratorEditor(),
+        [typeof(DockPanel)] = new DockPanelEditor(),
+        [typeof(Grid)] = new GridEditor(),
+        [typeof(Label)] = new LabelEditor(),
+        [typeof(Panel)] = new PanelEditor(),
+        [typeof(ScrollViewer)] = new ScrollViewerEditor(),
+        [typeof(StackPanel)] = new StackPanelEditor(),
+        [typeof(Viewbox)] = new ViewboxEditor(),
+        [typeof(WrapPanel)] = new WrapPanelEditor(),
+    };
+
+    private static readonly Dictionary<Type, IControlDefaults> s_controlDefaults = new ()
+    {
+        [typeof(TextBox)] = new TextBoxDefaults(),
+        [typeof(Grid)] = new GridDefaults(),
+        [typeof(Button)] = new ButtonDefaults(),
+        [typeof(AccessText)] = new AccessTextDefaults(),
+        [typeof(Slider)] = new SliderDefaults(),
+        [typeof(Panel)] = new PanelDefaults(),
+        [typeof(Decorator)] = new DecoratorDefaults(),
+        [typeof(Label)] = new LabelDefaults(),
+        [typeof(ContentControl)] = new ContentControlDefaults(),
+        [typeof(StackPanel)] = new StackPanelDefaults(),
+        [typeof(Border)] = new BorderDefaults(),
+        [typeof(ProgressBar)] = new ProgressBarDefaults(),
+        [typeof(Viewbox)] = new ViewboxDefaults(),
+        [typeof(Rectangle)] = new RectangleDefaults(),
+        [typeof(WrapPanel)] = new WrapPanelDefaults(),
+        [typeof(CheckBox)] = new CheckBoxDefaults(),
+        [typeof(ScrollViewer)] = new ScrollViewerDefaults(),
+        [typeof(DockPanel)] = new DockPanelDefaults(),
+        [typeof(Canvas)] = new CanvasDefaults(),
+        [typeof(Ellipse)] = new EllipseDefaults(),
+        [typeof(TextBlock)] = new TextBlockDefaults(),
+        [typeof(RadioButton)] = new RadioButtonDefaults(),
+    };
+
     private bool _isPressed;
     private bool _isDragging;
     private Point _start;
@@ -117,23 +163,6 @@ public partial class ToolboxView : UserControl
         }
     }
 
-    private Dictionary<Type, IControlEditor> _controlEditors = new()
-    {
-        [typeof(Border)] = new BorderEditor(),
-        [typeof(Button)] = new ButtonEditor(),
-        [typeof(Canvas)] = new CanvasEditor(),
-        [typeof(ContentControl)] = new ContentControlEditor(),
-        [typeof(Decorator)] = new DecoratorEditor(),
-        [typeof(DockPanel)] = new DockPanelEditor(),
-        [typeof(Grid)] = new GridEditor(),
-        [typeof(Label)] = new LabelEditor(),
-        [typeof(Panel)] = new PanelEditor(),
-        [typeof(ScrollViewer)] = new ScrollViewerEditor(),
-        [typeof(StackPanel)] = new StackPanelEditor(),
-        [typeof(Viewbox)] = new ViewboxEditor(),
-        [typeof(WrapPanel)] = new WrapPanelEditor(),
-    };
-
     private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
@@ -145,9 +174,11 @@ public partial class ToolboxView : UserControl
             {
                 control = FinDropControl(control);
 
-                if (_controlEditors.TryGetValue(control.GetType(), out var controlEditor))
+                s_controlDefaults.TryGetValue(type, out var controlDefaults);
+
+                if (s_controlEditors.TryGetValue(control.GetType(), out var controlEditor))
                 {
-                    controlEditor.Insert(type, e.GetPosition(control), control);
+                    controlEditor.Insert(type, e.GetPosition(control), control, controlDefaults);
                 }
             }
         }
@@ -169,4 +200,3 @@ public partial class ToolboxView : UserControl
         }
     }
 }
-

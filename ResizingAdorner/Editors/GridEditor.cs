@@ -3,13 +3,12 @@ using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
-using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
 public class GridEditor : IControlEditor
 {
-    public void Insert(Type type, Point point, object control)
+    public void Insert(Type type, Point point, object control, IControlDefaults? controlDefaults)
     {
         if (control is not Grid grid)
         {
@@ -21,7 +20,7 @@ public class GridEditor : IControlEditor
             return;
         }
 
-        DefaultsProvider.AutoPositionAndStretch(child);
+        controlDefaults?.Auto(child);
 
         var cells = GridHelper.GetCells(grid);
 

@@ -3,13 +3,12 @@ using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
-using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
 public class CanvasEditor : IControlEditor
 {
-    public void Insert(Type type, Point point, object control)
+    public void Insert(Type type, Point point, object control, IControlDefaults? controlDefaults)
     {
         if (control is not Canvas canvas)
         {
@@ -21,7 +20,7 @@ public class CanvasEditor : IControlEditor
             return;
         }
 
-        DefaultsProvider.FixedPositionAndSize(child);
+        controlDefaults?.Fixed(child);
 
         Canvas.SetLeft(child, point.X);
         Canvas.SetTop(child, point.Y);

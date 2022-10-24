@@ -3,13 +3,12 @@ using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Controls.Model;
 using ResizingAdorner.Controls.Utilities;
-using ResizingAdorner.Defaults;
 
 namespace ResizingAdorner.Editors;
 
 public class DockPanelEditor : IControlEditor
 {
-    public void Insert(Type type, Point point, object control)
+    public void Insert(Type type, Point point, object control, IControlDefaults? controlDefaults)
     {
         if (control is not DockPanel dockPanel)
         {
@@ -21,7 +20,7 @@ public class DockPanelEditor : IControlEditor
             return;
         }
 
-        DefaultsProvider.AutoPositionAndStretch(child);
+        controlDefaults?.Auto(child);
 
         dockPanel.Children.Add(child);
     }
