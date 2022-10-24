@@ -80,6 +80,22 @@ public partial class ToolboxView : UserControl
         }
     }
 
+    private Control FinDropControl(Control control)
+    {
+        var adorner = HitTestHelper.FindControl<ResizingAdornerPresenter>(control);
+        if (adorner is { AdornedControl: { } })
+        {
+            if (adorner.AdornedControl is ResizingAdornerPresenter)
+            {
+                return FinDropControl(adorner.AdornedControl);
+            }
+            control = adorner.AdornedControl;
+        }
+
+        return control;
+    }
+
+    
     private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
