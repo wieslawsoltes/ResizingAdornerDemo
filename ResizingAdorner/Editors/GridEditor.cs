@@ -47,6 +47,26 @@ public class GridEditor
     {
         switch (control)
         {
+            case Canvas canvas:
+                canvas.Background = new SolidColorBrush(Colors.Gray);
+                canvas.Classes.Add("resizing");
+                break;
+            case Grid grid:
+                grid.Background = new SolidColorBrush(Colors.Gray);
+                grid.Classes.Add("resizing");
+                break;
+            case StackPanel stackPanel:
+                stackPanel.Background = new SolidColorBrush(Colors.Gray);
+                stackPanel.Classes.Add("resizing");
+                break;
+            case WrapPanel wrapPanel:
+                wrapPanel.Background = new SolidColorBrush(Colors.Gray);
+                wrapPanel.Classes.Add("resizing");
+                break;
+            case DockPanel dockPanel:
+                dockPanel.Background = new SolidColorBrush(Colors.Gray);
+                dockPanel.Classes.Add("resizing");
+                break;
             case TextBlock textBlock:
                 textBlock.Text = "TextBlock";
                 break;
