@@ -119,14 +119,18 @@ public partial class ToolboxView : UserControl
 
     private Dictionary<Type, IControlEditor> _controlEditors = new()
     {
+        [typeof(Border)] = new BorderEditor(),
         [typeof(Button)] = new ButtonEditor(),
         [typeof(Canvas)] = new CanvasEditor(),
         [typeof(ContentControl)] = new ContentControlEditor(),
+        [typeof(Decorator)] = new DecoratorEditor(),
         [typeof(DockPanel)] = new DockPanelEditor(),
         [typeof(Grid)] = new GridEditor(),
         [typeof(Label)] = new LabelEditor(),
+        [typeof(Panel)] = new PanelEditor(),
         [typeof(ScrollViewer)] = new ScrollViewerEditor(),
         [typeof(StackPanel)] = new StackPanelEditor(),
+        [typeof(Viewbox)] = new ViewboxEditor(),
         [typeof(WrapPanel)] = new WrapPanelEditor(),
     };
 
