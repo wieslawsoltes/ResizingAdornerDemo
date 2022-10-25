@@ -15,15 +15,14 @@ public partial class MainView : UserControl
 
     private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
-        var topLevel = this.GetVisualRoot();
-        if (topLevel is Control control)
+        if (this.GetVisualRoot() is TopLevel topLevel)
         {
-            ToolboxView.ControlSelection?.Initialize(control);
+            Global.ControlSelection?.Initialize(topLevel);
         }
     }
 
     public void OnDelete()
     {
-        ToolboxView.ControlSelection?.Delete();
+        Global.ControlSelection?.Delete();
     }
 }

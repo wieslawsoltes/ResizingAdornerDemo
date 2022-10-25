@@ -11,24 +11,24 @@ namespace ResizingAdorner.Selection;
 public class ControlSelection : IControlSelection
 {
     private readonly List<Control> _adorners = new ();
-    private Control? _control;
+    private TopLevel? _topLevel;
     private ResizingAdornerPresenter? _hover;
     private ResizingAdornerPresenter? _selected;
 
-    public void Initialize(Control control)
+    public void Initialize(TopLevel topLevel)
     {
-        _control = control;
-        _control.AddHandler(InputElement.PointerPressedEvent, OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
-        _control.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+        _topLevel = topLevel;
+        _topLevel.AddHandler(InputElement.PointerPressedEvent, OnPointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+        _topLevel.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
     }
 
     public void DeInitialize()
     {
-        if (_control is { })
+        if (_topLevel is { })
         {
-            _control.RemoveHandler(InputElement.PointerPressedEvent, OnPointerPressed);
-            _control.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved);
-            _control = null;
+            _topLevel.RemoveHandler(InputElement.PointerPressedEvent, OnPointerPressed);
+            _topLevel.RemoveHandler(InputElement.PointerMovedEvent, OnPointerMoved);
+            _topLevel = null;
         }
     }
 
@@ -87,12 +87,12 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (_control is null)
+        if (_topLevel is null)
         {
             return;
         }
 
-        var selected = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
+        var selected = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _topLevel);
         if (selected != null)
         {
             _selected = selected;
@@ -109,12 +109,12 @@ public class ControlSelection : IControlSelection
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (_control is null)
+        if (_topLevel is null)
         {
             return;
         }
 
-        var hitTest = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _control);
+        var hitTest = HitTestHelper.HitTest<ResizingAdornerPresenter>(e, _topLevel);
         if (hitTest is { } && (Equals(hitTest, _hover) || Equals(hitTest, _selected)))
         {
             return;

@@ -1,7 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ResizingAdorner"
         xmlns:c="clr-namespace:ResizingAdorner.Controls"
-        xmlns:views="clr-namespace:ResizingAdorner.Views"
         xmlns:resizers="clr-namespace:ResizingAdorner.Resizers">
 
   <Design.PreviewWith>
@@ -21,7 +21,7 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
+                                    ControlSelection="{x:Static local:Global.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
             <resizers:CanvasControlResizer EnableSnap="True" SnapX="10" SnapY="10" />
           </c:ResizingAdornerPresenter.ControlResizer>
@@ -41,7 +41,7 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
+                                    ControlSelection="{x:Static local:Global.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
             <resizers:GridControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
@@ -61,7 +61,7 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
+                                    ControlSelection="{x:Static local:Global.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
             <resizers:DockPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
@@ -81,7 +81,7 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
+                                    ControlSelection="{x:Static local:Global.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
             <resizers:StackPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
@@ -101,7 +101,7 @@
                                     AdornedWidth="{Binding $parent[Control].Bounds.Width}"
                                     AdornedHeight="{Binding $parent[Control].Bounds.Height}"
                                     ShowThumbs="False"
-                                    ControlSelection="{x:Static views:ToolboxView.ControlSelection}">
+                                    ControlSelection="{x:Static local:Global.ControlSelection}">
           <c:ResizingAdornerPresenter.ControlResizer>
             <resizers:WrapPanelControlResizer />
           </c:ResizingAdornerPresenter.ControlResizer>
