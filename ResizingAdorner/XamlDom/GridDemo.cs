@@ -18,7 +18,7 @@ public class GridDemo
                 ["Name"] = "Grid",
                 ["Width"] = 500d,
                 ["Height"] = 500d,
-                ["Background"] = new SolidColorBrush(Colors.White),
+                ["Background"] = new SolidColorBrush(Colors.WhiteSmoke),
                 ["ColumnDefinitions"] = ColumnDefinitions.Parse("100,*,100"),
                 ["RowDefinitions"] = RowDefinitions.Parse("100,*,100"),
             },
