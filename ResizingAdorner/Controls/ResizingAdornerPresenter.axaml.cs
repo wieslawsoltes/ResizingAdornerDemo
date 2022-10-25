@@ -39,7 +39,8 @@ public class ResizingAdornerPresenter : TemplatedControl
         AvaloniaProperty.Register<ResizingAdornerPresenter, IControlSelection?>(nameof(ControlSelection));
 
     private bool _updating;
-    private bool _dragging;
+    private bool _isPressed;
+    private bool _isDragging;
     private Thumb? _thumbCenter;
     private Thumb? _thumbLeft;
     private Thumb? _thumbRight;
@@ -287,36 +288,44 @@ public class ResizingAdornerPresenter : TemplatedControl
         }
     }
 
-    private void Moved(PointerEventArgs e, Action<Vector> action)
-    {
-        if (!_dragging)
-        {
-            return;
-        }
-
-        if (AdornedControl is {Parent: Control parent})
-        {
-            var point = e.GetPosition(parent);
-            var vector = (Vector) (point - _startPointParent);
-            action(vector);
-        }
-    }
-
     private void Pressed(PointerPressedEventArgs e)
     {
         if (AdornedControl is {Parent: Control parent})
         {
             _startPointParent = e.GetPosition(parent);
+            _isPressed = true;
+            _isDragging = true;
+            e.Pointer.Capture(e.Source as IInputElement);
             DragStarted();
-            _dragging = true;
-            e.Pointer.Capture(AdornedControl);
         }
     }
 
     private void Released(PointerReleasedEventArgs e)
     {
-        _dragging = false;
-        e.Pointer.Capture(null);
+        if (_isDragging)
+        {
+            _isPressed = false;
+            _isDragging = false;
+            e.Pointer.Capture(null);
+        }
+    }
+
+    private void Moved(PointerEventArgs e, Action<Vector> action)
+    {
+        if (_isPressed)
+        {
+            if (!_isDragging)
+            {
+                _isDragging = true;
+            }
+
+            if (AdornedControl is {Parent: Control parent})
+            {
+                var point = e.GetPosition(parent);
+                var vector = (Vector)(point - _startPointParent);
+                action(vector);
+            }
+        }
     }
 
     private void Thumb_OnPointerPressed(object? sender, PointerPressedEventArgs e)
