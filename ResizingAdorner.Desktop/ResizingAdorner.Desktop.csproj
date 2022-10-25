@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <AvaloniaVersion>11.0.0-preview2</AvaloniaVersion>
   </PropertyGroup>
 
   <ItemGroup>

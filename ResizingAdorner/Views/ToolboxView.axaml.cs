@@ -191,6 +191,7 @@ public partial class ToolboxView : UserControl
         _isPressed = false;
         _isDragging = false;
         _dragItem = null;
+        e.Pointer.Capture(ControlTypes);
     }
 
     private void ToolBox_PointerPressed(object? sender, PointerPressedEventArgs e)
@@ -202,6 +203,7 @@ public partial class ToolboxView : UserControl
             _isPressed = true;
             _isDragging = false;
             _dragItem = listBoxItem;
+            e.Pointer.Capture(null);
         }
     }
 }

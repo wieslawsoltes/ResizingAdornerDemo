@@ -7,20 +7,6 @@
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <MSBuildEnableWorkloadResolver>true</MSBuildEnableWorkloadResolver>
-    <WasmBuildNative>true</WasmBuildNative>
-    <EmccFlags>-sVERBOSE -sERROR_ON_UNDEFINED_SYMBOLS=0</EmccFlags>
-    <AvaloniaVersion>11.0.0-preview2</AvaloniaVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <RunAOTCompilation>true</RunAOTCompilation>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TrimMode>full</TrimMode>
-    <WasmBuildNative>true</WasmBuildNative>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <WasmEnableSIMD>true</WasmEnableSIMD>
-    <EmccCompileOptimizationFlag>-O3</EmccCompileOptimizationFlag>
-    <EmccLinkOptimizationFlag>-O3</EmccLinkOptimizationFlag>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,8 +19,8 @@
     <WasmExtraFilesToDeploy Include="AppBundle\index.html" />
     <WasmExtraFilesToDeploy Include="AppBundle\Logo.svg" />
     <WasmExtraFilesToDeploy Include="AppBundle\main.js" />
+    <WasmExtraFilesToDeploy Include="AppBundle\staticwebapp.config.json" />
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Web" Version="$(AvaloniaVersion)" />
