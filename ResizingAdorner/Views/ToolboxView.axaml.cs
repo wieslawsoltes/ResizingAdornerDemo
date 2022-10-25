@@ -160,7 +160,7 @@ public partial class ToolboxView : UserControl
             {
                 var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
 
-                Console.WriteLine(inputElement);
+                // Console.WriteLine(inputElement);
 
                 // TODO: Move/add preview
             }
@@ -173,7 +173,7 @@ public partial class ToolboxView : UserControl
         {
             var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
 
-            Console.WriteLine(inputElement);
+            // Console.WriteLine(inputElement);
 
             if (inputElement is Control control)
             {
