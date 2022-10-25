@@ -309,12 +309,14 @@ public class ResizingAdornerPresenter : TemplatedControl
             _startPointParent = e.GetPosition(parent);
             DragStarted();
             _dragging = true;
+            e.Pointer.Capture(AdornedControl);
         }
     }
 
     private void Released(PointerReleasedEventArgs e)
     {
         _dragging = false;
+        e.Pointer.Capture(null);
     }
 
     private void Thumb_OnPointerPressed(object? sender, PointerPressedEventArgs e)
