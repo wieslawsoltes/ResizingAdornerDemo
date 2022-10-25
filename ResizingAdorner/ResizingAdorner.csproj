@@ -16,19 +16,4 @@
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Views\MainView.axaml.cs">
-      <DependentUpon>MainView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\MainWindow.axaml.cs">
-      <DependentUpon>MainWindow.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ToolboxView.axaml.cs">
-      <DependentUpon>ToolboxView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
 </Project>
