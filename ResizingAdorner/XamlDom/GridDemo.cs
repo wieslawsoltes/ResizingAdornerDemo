@@ -29,7 +29,7 @@ public class GridDemo
                     ControlType = typeof(Ellipse),
                     Values = new ()
                     {
-                        ["Fill"] = "Red",
+                        ["Fill"] = new SolidColorBrush(Colors.Red),
                         ["Grid.Column"] = 0,
                         ["Grid.Row"] = 0,
                     },   
@@ -39,7 +39,7 @@ public class GridDemo
                     ControlType = typeof(Rectangle),
                     Values = new ()
                     {
-                        ["Fill"] = new SolidColorBrush(Colors.Red),
+                        ["Fill"] = new SolidColorBrush(Colors.Green),
                         ["Grid.Column"] = 1,
                         ["Grid.Row"] = 1,
                     },   
