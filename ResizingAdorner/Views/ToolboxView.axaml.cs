@@ -66,7 +66,7 @@ public partial class ToolboxView : UserControl
     private bool _isPressed;
     private bool _isDragging;
     private Point _start;
-    private ListBoxItem? _dragItem;
+    private ListBoxItem? _dragListBoxItem;
 
     public ToolboxView()
     {
@@ -81,50 +81,7 @@ public partial class ToolboxView : UserControl
         ControlTypes.AddHandler(InputElement.PointerReleasedEvent, ToolBox_PointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         ControlTypes.AddHandler(InputElement.PointerMovedEvent, ToolBox_PointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
 
-        ControlTypes.Items = GetControlTypes();
-    }
-
-    private List<Type> GetControlTypes()
-    {
-        var controlType = typeof(Control);
-        var topLevelType = typeof(TopLevel);
-        var controlsAssembly = controlType.Assembly;
-        var controlTypes = new List<Type>();
-
-        foreach (var t in controlsAssembly.GetTypes())
-        {
-            if (!t.IsAbstract
-                && t.IsPublic
-                && t.IsClass
-                && !t.ContainsGenericParameters
-                && t.GetConstructors().Any(x => x.GetParameters().Length == 0))
-            {
-                if (HasBaseType(t, controlType) && !HasBaseType(t, topLevelType))
-                {
-                    controlTypes.Add(t);
-                }
-            }
-        }
-
-        controlTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-
-        return controlTypes;
-    }
-
-    private bool HasBaseType(Type t, Type baseType)
-    {
-        var b = t.BaseType;
-        while (b != null)
-        {
-            if (b == baseType)
-            {
-                return true;
-            }
-
-            b = b.BaseType;
-        }
-
-        return false;
+        ControlTypes.Items = TypeHelper.GetControlTypes();
     }
 
     private Control FinDropControl(Control control)
@@ -140,6 +97,48 @@ public partial class ToolboxView : UserControl
         }
 
         return control;
+    }
+
+    private void ToolBox_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        var listBoxItem = HitTestHelper.HitTest<ListBoxItem>(e, ControlTypes);
+        if (listBoxItem is { })
+        {
+            Console.WriteLine($"Pressed: {listBoxItem}");
+
+            _start = e.GetPosition(ControlTypes);
+            _isPressed = true;
+            _isDragging = false;
+            _dragListBoxItem = listBoxItem;
+            e.Pointer.Capture(ControlTypes);
+        }
+    }
+
+    private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (_isDragging && _dragListBoxItem is {DataContext: Type type})
+        {
+            var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
+
+            Console.WriteLine($"Released: {_dragListBoxItem}");
+
+            if (inputElement is Control control)
+            {
+                control = FinDropControl(control);
+
+                s_controlDefaults.TryGetValue(type, out var controlDefaults);
+
+                if (s_controlEditors.TryGetValue(control.GetType(), out var controlEditor))
+                {
+                    controlEditor.Insert(type, e.GetPosition(control), control, controlDefaults);
+                }
+            }
+        }
+
+        _isPressed = false;
+        _isDragging = false;
+        _dragListBoxItem = null;
+        e.Pointer.Capture(null);
     }
 
     private void ToolBox_PointerMoved(object? sender, PointerEventArgs e)
@@ -160,50 +159,10 @@ public partial class ToolboxView : UserControl
             {
                 var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
 
-                // Console.WriteLine(inputElement);
+                Console.WriteLine($"Move: {_dragListBoxItem}");
 
                 // TODO: Move/add preview
             }
-        }
-    }
-
-    private void ToolBox_PointerReleased(object? sender, PointerReleasedEventArgs e)
-    {
-        if (_isDragging && _dragItem is { } && _dragItem.DataContext is Type type)
-        {
-            var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
-
-            // Console.WriteLine(inputElement);
-
-            if (inputElement is Control control)
-            {
-                control = FinDropControl(control);
-
-                s_controlDefaults.TryGetValue(type, out var controlDefaults);
-
-                if (s_controlEditors.TryGetValue(control.GetType(), out var controlEditor))
-                {
-                    controlEditor.Insert(type, e.GetPosition(control), control, controlDefaults);
-                }
-            }
-        }
-
-        _isPressed = false;
-        _isDragging = false;
-        _dragItem = null;
-        e.Pointer.Capture(ControlTypes);
-    }
-
-    private void ToolBox_PointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        var listBoxItem = HitTestHelper.HitTest<ListBoxItem>(e, ControlTypes);
-        if (listBoxItem is { })
-        {
-            _start = e.GetPosition(ControlTypes);
-            _isPressed = true;
-            _isDragging = false;
-            _dragItem = listBoxItem;
-            e.Pointer.Capture(null);
         }
     }
 }

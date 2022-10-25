@@ -15,7 +15,7 @@ public class DockPanelEditor : IControlEditor
             return;
         }
 
-        if (TypeFactory.CreateControl(type) is not { } child)
+        if (TypeHelper.CreateControl(type) is not { } child)
         {
             return;
         }
