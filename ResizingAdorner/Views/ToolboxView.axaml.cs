@@ -110,7 +110,7 @@ public partial class ToolboxView : UserControl
             _isPressed = true;
             _isDragging = false;
             _dragListBoxItem = listBoxItem;
-            e.Pointer.Capture(ControlTypes);
+            e.Pointer.Capture(listBoxItem);
         }
     }
 
