@@ -28,6 +28,26 @@ public class XamlDomNode
         if (TypeHelper.CreateControl(ControlType) is { } control)
         {
             _control = control;
+
+            if (Child is { })
+            {
+                if (!Child.CreateControl())
+                {
+                    return false;
+                }
+            }
+
+            if (Children is { })
+            {
+                foreach (var child in Children)
+                {
+                    if (!child.CreateControl())
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
