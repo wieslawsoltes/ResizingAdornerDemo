@@ -61,5 +61,7 @@ public class GridDemo
         {
             Root = root
         };
+
+        Dom.Root.CreateControl();
     }
 }
