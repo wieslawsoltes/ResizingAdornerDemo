@@ -295,7 +295,7 @@ public class ResizingAdornerPresenter : TemplatedControl
             _startPointParent = e.GetPosition(parent);
             _isPressed = true;
             _isDragging = true;
-            e.Pointer.Capture(e.Source as IInputElement);
+            // e.Pointer.Capture(e.Source as IInputElement);
             DragStarted();
         }
     }
@@ -306,7 +306,7 @@ public class ResizingAdornerPresenter : TemplatedControl
         {
             _isPressed = false;
             _isDragging = false;
-            e.Pointer.Capture(null);
+            // e.Pointer.Capture(null);
         }
     }
 
