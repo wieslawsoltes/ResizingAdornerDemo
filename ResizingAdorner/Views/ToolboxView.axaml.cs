@@ -103,13 +103,13 @@ public partial class ToolboxView : UserControl
         var listBoxItem = HitTestHelper.HitTest<ListBoxItem>(e, ControlTypes);
         if (listBoxItem is { })
         {
-            Console.WriteLine($"Pressed: {listBoxItem}");
+            // Console.WriteLine($"Pressed: {listBoxItem}");
 
             _start = e.GetPosition(ControlTypes);
             _isPressed = true;
             _isDragging = false;
             _dragListBoxItem = listBoxItem;
-            e.Pointer.Capture(listBoxItem);
+            // e.Pointer.Capture(listBoxItem);
         }
     }
 
@@ -119,7 +119,7 @@ public partial class ToolboxView : UserControl
         {
             var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
 
-            Console.WriteLine($"Released: {_dragListBoxItem}");
+            // Console.WriteLine($"Released: {_dragListBoxItem}");
 
             if (inputElement is Control control)
             {
@@ -137,7 +137,7 @@ public partial class ToolboxView : UserControl
         _isPressed = false;
         _isDragging = false;
         _dragListBoxItem = null;
-        e.Pointer.Capture(null);
+        // e.Pointer.Capture(null);
     }
 
     private void ToolBox_PointerMoved(object? sender, PointerEventArgs e)
@@ -158,7 +158,7 @@ public partial class ToolboxView : UserControl
             {
                 var inputElement = this.InputHitTest(e.GetPosition(ControlTypes));
 
-                Console.WriteLine($"Move: {_dragListBoxItem}");
+                // Console.WriteLine($"Move: {_dragListBoxItem}");
 
                 // TODO: Move/add preview
             }
