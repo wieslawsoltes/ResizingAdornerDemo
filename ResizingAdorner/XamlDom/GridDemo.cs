@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
-using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
 
@@ -11,9 +10,9 @@ public class GridDemo
 
     public GridDemo()
     {
-        var pg = Registry.Properties[typeof(Grid)];
-        var pe = Registry.Properties[typeof(Ellipse)];;
-        var pr = Registry.Properties[typeof(Rectangle)];;
+        var pg = XamlPropertyRegistry.Properties[typeof(Grid)];
+        var pe = XamlPropertyRegistry.Properties[typeof(Ellipse)];
+        var pr = XamlPropertyRegistry.Properties[typeof(Rectangle)];
 
         var root = new XamlNode
         {

@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
-using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
 
-public static class Registry
+public static class XamlPropertyRegistry
 {
     public static Dictionary<Type, XamlPropertyCollection> Properties = new ()
     {
