@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Avalonia;
 using Avalonia.Controls;
 using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
 
-public class XamlDomNode
+public class XamlNode
 {
     private Control? _control;
 
     public Type? ControlType { get; set; }
 
-    public Dictionary<string, object?>? Values { get; set; }
+    public Dictionary<XamlProperty, object?>? Values { get; set; }
 
-    public XamlDomNode? Child { get; set; }
+    public XamlNode? Child { get; set; }
 
-    public List<XamlDomNode>? Children { get; set; }
+    public List<XamlNode>? Children { get; set; }
 
     public bool CreateControl()
     {
@@ -54,23 +55,22 @@ public class XamlDomNode
         return false;
     }
 
-    /*
-    public void SetValue(AvaloniaProperty property, object? value)
+    public void SetValue(XamlProperty property, object? value)
     {
         if (Values is null)
         {
-            Values = new Dictionary<AvaloniaProperty, object?>();
+            Values = new Dictionary<XamlProperty, object?>();
         }
 
         Values[property] = value;
 
         if (_control is { })
         {
-            _control.SetValue(property, value);
+            property.SetValue(_control, value);
         }
     }
 
-    public object? GetValue(AvaloniaProperty property)
+    public object? GetValue(XamlProperty property)
     {
         if (Values is { })
         {
@@ -82,7 +82,7 @@ public class XamlDomNode
 
         return AvaloniaProperty.UnsetValue;
     }
-    */
+
 
     public void Write(StringBuilder sb, int indentLevel)
     {
@@ -109,8 +109,15 @@ public class XamlDomNode
                 {
                     continue;
                 }
+
+                var name = kvp.Key.Name;
+                if (kvp.Key.AvaloniaProperty is {IsAttached: true})
+                {
+                    name = kvp.Key.AvaloniaProperty.OwnerType.Name + "." + name;
+                }
+                
                 sb.Append(' ');
-                sb.Append(kvp.Key);
+                sb.Append(name);
                 sb.Append('=');
                 sb.Append('"');
                 sb.Append(kvp.Value);

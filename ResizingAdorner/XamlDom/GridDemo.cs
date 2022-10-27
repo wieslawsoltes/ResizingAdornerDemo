@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
+using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
 
@@ -10,48 +11,54 @@ public class GridDemo
 
     public GridDemo()
     {
-        var root = new XamlDomNode
+        var pg = Registry.Properties[typeof(Grid)];
+
+        var pe = Registry.Properties[typeof(Ellipse)];;
+
+        var pr = Registry.Properties[typeof(Rectangle)];;
+
+        var root = new XamlNode
         {
             ControlType = typeof(Grid),
             Values = new ()
             {
-                ["Name"] = "Grid",
-                ["Width"] = 500d,
-                ["Height"] = 500d,
-                ["Background"] = new SolidColorBrush(Colors.WhiteSmoke),
-                ["ColumnDefinitions"] = ColumnDefinitions.Parse("100,*,100"),
-                ["RowDefinitions"] = RowDefinitions.Parse("100,*,100"),
+                [pg["Name"]] = "Grid",
+                [pg["Width"]] = 500d,
+                [pg["Height"]] = 500d,
+                [pg["Background"]] = new SolidColorBrush(Colors.WhiteSmoke),
+                [pg["ColumnDefinitions"]] = ColumnDefinitions.Parse("100,*,100"),
+                [pg["RowDefinitions"]] = RowDefinitions.Parse("100,*,100"),
             },
             Children = new ()
             {
-                new XamlDomNode
+                new XamlNode
                 {
                     ControlType = typeof(Ellipse),
                     Values = new ()
                     {
-                        ["Fill"] = new SolidColorBrush(Colors.Red),
-                        ["Grid.Column"] = 0,
-                        ["Grid.Row"] = 0,
+                        [pe["Fill"]] = new SolidColorBrush(Colors.Red),
+                        [pe["Grid.Column"]] = 0,
+                        [pe["Grid.Row"]] = 0,
                     },   
                 },
-                new XamlDomNode
+                new XamlNode
                 {
                     ControlType = typeof(Rectangle),
                     Values = new ()
                     {
-                        ["Fill"] = new SolidColorBrush(Colors.Green),
-                        ["Grid.Column"] = 1,
-                        ["Grid.Row"] = 1,
+                        [pr["Fill"]] = new SolidColorBrush(Colors.Green),
+                        [pr["Grid.Column"]] = 1,
+                        [pr["Grid.Row"]] = 1,
                     },   
                 },
-                new XamlDomNode
+                new XamlNode
                 {
                     ControlType = typeof(Rectangle),
                     Values = new ()
                     {
-                        ["Fill"] = new SolidColorBrush(Colors.Blue),
-                        ["Grid.Column"] = 2,
-                        ["Grid.Row"] = 2,
+                        [pr["Fill"]] = new SolidColorBrush(Colors.Blue),
+                        [pr["Grid.Column"]] = 2,
+                        [pr["Grid.Row"]] = 2,
                     },   
                 },
             }
