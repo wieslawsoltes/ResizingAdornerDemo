@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Avalonia;
 using Avalonia.Controls;
@@ -18,6 +19,8 @@ public class XamlNode
     public XamlNode? Child { get; set; }
 
     public List<XamlNode>? Children { get; set; }
+
+    public Control? Control => _control;
 
     public bool CreateControl()
     {
