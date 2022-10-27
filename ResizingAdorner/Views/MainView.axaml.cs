@@ -25,6 +25,8 @@ public partial class MainView : UserControl
             var xaml = sb.ToString();
             
             Console.WriteLine(xaml);
+
+            // TODO: Content = gridDemo.Dom.Root.Control;
         }
     }
 
