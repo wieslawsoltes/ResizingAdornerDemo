@@ -12,9 +12,7 @@ public class GridDemo
     public GridDemo()
     {
         var pg = Registry.Properties[typeof(Grid)];
-
         var pe = Registry.Properties[typeof(Ellipse)];;
-
         var pr = Registry.Properties[typeof(Rectangle)];;
 
         var root = new XamlNode
