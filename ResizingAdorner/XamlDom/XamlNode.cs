@@ -35,14 +35,8 @@ public class XamlNode
         {
             _control = control;
 
-            if (Control is { } && Values is { })
-            {
-                foreach (var kvp in Values)
-                {
-                    kvp.Key.SetValue(Control, kvp.Value);
-                }
-            }
-            
+            SetControlValues(this);
+
             var contentProperty = _control
                 .GetType()
                 .GetProperties()
@@ -64,13 +58,7 @@ public class XamlNode
                         contentProperty.SetValue(_control, Child.Control);
                     }
 
-                    if (Child.Values is { })
-                    {
-                        foreach (var kvp in Child.Values)
-                        {
-                           kvp.Key.SetValue(Child.Control, kvp.Value);
-                        }
-                    }
+                    SetControlValues(Child);
                 }
             }
 
@@ -94,13 +82,7 @@ public class XamlNode
                             }
                         }
 
-                        if (child.Values is { })
-                        {
-                            foreach (var kvp in child.Values)
-                            {
-                                kvp.Key.SetValue(child.Control, kvp.Value);
-                            }
-                        }
+                        SetControlValues(child);
                     }
                 }
             }
@@ -109,6 +91,17 @@ public class XamlNode
         }
 
         return false;
+    }
+
+    private void SetControlValues(XamlNode xamlNode)
+    {
+        if (xamlNode.Values is { } && xamlNode.Control is { })
+        {
+            foreach (var kvp in xamlNode.Values)
+            {
+                kvp.Key.SetValue(xamlNode.Control, kvp.Value);
+            }
+        }
     }
 
     public void SetValue(XamlProperty property, object? value)
