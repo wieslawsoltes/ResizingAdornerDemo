@@ -67,5 +67,7 @@ public class GridDemo
         };
 
         Dom.Root.CreateControl();
+
+        Dom.Root.Control?.Classes.Add("resizing");
     }
 }
