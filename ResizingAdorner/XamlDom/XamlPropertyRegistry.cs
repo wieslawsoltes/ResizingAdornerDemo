@@ -13,7 +13,6 @@ public static class XamlPropertyRegistry
         {
             Properties = new()
             {
-                
                 ["Name"] = XamlProperty.CreateAvalonia<Grid>("Name"),
                 ["Width"] = XamlProperty.CreateAvalonia<Grid>("Width"),
                 ["Height"] = XamlProperty.CreateAvalonia<Grid>("Height"),
