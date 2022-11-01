@@ -30,11 +30,19 @@ public class XamlNode
         {
             return false;
         }
-        
+
         if (TypeHelper.CreateControl(ControlType) is { } control)
         {
             _control = control;
 
+            if (Control is { } && Values is { })
+            {
+                foreach (var kvp in Values)
+                {
+                    kvp.Key.SetValue(Control, kvp.Value);
+                }
+            }
+            
             var contentProperty = _control
                 .GetType()
                 .GetProperties()
@@ -49,9 +57,20 @@ public class XamlNode
                     return false;
                 }
 
-                if (contentProperty is { })
+                if (Child.Control is { })
                 {
-                    contentProperty.SetValue(_control, Child.Control);
+                    if (contentProperty is { })
+                    {
+                        contentProperty.SetValue(_control, Child.Control);
+                    }
+
+                    if (Child.Values is { })
+                    {
+                        foreach (var kvp in Child.Values)
+                        {
+                           kvp.Key.SetValue(Child.Control, kvp.Value);
+                        }
+                    }
                 }
             }
 
@@ -64,12 +83,23 @@ public class XamlNode
                         return false;
                     }
 
-                    if (contentProperty is { } && addMethod is { } && child.Control is { })
+                    if (child.Control is { })
                     {
-                        var content = contentProperty.GetValue(_control);
-                        if (content is { })
+                        if (contentProperty is { } && addMethod is { })
                         {
-                            addMethod.Invoke(content, new object[] { child.Control });
+                            var content = contentProperty.GetValue(_control);
+                            if (content is { })
+                            {
+                                addMethod.Invoke(content, new object[] {child.Control});
+                            }
+                        }
+
+                        if (child.Values is { })
+                        {
+                            foreach (var kvp in child.Values)
+                            {
+                                kvp.Key.SetValue(child.Control, kvp.Value);
+                            }
                         }
                     }
                 }
