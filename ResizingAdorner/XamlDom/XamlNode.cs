@@ -24,6 +24,25 @@ public class XamlNode
 
     public Control? Control => _control;
 
+    private class ReflectionCache
+    {
+        public PropertyInfo? ContentProperty { get; }
+
+        public MethodInfo? AddMethod { get; }
+
+        public ReflectionCache(Control control)
+        {
+            ContentProperty = control
+                .GetType()
+                .GetProperties()
+                .FirstOrDefault(x => x.IsDefined(typeof(ContentAttribute), false));
+
+            AddMethod = ContentProperty?.PropertyType.GetMethod("Add");
+        }
+    }
+
+    private readonly Dictionary<Type, ReflectionCache> _reflectionCaches = new();
+
     public bool CreateControl()
     {
         if (ControlType is null)
@@ -35,14 +54,9 @@ public class XamlNode
         {
             _control = control;
 
+            var reflectionCache = GetReflectionCache(_control);
+
             SetControlValues(this);
-
-            var contentProperty = _control
-                .GetType()
-                .GetProperties()
-                .FirstOrDefault(x => x.IsDefined(typeof(ContentAttribute), false));
-
-            var addMethod = contentProperty?.PropertyType.GetMethod("Add");
 
             if (Child is { })
             {
@@ -53,9 +67,9 @@ public class XamlNode
 
                 if (Child.Control is { })
                 {
-                    if (contentProperty is { })
+                    if (reflectionCache.ContentProperty is { })
                     {
-                        contentProperty.SetValue(_control, Child.Control);
+                        reflectionCache.ContentProperty.SetValue(_control, Child.Control);
                     }
 
                     SetControlValues(Child);
@@ -73,12 +87,12 @@ public class XamlNode
 
                     if (child.Control is { })
                     {
-                        if (contentProperty is { } && addMethod is { })
+                        if (reflectionCache.ContentProperty is { } && reflectionCache.AddMethod is { })
                         {
-                            var content = contentProperty.GetValue(_control);
+                            var content = reflectionCache.ContentProperty.GetValue(_control);
                             if (content is { })
                             {
-                                addMethod.Invoke(content, new object[] {child.Control});
+                                reflectionCache.AddMethod.Invoke(content, new object[] {child.Control});
                             }
                         }
 
@@ -91,6 +105,17 @@ public class XamlNode
         }
 
         return false;
+    }
+
+    private ReflectionCache GetReflectionCache(Control control)
+    {
+        if (!_reflectionCaches.TryGetValue(control.GetType(), out var reflectionCache))
+        {
+            reflectionCache = new ReflectionCache(control);
+            _reflectionCaches[control.GetType()] = reflectionCache;
+        }
+
+        return reflectionCache;
     }
 
     private void SetControlValues(XamlNode xamlNode)
