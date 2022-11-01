@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Metadata;
 using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
@@ -33,11 +35,23 @@ public class XamlNode
         {
             _control = control;
 
+            var contentProperty = _control
+                .GetType()
+                .GetProperties()
+                .FirstOrDefault(x => x.IsDefined(typeof(ContentAttribute), false));
+
+            var addMethod = contentProperty?.PropertyType.GetMethod("Add");
+
             if (Child is { })
             {
                 if (!Child.CreateControl())
                 {
                     return false;
+                }
+
+                if (contentProperty is { })
+                {
+                    contentProperty.SetValue(_control, Child.Control);
                 }
             }
 
@@ -48,6 +62,15 @@ public class XamlNode
                     if (!child.CreateControl())
                     {
                         return false;
+                    }
+
+                    if (contentProperty is { } && addMethod is { } && child.Control is { })
+                    {
+                        var content = contentProperty.GetValue(_control);
+                        if (content is { })
+                        {
+                            addMethod.Invoke(content, new object[] { child.Control });
+                        }
                     }
                 }
             }
