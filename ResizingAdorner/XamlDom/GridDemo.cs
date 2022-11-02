@@ -12,7 +12,8 @@ public class GridDemo
     {
         if (XamlPropertyRegistry.Properties.TryGetValue(typeof(T), out var propertyCollection))
         {
-            if (propertyCollection.Properties.TryGetValue(name, out var property))
+            if (propertyCollection.Properties != null
+                && propertyCollection.Properties.TryGetValue(name, out var property))
             {
                 return property;
             }
