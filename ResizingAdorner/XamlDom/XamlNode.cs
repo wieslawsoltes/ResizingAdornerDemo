@@ -1,139 +1,73 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Metadata;
-using ResizingAdorner.Utilities;
 
 namespace ResizingAdorner.XamlDom;
 
 public class XamlNode
 {
-    private Control? _control;
+    private XamlPropertyCollection? _propertyCollection;
 
     public Type? ControlType { get; set; }
 
-    public Dictionary<XamlProperty, object?>? Values { get; set; }
+    public Dictionary<string, object?>? Values { get; set; }
 
     public XamlNode? Child { get; set; }
 
     public List<XamlNode>? Children { get; set; }
 
-    public Control? Control => _control;
+    public Control? Control { get; set; }
 
-    private class ReflectionCache
+    public XamlPropertyCollection PropertyCollection
     {
-        public PropertyInfo? ContentProperty { get; }
-
-        public MethodInfo? AddMethod { get; }
-
-        public ReflectionCache(Control control)
+        get
         {
-            ContentProperty = control
-                .GetType()
-                .GetProperties()
-                .FirstOrDefault(x => x.IsDefined(typeof(ContentAttribute), false));
-
-            AddMethod = ContentProperty?.PropertyType.GetMethod("Add");
-        }
-    }
-
-    private readonly Dictionary<Type, ReflectionCache> _reflectionCaches = new();
-
-    public bool CreateControl()
-    {
-        if (ControlType is null)
-        {
-            return false;
-        }
-
-        if (TypeHelper.CreateControl(ControlType) is { } control)
-        {
-            _control = control;
-
-            var reflectionCache = GetReflectionCache(_control);
-
-            SetControlValues(this);
-
-            if (Child is { })
+            if (ControlType is null)
             {
-                if (!Child.CreateControl())
-                {
-                    return false;
-                }
-
-                if (Child.Control is { })
-                {
-                    if (reflectionCache.ContentProperty is { })
-                    {
-                        reflectionCache.ContentProperty.SetValue(_control, Child.Control);
-                    }
-
-                    SetControlValues(Child);
-                }
+                throw new Exception();
             }
 
-            if (Children is { })
+            if (_propertyCollection is null)
             {
-                foreach (var child in Children)
+                if (XamlPropertyRegistry.Properties.TryGetValue(ControlType, out var propertyCollection))
                 {
-                    if (!child.CreateControl())
-                    {
-                        return false;
-                    }
+                    _propertyCollection = propertyCollection;
 
-                    if (child.Control is { })
-                    {
-                        if (reflectionCache.ContentProperty is { } && reflectionCache.AddMethod is { })
-                        {
-                            var content = reflectionCache.ContentProperty.GetValue(_control);
-                            if (content is { })
-                            {
-                                reflectionCache.AddMethod.Invoke(content, new object[] {child.Control});
-                            }
-                        }
-
-                        SetControlValues(child);
-                    }
+                    return _propertyCollection;
                 }
+
+                throw new Exception();
             }
 
-            return true;
+            return _propertyCollection;
+        }
+    }
+    
+    public void UpdateControlValues()
+    {
+        var properties = PropertyCollection.Properties;
+        if (properties is null)
+        {
+            throw new Exception();
         }
 
-        return false;
-    }
-
-    private ReflectionCache GetReflectionCache(Control control)
-    {
-        if (!_reflectionCaches.TryGetValue(control.GetType(), out var reflectionCache))
+        if (Values is { } && Control is { })
         {
-            reflectionCache = new ReflectionCache(control);
-            _reflectionCaches[control.GetType()] = reflectionCache;
-        }
-
-        return reflectionCache;
-    }
-
-    private void SetControlValues(XamlNode xamlNode)
-    {
-        if (xamlNode.Values is { } && xamlNode.Control is { })
-        {
-            foreach (var kvp in xamlNode.Values)
+            foreach (var kvp in Values)
             {
-                kvp.Key.SetValue(xamlNode.Control, kvp.Value);
+                var property = properties[kvp.Key];
+
+                property.SetValue(Control, kvp.Value);
             }
         }
     }
 
+    /*
     public void SetValue(XamlProperty property, object? value)
     {
         if (Values is null)
         {
-            Values = new Dictionary<XamlProperty, object?>();
+            Values = new Dictionary<string, object?>();
         }
 
         Values[property] = value;
@@ -156,91 +90,5 @@ public class XamlNode
 
         return AvaloniaProperty.UnsetValue;
     }
-
-
-    public void Write(StringBuilder sb, int indentLevel)
-    {
-        if (ControlType is null)
-        {
-            return;
-        }
-
-        var hasContent = false;
-
-        if (indentLevel > 0)
-        {
-            sb.Append(new string(' ', indentLevel * 2));
-        }
-        
-        sb.Append('<');
-        sb.Append(ControlType.Name);
-
-        if (Values is { })
-        {
-            foreach (var kvp in Values)
-            {
-                if (kvp.Value is null)
-                {
-                    continue;
-                }
-
-                var name = kvp.Key.Name;
-                if (kvp.Key.AvaloniaProperty is {IsAttached: true})
-                {
-                    name = kvp.Key.AvaloniaProperty.OwnerType.Name + "." + name;
-                }
-                
-                sb.Append(' ');
-                sb.Append(name);
-                sb.Append('=');
-                sb.Append('"');
-                sb.Append(kvp.Value);
-                sb.Append('"');
-            }
-        }
-
-        if (Child is { })
-        {
-            sb.Append('>');
-            sb.AppendLine();
-
-            var childLevel = indentLevel + 1;
-
-            Child.Write(sb, childLevel);
-
-            hasContent = true;
-        }
-
-        if (Children is {Count: > 0})
-        {
-            sb.Append('>');
-            sb.AppendLine();
-
-            var childrenLevel = indentLevel + 1;
-
-            foreach (var child in Children)
-            {
-                child.Write(sb, childrenLevel);
-            }
-
-            hasContent = true;
-        }
-
-        if (hasContent)
-        {
-            sb.Append(new string(' ', indentLevel * 2));
-            sb.Append('<');
-            sb.Append('/');
-            sb.Append(ControlType.Name);
-            sb.Append('>');
-            sb.AppendLine();
-        }
-        else
-        {
-            sb.Append(' ');
-            sb.Append('/');
-            sb.Append('>');
-            sb.AppendLine();
-        }
-    }
+    */
 }

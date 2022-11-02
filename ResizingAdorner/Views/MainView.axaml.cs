@@ -19,8 +19,9 @@ public partial class MainView : UserControl
         if (gridDemo.Dom.Root is { })
         {
             var sb = new StringBuilder();
+            var writer = new XamlStringWriter();
 
-            gridDemo.Dom.Root.Write(sb, 0);
+            writer.Write(gridDemo.Dom.Root, sb, 0);
 
             var xaml = sb.ToString();
             

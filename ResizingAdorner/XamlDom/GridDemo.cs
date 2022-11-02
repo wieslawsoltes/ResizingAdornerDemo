@@ -8,23 +8,32 @@ public class GridDemo
 {
     public XamlDom Dom { get; }
 
+    public XamlProperty? GetProperty<T>(string name)
+    {
+        if (XamlPropertyRegistry.Properties.TryGetValue(typeof(T), out var propertyCollection))
+        {
+            if (propertyCollection.Properties.TryGetValue(name, out var property))
+            {
+                return property;
+            }
+        }
+
+        return null;
+    }
+    
     public GridDemo()
     {
-        var pg = XamlPropertyRegistry.Properties[typeof(Grid)];
-        var pe = XamlPropertyRegistry.Properties[typeof(Ellipse)];
-        var pr = XamlPropertyRegistry.Properties[typeof(Rectangle)];
-
         var root = new XamlNode
         {
             ControlType = typeof(Grid),
             Values = new ()
             {
-                [pg["Name"]] = "Grid",
-                [pg["Width"]] = 500d,
-                [pg["Height"]] = 500d,
-                [pg["Background"]] = new SolidColorBrush(Colors.WhiteSmoke),
-                [pg["ColumnDefinitions"]] = ColumnDefinitions.Parse("100,*,100"),
-                [pg["RowDefinitions"]] = RowDefinitions.Parse("100,*,100"),
+                ["Name"] = "Grid",
+                ["Width"] = 500d,
+                ["Height"] = 500d,
+                ["Background"] = new SolidColorBrush(Colors.WhiteSmoke),
+                ["ColumnDefinitions"] = ColumnDefinitions.Parse("100,*,100"),
+                ["RowDefinitions"] = RowDefinitions.Parse("100,*,100"),
             },
             Children = new ()
             {
@@ -33,9 +42,9 @@ public class GridDemo
                     ControlType = typeof(Ellipse),
                     Values = new ()
                     {
-                        [pe["Fill"]] = new SolidColorBrush(Colors.Red),
-                        [pe["Grid.Column"]] = 0,
-                        [pe["Grid.Row"]] = 0,
+                        ["Fill"] = new SolidColorBrush(Colors.Red),
+                        ["Grid.Column"] = 0,
+                        ["Grid.Row"] = 0,
                     },   
                 },
                 new XamlNode
@@ -43,9 +52,9 @@ public class GridDemo
                     ControlType = typeof(Rectangle),
                     Values = new ()
                     {
-                        [pr["Fill"]] = new SolidColorBrush(Colors.Green),
-                        [pr["Grid.Column"]] = 1,
-                        [pr["Grid.Row"]] = 1,
+                        ["Fill"] = new SolidColorBrush(Colors.Green),
+                        ["Grid.Column"] = 1,
+                        ["Grid.Row"] = 1,
                     },   
                 },
                 new XamlNode
@@ -53,9 +62,9 @@ public class GridDemo
                     ControlType = typeof(Rectangle),
                     Values = new ()
                     {
-                        [pr["Fill"]] = new SolidColorBrush(Colors.Blue),
-                        [pr["Grid.Column"]] = 2,
-                        [pr["Grid.Row"]] = 2,
+                        ["Fill"] = new SolidColorBrush(Colors.Blue),
+                        ["Grid.Column"] = 2,
+                        ["Grid.Row"] = 2,
                     },   
                 },
             }
@@ -66,7 +75,9 @@ public class GridDemo
             Root = root
         };
 
-        Dom.Root.CreateControl();
+        var factory = new AvaloniaObjectFactory();
+
+        factory.CreateControl(Dom.Root);
 
         Dom.Root.Control?.Classes.Add("resizing");
     }
