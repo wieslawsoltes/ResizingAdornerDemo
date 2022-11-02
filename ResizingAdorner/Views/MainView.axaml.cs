@@ -14,7 +14,12 @@ public partial class MainView : UserControl
         InitializeComponent();
 
         AttachedToVisualTree += OnAttachedToVisualTree;
+        
+        //Demo();
+    }
 
+    private void Demo()
+    {
         var gridDemo = new GridDemo();
         if (gridDemo.Dom.Root is { })
         {
@@ -24,10 +29,11 @@ public partial class MainView : UserControl
             writer.Write(gridDemo.Dom.Root, sb, 0);
 
             var xaml = sb.ToString();
-            
+
             Console.WriteLine(xaml);
 
-            // TODO: Content = gridDemo.Dom.Root.Control;
+            // TODO:
+            Content = gridDemo.Dom.Root.Control;
         }
     }
 
