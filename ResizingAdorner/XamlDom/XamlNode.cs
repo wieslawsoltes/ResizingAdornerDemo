@@ -45,7 +45,7 @@ public class XamlNode
     
     public void UpdateControlValues()
     {
-        var properties = PropertyCollection.Properties;
+        var properties = PropertyCollection;
         if (properties is null)
         {
             throw new Exception();
@@ -56,6 +56,10 @@ public class XamlNode
             foreach (var kvp in Values)
             {
                 var property = properties[kvp.Key];
+                if (property is null)
+                {
+                    throw new Exception();
+                }
 
                 property.SetValue(Control, kvp.Value);
             }
