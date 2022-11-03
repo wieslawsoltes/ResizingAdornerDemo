@@ -12,7 +12,7 @@ public class XamlStringWriter
             return;
         }
 
-        var properties = xamlNode.PropertyCollection.Properties;
+        var properties = xamlNode.PropertyCollection;
         if (properties is null)
         {
             throw new Exception();
@@ -39,6 +39,10 @@ public class XamlStringWriter
 
                 var name = kvp.Key;
                 var property = properties[name];
+                if (property is null)
+                {
+                    throw new Exception();
+                }
 
                 if (property.AvaloniaProperty is {IsAttached: true})
                 {
