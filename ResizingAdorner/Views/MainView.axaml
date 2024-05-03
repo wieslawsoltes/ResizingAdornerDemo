@@ -9,7 +9,7 @@
              x:CompileBindings="True" x:DataType="views:MainView"
              Background="Transparent"
              Name="Editor"
-             FontFamily="avares://Avalonia.Themes.Fluent/Assets#Inter">
+             FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter">
 
   <UserControl.KeyBindings>
     <KeyBinding Command="{Binding #Editor.OnDelete}" Gesture="Delete" />

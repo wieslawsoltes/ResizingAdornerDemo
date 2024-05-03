@@ -1,9 +1,10 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="ResizingAdorner.App"
-             Name="ResizingAdorner">
+             Name="ResizingAdorner"
+             RequestedThemeVariant="Light">
   <Application.Styles>
-    <FluentTheme Mode="Light" />
+    <FluentTheme />
     <StyleInclude Source="/Controls/ResizingAdornerPresenter.axaml" />
     <StyleInclude Source="/Styles/Resizing.axaml" />
   </Application.Styles>

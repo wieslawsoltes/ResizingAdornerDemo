@@ -24,7 +24,7 @@ public class ToolboxManager : IToolboxManager
         _listBox.AddHandler(InputElement.PointerReleasedEvent, OnPointerReleased, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         _listBox.AddHandler(InputElement.PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
 
-        _listBox.Items = TypeHelper.GetControlTypes();
+        _listBox.ItemsSource = TypeHelper.GetControlTypes();
 
         _placementManager = new PlacementManager();
     }
